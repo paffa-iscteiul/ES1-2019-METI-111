@@ -28,7 +28,7 @@ public class Marco {
 	}
 	public static void Atack_calcule() {
 		Atack = (Strengt * Stamina)/Vida ;
-		
+		System.out.println("A vida do marco inicialmente é :");
 		System.out.println( Atack);
 	}
 	//Nao me lembro como testar
