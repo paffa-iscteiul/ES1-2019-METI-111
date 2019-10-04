@@ -29,7 +29,9 @@ public class Marco {
 	public static void Atack_calcule() {
 		Atack = (Strengt * Stamina)/Vida ;
 		
+		System.out.println( Atack);
 	}
+	//Nao me lembro como testar
 	
 	public static void main(String[] args) {
 
