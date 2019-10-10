@@ -4,11 +4,13 @@ public class puppy {
 	private int age;
 	private String name;
 	private String owner;
+	private int id;
 	
-	public puppy(int age, String name, String owner) {
+	public puppy(int age, String name, String owner, int id) {
 		this.age = age;
 		this.name = name;
 		this.owner = owner;
+		this.id = id;
 	}
 
 	public int getAge() {
