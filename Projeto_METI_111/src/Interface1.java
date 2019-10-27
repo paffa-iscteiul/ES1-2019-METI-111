@@ -42,7 +42,7 @@ public class Interface1 {
 				try {
 					f.Browser();
 				}catch(Exception a) {a.printStackTrace();}
-				Interface1 i = new Interface1 ();
+			
 			}
 	});
 		
@@ -50,6 +50,7 @@ public class Interface1 {
 		painelsul.add(finish);
 		finish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				//aqui devesse inicializar a nova interface
 				
 				frame1.setVisible(false);
