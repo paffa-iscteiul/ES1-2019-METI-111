@@ -48,7 +48,7 @@ public class Interface1 {
 		
 		JButton finish = new JButton ("finish");
 		painelsul.add(finish);
-		browser.addActionListener(new ActionListener() {
+		finish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//aqui devesse inicializar a nova interface
 				
