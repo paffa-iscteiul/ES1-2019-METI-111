@@ -14,6 +14,8 @@ import java.awt.event.ActionEvent;
 
 public class Interface1 {
 	private JFrame frame;
+	private Openfile of = new Openfile(this);
+	private boolean fileSelected = false;
 	
 	public Interface1 () {
 		frame = new JFrame ("Aplicação de avaliaçao de código");
@@ -40,9 +42,8 @@ public class Interface1 {
 		//acao do botao invoca o objecto da outra class para se ir buscar o ficheiro 
 		browser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Openfile f = new Openfile();
 				try {
-					f.Browser();
+					of.Browser();
 				}catch(Exception a) {a.printStackTrace();}
 			}
 	});
@@ -51,16 +52,22 @@ public class Interface1 {
 		painelsul.add(finish, BorderLayout.CENTER);
 		finish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Avançar para nova janela?");
-				//aqui devesse inicializar a nova interface
-				frame.dispose();
+				if(fileSelected) {
+					JOptionPane.showMessageDialog(null, "Avançar para nova janela?");
+					//aqui devesse inicializar a nova interface
+					frame.dispose();
+				}else {
+					JOptionPane.showMessageDialog(null, "Tem de selecionar algum ficheiro");
+				}
+				
 			}
 	});
 		
 	}
 	
 	public void fileConfirmed (String s) {
-		JOptionPane.showMessageDialog(null, "O ficheiro foi carregado corretamente");
+		JOptionPane.showMessageDialog(null, "O ficheiro " + s + " foi carregado corretamente. Carregue Finish para continuar");
+		fileSelected=true;
 	}
 	
 	public static void main (String[] args) {
