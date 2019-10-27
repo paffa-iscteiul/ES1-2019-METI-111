@@ -2,8 +2,10 @@
 import javax.swing.JFrame ;
 import javax.swing.WindowConstants;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -24,9 +26,15 @@ public class Interface1 {
 		
 		JLabel aviso = new JLabel (" clique no botao browser para esclher o ficheito ");
 		frame1.add(aviso,BorderLayout.NORTH);
+		//painel sul para o botao nao ocupar mt espaco
+		JPanel painelsul = new JPanel ();
+		painelsul.setLayout(new FlowLayout());
+		frame1.add(painelsul,BorderLayout.SOUTH);
 		
+		//botao de executa a janela
 		JButton browser = new JButton ("Browser");
-		frame1.add(browser);
+		painelsul.add(browser);
+		
 		//acao do botao invoca o objecto da outra class para se ir buscar o ficheiro 
 		browser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -34,11 +42,20 @@ public class Interface1 {
 				try {
 					f.Browser();
 				}catch(Exception a) {a.printStackTrace();}
-				
+				Interface1 i = new Interface1 ();
+			}
+	});
+		
+		JButton finish = new JButton ("finish");
+		painelsul.add(finish);
+		browser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				//aqui devesse inicializar a nova interface
+				
 				frame1.setVisible(false);
 			}
 	});
+		
 	}
 	
 	
