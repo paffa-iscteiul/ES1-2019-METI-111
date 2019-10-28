@@ -33,7 +33,7 @@ public class Interface1 {
 		//painel sul para o botao nao ocupar mt espaco
 		JPanel painelsul = new JPanel ();
 		painelsul.setLayout(new BorderLayout());
-		frame.add(painelsul,BorderLayout.CENTER);
+		frame.add(painelsul,BorderLayout.SOUTH);
 		
 		//botao de executa a janela
 		JButton browser = new JButton ("Browser");
