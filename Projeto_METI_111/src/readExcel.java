@@ -27,7 +27,6 @@ public class readExcel {
 						System.out.println("Linha " + cell.getRowIndex() + ": " + cell.toString());
 					}
 					//System.out.println(cell.toString());
-					//System.out.println();
 				}
 			}
 			wb.close();
