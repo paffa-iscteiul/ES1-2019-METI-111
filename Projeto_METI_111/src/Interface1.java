@@ -32,8 +32,14 @@ public class Interface1 {
 		frame.add(aviso,BorderLayout.NORTH);
 		//painel sul para o botao nao ocupar mt espaco
 		JPanel painelsul = new JPanel ();
-		painelsul.setLayout(new BorderLayout());
+		painelsul.setLayout(new FlowLayout());
 		frame.add(painelsul,BorderLayout.SOUTH);
+		
+		// painel centro
+		JPanel painelcentro = new JPanel();
+		painelcentro.setLayout(new FlowLayout());
+		frame.add(painelcentro,BorderLayout.CENTER);
+		
 		
 		//botao de executa a janela
 		JButton browser = new JButton ("Browser");
@@ -44,6 +50,9 @@ public class Interface1 {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					of.Browser();
+					JLabel fille = new JLabel("ficheiro carregado:"+ of.Excelfile.getName());
+					painelcentro.add(fille);
+					frame.setSize(400,111);
 				}catch(Exception a) {a.printStackTrace();}
 			}
 	});
