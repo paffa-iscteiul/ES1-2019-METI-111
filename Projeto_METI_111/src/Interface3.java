@@ -16,18 +16,18 @@ public class Interface3 {
 		frame = new JFrame ("Aplicação de avaliaçao de código");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
+		
 		frame.setSize(500,300);
-		frame.setVisible(true);
 		addFrameContent();
 	}	
 	
 	
 	private void addFrameContent() {
-				
 		//painel onde se lê o excell
 		JPanel painelcentro = new JPanel ();
 		painelcentro.setLayout(new FlowLayout());
-		frame.add(painelcentro,BorderLayout.NORTH);
+		frame.add(painelcentro,BorderLayout.NORTH); //onde entra  excell
+		
 		JLabel aviso = new JLabel ("Valores da Tabela selecionada");
 		painelcentro.add(aviso,BorderLayout.NORTH);
 		
@@ -40,9 +40,9 @@ public class Interface3 {
 		painelimiares.setLayout(new GridLayout(4,2));
 		fatores.add(painelimiares, BorderLayout.CENTER);
 		
-		JPanel calculadora = new JPanel();
+		JPanel calculadora = new JPanel();  //onde entra a calculadora
 		calculadora.setLayout(new BorderLayout());
-		fatores.add(calculadora, BorderLayout.EAST);
+		frame.add(calculadora, BorderLayout.EAST);
 		
 		
 		JLabel inserir = new JLabel ("Insira os valores de limiares pretendidos");
@@ -68,13 +68,14 @@ public class Interface3 {
 		painelimiares.add(labellaa,6);
 		painelimiares.add(limlaa,7);
 		
-		limloc.setSize(100,20);
+		limloc.setSize(20,20);
+		limcyclo.setSize(20,20);
+		limatfd.setSize(20,20);
+		limlaa.setSize(20,20);
+		
+		frame.setVisible(true);
 
 		
 	}
-	public static void main (String[] args) {
-		Interface3 i3 = new Interface3 ();
-	}
-	
 }
 		

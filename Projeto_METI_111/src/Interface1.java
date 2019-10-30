@@ -63,7 +63,7 @@ public class Interface1 {
 			public void actionPerformed(ActionEvent e) {
 				if(fileSelected) {
 					JOptionPane.showMessageDialog(null, "Avançar para nova janela?");
-					//aqui devesse inicializar a nova interface
+					Interface3 interface3 = new Interface3();
 					frame.dispose();
 				}else {
 					JOptionPane.showMessageDialog(null, "Tem de selecionar algum ficheiro");
