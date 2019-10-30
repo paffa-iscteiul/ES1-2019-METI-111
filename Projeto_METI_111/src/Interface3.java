@@ -26,7 +26,7 @@ public class Interface3 {
 		//painel onde se lê o excell
 		JPanel painelcentro = new JPanel ();
 		painelcentro.setLayout(new FlowLayout());
-		frame.add(painelcentro,BorderLayout.NORTH); //onde entra  excell
+		frame.add(painelcentro,BorderLayout.NORTH); //onde entra  excell (está criado o espaço)
 		
 		JLabel aviso = new JLabel ("Valores da Tabela selecionada");
 		painelcentro.add(aviso,BorderLayout.NORTH);
@@ -40,7 +40,7 @@ public class Interface3 {
 		painelimiares.setLayout(new GridLayout(4,2));
 		fatores.add(painelimiares, BorderLayout.CENTER);
 		
-		JPanel calculadora = new JPanel();  //onde entra a calculadora
+		JPanel calculadora = new JPanel();  //onde entra a calculadora (está criado o espaço)
 		calculadora.setLayout(new BorderLayout());
 		frame.add(calculadora, BorderLayout.EAST);
 		
