@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -45,27 +47,116 @@ public class Interface3 {
 		calculadora.setLayout(new BorderLayout());
 		frame.add(calculadora, BorderLayout.EAST);
 		
-		// Organização do Painel da "Calculadora"
+		// Organização do Painel da "Calculadora" - mais tarde terá provavelmente a sua propria classe
 		calculadora.setLayout(new BorderLayout());
 		
 		JPanel cpainel = new JPanel();
+		
+		//Mostrador
+		JTextField mostrador = new JTextField();
+		calculadora.add(mostrador, BorderLayout.NORTH);
 		
 		// Painel com os termos das regras
 		JPanel termos = new JPanel();
 		termos.setLayout(new GridLayout(3,4));
 		
-		JButton and = new JButton("AND");
-		JButton menor = new JButton("<");
-		JButton telse = new JButton("ELSE");
-		JButton or = new JButton("OR");
-		JButton igual = new JButton("=");
-		JButton verdadeiro = new JButton("TRUE");
-		JButton se = new JButton("IF");
-		JButton falso = new JButton("FALSE");
-		JButton maior = new JButton(">");
-		JButton então = new JButton("THEN");
-		JButton isfeatureenvy = new JButton("is_feature_envy");
-		JButton islongmethod = new JButton("is_long_method");
+		JButton and = new JButton("AND ");
+		and.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTermo = mostrador.getText() + and.getText();
+				mostrador.setText(enterTermo);
+			}
+		});
+		
+		JButton menor = new JButton("< ");
+		menor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTermo = mostrador.getText() + menor.getText();
+				mostrador.setText(enterTermo);
+			}
+		});
+		
+		JButton telse = new JButton("ELSE ");
+		telse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTermo = mostrador.getText() + telse.getText();
+				mostrador.setText(enterTermo);
+			}
+		});
+		
+		
+		JButton or = new JButton("OR ");
+		or.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTermo = mostrador.getText() + or.getText();
+				mostrador.setText(enterTermo);
+			}
+		});
+		
+		JButton igual = new JButton("= ");
+		igual.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTermo = mostrador.getText() + igual.getText();
+				mostrador.setText(enterTermo);
+			}
+		});
+		
+		JButton verdadeiro = new JButton("TRUE ");
+		verdadeiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTermo = mostrador.getText() + verdadeiro.getText();
+				mostrador.setText(enterTermo);
+			}
+		});
+		
+		JButton se = new JButton("IF ");
+		se.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTermo = mostrador.getText() + se.getText();
+				mostrador.setText(enterTermo);
+			}
+		});
+		
+		JButton falso = new JButton("FALSE ");
+		falso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTermo = mostrador.getText() + falso.getText();
+				mostrador.setText(enterTermo);
+			}
+		});
+		
+		JButton maior = new JButton("> ");
+		maior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTermo = mostrador.getText() + maior.getText();
+				mostrador.setText(enterTermo);
+			}
+		});
+		
+		JButton então = new JButton("THEN ");
+		então.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTermo = mostrador.getText() + então.getText();
+				mostrador.setText(enterTermo);
+			}
+		});
+		
+		JButton isfeatureenvy = new JButton("is_feature_envy ");
+		isfeatureenvy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTermo = mostrador.getText() + isfeatureenvy.getText();
+				mostrador.setText(enterTermo);
+			}
+		});
+		
+		JButton islongmethod = new JButton("is_long_method ");
+		islongmethod.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTermo = mostrador.getText() + islongmethod.getText();
+				mostrador.setText(enterTermo);
+			}
+		});
+		
 		
 		termos.add(and);
 		termos.add(menor);
@@ -86,15 +177,35 @@ public class Interface3 {
 		JPanel acoes = new JPanel();
 		acoes.setLayout(new GridLayout(2,1));
 		JButton submeter = new JButton("Submeter");
+		submeter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String regra = mostrador.getText();
+			}
+		});
+		
+		
 		JButton apagar = new JButton("Apagar");
+		apagar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String apagado=null;
+				if(mostrador.getText().length() > 0) {
+					StringBuilder st = new StringBuilder(mostrador.getText());
+					st.deleteCharAt(mostrador.getText().length() -1);
+					apagado = st.toString();
+					mostrador.setText(apagado);
+				}
+				
+			}
+		});
+		
+		
+		
 		acoes.add(submeter);
 		acoes.add(apagar);
 		cpainel.add(acoes);
 		calculadora.add(cpainel, BorderLayout.CENTER);
 		
-		//Mostrador
-		JTextField mostrador = new JTextField();
-		calculadora.add(mostrador, BorderLayout.NORTH);
+		
 		
 		
 		
