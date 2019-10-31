@@ -40,12 +40,12 @@ public class excelDisplay {
 
 
 	public JTable getJ() {
-		return j;
+		return table;
 	}
 
 
 	public void setJ(JTable j) {
-		this.j = j;
+		this.table = j;
 	}
 
 
