@@ -3,6 +3,7 @@ import java.awt.Button;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -40,9 +41,65 @@ public class Interface3 {
 		painelimiares.setLayout(new GridLayout(4,2));
 		fatores.add(painelimiares, BorderLayout.CENTER);
 		
+			
 		JPanel calculadora = new JPanel();  //onde entra a calculadora (está criado o espaço)
 		calculadora.setLayout(new BorderLayout());
 		frame.add(calculadora, BorderLayout.EAST);
+		
+		// Organização do Painel da "Calculadora"
+		calculadora.setLayout(new BorderLayout());
+		
+		JPanel cpainel = new JPanel();
+		
+		// Painel com os termos das regras
+		JPanel termos = new JPanel();
+		termos.setLayout(new GridLayout(3,4));
+		
+		JButton and = new JButton("AND");
+		JButton menor = new JButton("<");
+		JButton telse = new JButton("ELSE");
+		JButton or = new JButton("OR");
+		JButton igual = new JButton("=");
+		JButton verdadeiro = new JButton("TRUE");
+		JButton se = new JButton("IF");
+		JButton falso = new JButton("FALSE");
+		JButton maior = new JButton(">");
+		JButton então = new JButton("THEN");
+		JButton isfeatureenvy = new JButton("is_feature_envy");
+		JButton islongmethod = new JButton("is_long_method");
+		
+		termos.add(and);
+		termos.add(menor);
+		termos.add(telse);
+		termos.add(or);
+		termos.add(igual);
+		termos.add(verdadeiro);
+		termos.add(se);
+		termos.add(falso);
+		termos.add(maior);
+		termos.add(então);
+		termos.add(isfeatureenvy);
+		termos.add(islongmethod);
+		
+		cpainel.add(termos);
+		
+		//Painel com as ações
+		JPanel acoes = new JPanel();
+		acoes.setLayout(new GridLayout(2,1));
+		JButton submeter = new JButton("Submeter");
+		JButton apagar = new JButton("Apagar");
+		acoes.add(submeter);
+		acoes.add(apagar);
+		cpainel.add(acoes);
+		calculadora.add(cpainel, BorderLayout.CENTER);
+		
+		//Mostrador
+		JTextField mostrador = new JTextField();
+		calculadora.add(mostrador, BorderLayout.NORTH);
+		
+		
+		
+		
 		
 		
 		JLabel inserir = new JLabel ("Insira os valores de limiares pretendidos");
