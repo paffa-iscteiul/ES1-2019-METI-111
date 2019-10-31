@@ -27,20 +27,25 @@ public class readExcel {
 
 	
 	
-	public readExcel(File excelF) {
+	public readExcel(File excelF, Openfile of) {
 	try {
-		this.fis = new FileInputStream(excelF);
+		fis = new FileInputStream(excelF);
 		columnNames = new ArrayList<String>();
 		data = new ArrayList<String>();
-		GetCount(excelF);
+		workbook = new XSSFWorkbook(fis);
+		XSSFSheet firstSheet = workbook.getSheetAt(0);
+		Iterator<Row> iterator = firstSheet.iterator();
+		Row nextRow = iterator.next();
+		this.rowCount = ((XSSFSheet) firstSheet).getLastRowNum();
+		this.columnCount = nextRow.getLastCellNum();
 		ReadFile();
-	} catch (FileNotFoundException e) {
+	} catch (Exception e) {
 		e.printStackTrace();
 	}
 	}
 	
 	public void ReadFile() {
-		XSSFSheet sheet = this.workbook.getSheetAt(0);
+		XSSFSheet sheet = workbook.getSheetAt(0);
 		Iterator<Row> rowIt = sheet.iterator();
 		Boolean Titles = true;
 		while(rowIt.hasNext()) {
@@ -52,28 +57,18 @@ public class readExcel {
 					columnNames.add(cell.toString());
 				}
 			}else {
+				record rec = new record();
+				int i=0;
 				while (cellIterator.hasNext()) {
+					i++;
 					Cell cell = cellIterator.next();
+					rec.add(i, cell.toString());
 					data.add(cell.toString());
 				}
+				records.add(rec);
 			}
 			Titles = false;
 		}
-	}
-	
-	public void GetCount(File ExcelFile) {
-		try {
-			XSSFWorkbook workbook = new XSSFWorkbook(fis);
-			this.workbook = workbook;
-			XSSFSheet firstSheet = workbook.getSheetAt(0);
-			Iterator<Row> iterator = firstSheet.iterator();
-			Row nextRow = iterator.next();
-			this.rowCount = ((XSSFSheet) firstSheet).getLastRowNum();
-			this.columnCount = nextRow.getLastCellNum();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 	}
 	
 	public String [] getColumnNames() {
@@ -94,7 +89,7 @@ public class readExcel {
 				index++;
 			}
 		}
-	return dataMatrix;
+		return dataMatrix;
 	}
 	
 	

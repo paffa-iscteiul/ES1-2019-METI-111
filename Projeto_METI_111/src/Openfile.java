@@ -19,7 +19,7 @@ public class Openfile {
 			java.io.File file = escolherficheiro.getSelectedFile();
 			Excelfile = new File(escolherficheiro.getSelectedFile().toString());
 			//irei realizar aqui a leitura do ficheiro Excel para uma estrutura de dados (Pedro)
-			readExcel readExcel = new readExcel(Excelfile);
+			readExcel readExcel = new readExcel(Excelfile, this);
 			excelDisplay.startInstance(readExcel);
 			System.out.println("O ficheiro escolhido encontra-se na diretoria: " + Excelfile.getPath());
 			i.fileConfirmed(file.getName());
