@@ -8,13 +8,13 @@ import javax.swing.JTable;
 
 import org.apache.commons.compress.archivers.dump.InvalidFormatException;
 
-public class Tester {
+public class excelDisplay {
 
 	JFrame f;
 	JTable j;
 	
 	//Constructor
-	Tester() throws InvalidFormatException, IOException{
+	excelDisplay() throws InvalidFormatException, IOException{
 	
 		//Frame Initiallization
 		f = new JFrame();
@@ -52,7 +52,7 @@ public class Tester {
 	
 	public static void main(String [] args) throws InvalidFormatException, IOException
 	{
-		new Tester();
+		new excelDisplay();
 	}
 	
 }

@@ -17,7 +17,6 @@ public class Interface3 {
 		frame = new JFrame ("Aplicação de avaliaçao de código");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
-		
 		frame.setSize(500,300);
 		addFrameContent();
 	}	
