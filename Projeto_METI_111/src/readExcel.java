@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -12,33 +14,86 @@ public class readExcel {
 	private ArrayList<record> records=new ArrayList<record>();
 	private Openfile of;
 	
-	public readExcel(File excelF, Openfile of) {
-		try {
-			this.of=of;
-			FileInputStream fis=new FileInputStream(excelF);
-			XSSFWorkbook wb = new XSSFWorkbook(fis);
-			XSSFSheet st = wb.getSheetAt(0);
-			Iterator <Row> row = st.iterator();
-			while(row.hasNext()) {
-				Row r = row.next();
-				Iterator<Cell> cel = r.cellIterator();
-				record rec=new record();
-				int i = 0;
-				while(cel.hasNext()) {
-					i++;
-					Cell cell = cel.next();
-					rec.add(i, cell.toString());
+	private FileInputStream fis;
+	private int rowCount;
+	private int columnCount;
+	private ArrayList<String> columnNames;
+	private ArrayList<String> data;
+	private XSSFWorkbook workbook;
+
+	
+	
+	public readExcel(File excelF) {
+	try {
+		this.fis = new FileInputStream(excelF);
+		columnNames = new ArrayList<String>();
+		data = new ArrayList<String>();
+		GetCount(excelF);
+		ReadFile();
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	}
+	}
+	
+	public void ReadFile() {
+		XSSFSheet sheet = this.workbook.getSheetAt(0);
+		Iterator<Row> rowIt = sheet.iterator();
+		Boolean Titles = true;
+		while(rowIt.hasNext()) {
+			Row row = rowIt.next();
+			Iterator<Cell> cellIterator = row.cellIterator();
+			if(Titles == true) {
+				while(cellIterator.hasNext()) {
+					Cell cell = cellIterator.next();
+					columnNames.add(cell.toString());
 				}
-				records.add(rec);
+			}else {
+				while (cellIterator.hasNext()) {
+					Cell cell = cellIterator.next();
+					data.add(cell.toString());
+				}
 			}
-			wb.close();
-			fis.close();
-			//As seguintes 3 linhas serão eliminadas futuramente pelo Fábio
-			for(int j=0;j!=records.size();j++) {
-				System.out.println(records.get(j).getRegisto());
-			}
-			} catch(Exception e) {
-			
+			Titles = false;
 		}
 	}
+	
+	public void GetCount(File ExcelFile) {
+		try {
+			XSSFWorkbook workbook = new XSSFWorkbook(fis);
+			this.workbook = workbook;
+			XSSFSheet firstSheet = workbook.getSheetAt(0);
+			Iterator<Row> iterator = firstSheet.iterator();
+			Row nextRow = iterator.next();
+			this.rowCount = ((XSSFSheet) firstSheet).getLastRowNum();
+			this.columnCount = nextRow.getLastCellNum();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public String [] getColumnNames() {
+		String [] columnVector = new String [columnCount];
+		for(int i = 0; i < columnCount; i++) {
+			columnVector [i] = columnNames.get(i);
+		}
+	return columnVector;
+	}
+	
+	
+	public String [] [] getData(){
+		String [] [] dataMatrix = new String [rowCount-1] [columnCount];
+		int index = 0;
+		for(int i = 0; i < (rowCount-1); i++) {
+			for(int j = 0; j < columnCount; j++) {
+				dataMatrix [i] [j] = this.data.get(index);
+				index++;
+			}
+		}
+	return dataMatrix;
+	}
+	
+	
+	
+	
 }
