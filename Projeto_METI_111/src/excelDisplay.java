@@ -1,58 +1,64 @@
 
 import java.io.File;
-import java.io.IOException;
 
-import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import org.apache.commons.compress.archivers.dump.InvalidFormatException;
-
 public class excelDisplay {
 
-	JFrame f;
-	JTable j;
+	private JTable j;
+	private JScrollPane sp;
+	private static excelDisplay INSTANCE = null;
 	
 	//Constructor
-	excelDisplay() throws InvalidFormatException, IOException{
-	
-		//Frame Initiallization
-		f = new JFrame();
-		
-		//Frame Title
-		f.setTitle("JTable Example");
-		
-		//Data to be displayed in the JTable
-//		String [] [] data = {
-//			{ "Fábio", "Joana", "Miguel"},
-//			{ "Fábio", "Joana", "Miguel"}
-//		};
-		
+	public excelDisplay(readExcel excel) {		
 		//Column Names
+		String [] columnNames = excel.getColumnNames();
 		
-		
-		readExcel read = new readExcel(new File("C:\\Users\\ES\\Downloads\\Long-Method.xlsx"));
-		String [] columnNames = read.getColumnNames();
-		String [] [] data = read.getData();
-	//	String [] columnNames = {"Boy", "Girl", "Idk"};
+		//Excel Data
+		String [] [] data = excel.getData();
 		
 		//Initializing the JTable
 		j = new JTable(data, columnNames);
 		j.setBounds(30, 40, 200, 300);
 		
 		//Adding it to JScrollPane
-		JScrollPane sp = new JScrollPane(j);
-		f.add(sp);
-		//Frame Size
-		f.setSize(500, 200);
-		//Frame Visible = true
-		f.setVisible(true);
-	
+		sp = new JScrollPane(j);
 	}
 	
-	public static void main(String [] args) throws InvalidFormatException, IOException
-	{
-		new excelDisplay();
+	
+	public static excelDisplay startInstance(readExcel readExcel) {
+		if(INSTANCE == null) {
+	         INSTANCE = new excelDisplay(readExcel);
+	      }
+	      return INSTANCE;
 	}
+	
+	public static excelDisplay getInstance() {
+		return INSTANCE;
+	}
+
+
+	public JTable getJ() {
+		return j;
+	}
+
+
+	public void setJ(JTable j) {
+		this.j = j;
+	}
+
+
+	public JScrollPane getSp() {
+		return sp;
+	}
+
+
+	public void setSp(JScrollPane sp) {
+		this.sp = sp;
+	}
+	
+	
+	
 	
 }

@@ -10,6 +10,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+
+
 public class readExcel {
 	private ArrayList<record> records=new ArrayList<record>();
 	private Openfile of;
@@ -20,6 +22,8 @@ public class readExcel {
 	private ArrayList<String> columnNames;
 	private ArrayList<String> data;
 	private XSSFWorkbook workbook;
+	private static readExcel INSTANCE = null;
+	
 
 	
 	
@@ -92,8 +96,6 @@ public class readExcel {
 		}
 	return dataMatrix;
 	}
-	
-	
 	
 	
 }

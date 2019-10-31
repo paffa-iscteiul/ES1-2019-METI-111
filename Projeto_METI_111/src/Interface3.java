@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
@@ -7,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
@@ -26,7 +26,7 @@ public class Interface3 {
 		//painel onde se lê o excell
 		JPanel painelcentro = new JPanel ();
 		painelcentro.setLayout(new FlowLayout());
-		frame.add(painelcentro,BorderLayout.NORTH); //onde entra  excell (está criado o espaço)
+		frame.add(excelDisplay.getInstance().getSp(),BorderLayout.NORTH); //onde entra  excell (está criado o espaço)
 		
 		JLabel aviso = new JLabel ("Valores da Tabela selecionada");
 		painelcentro.add(aviso,BorderLayout.NORTH);
@@ -130,8 +130,8 @@ public class Interface3 {
 		limlaa.setSize(20,20);
 		
 		frame.setVisible(true);
-
-		
 	}
+	
+	
 }
 		
