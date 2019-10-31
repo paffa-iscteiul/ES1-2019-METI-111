@@ -6,7 +6,7 @@ import javax.swing.JTable;
 
 public class excelDisplay {
 
-	private JTable j;
+	private JTable table;
 	private JScrollPane sp;
 	private static excelDisplay INSTANCE = null;
 	
@@ -19,11 +19,11 @@ public class excelDisplay {
 		String [] [] data = excel.getData();
 		
 		//Initializing the JTable
-		j = new JTable(data, columnNames);
-		j.setBounds(30, 40, 200, 300);
+		table = new JTable(data, columnNames);
+		table.setBounds(30, 40, 200, 300);
 		
 		//Adding it to JScrollPane
-		sp = new JScrollPane(j);
+		sp = new JScrollPane(table);
 	}
 	
 	
