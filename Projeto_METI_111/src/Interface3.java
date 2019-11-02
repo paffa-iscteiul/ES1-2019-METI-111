@@ -1,8 +1,11 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -60,7 +63,7 @@ public class Interface3 {
 		JPanel termos = new JPanel();
 		termos.setLayout(new GridLayout(3,4));
 		
-		JButton and = new JButton("AND ");
+		JButton and = new JButton(" AND");
 		and.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTermo = mostrador.getText() + and.getText();
@@ -68,7 +71,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton menor = new JButton("< ");
+		JButton menor = new JButton(" <");
 		menor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTermo = mostrador.getText() + menor.getText();
@@ -76,7 +79,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton telse = new JButton("ELSE ");
+		JButton telse = new JButton(" ELSE");
 		telse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTermo = mostrador.getText() + telse.getText();
@@ -85,7 +88,7 @@ public class Interface3 {
 		});
 		
 		
-		JButton or = new JButton("OR ");
+		JButton or = new JButton(" OR");
 		or.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTermo = mostrador.getText() + or.getText();
@@ -93,7 +96,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton igual = new JButton("= ");
+		JButton igual = new JButton(" =");
 		igual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTermo = mostrador.getText() + igual.getText();
@@ -101,7 +104,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton verdadeiro = new JButton("TRUE ");
+		JButton verdadeiro = new JButton(" TRUE");
 		verdadeiro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTermo = mostrador.getText() + verdadeiro.getText();
@@ -109,7 +112,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton se = new JButton("IF ");
+		JButton se = new JButton(" IF");
 		se.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTermo = mostrador.getText() + se.getText();
@@ -117,7 +120,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton falso = new JButton("FALSE ");
+		JButton falso = new JButton(" FALSE");
 		falso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTermo = mostrador.getText() + falso.getText();
@@ -125,7 +128,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton maior = new JButton("> ");
+		JButton maior = new JButton(" >");
 		maior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTermo = mostrador.getText() + maior.getText();
@@ -133,7 +136,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton então = new JButton("THEN ");
+		JButton então = new JButton(" THEN");
 		então.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTermo = mostrador.getText() + então.getText();
@@ -141,7 +144,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton isfeatureenvy = new JButton("is_feature_envy ");
+		JButton isfeatureenvy = new JButton(" is_feature_envy");
 		isfeatureenvy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTermo = mostrador.getText() + isfeatureenvy.getText();
@@ -149,7 +152,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton islongmethod = new JButton("is_long_method ");
+		JButton islongmethod = new JButton(" is_long_method");
 		islongmethod.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTermo = mostrador.getText() + islongmethod.getText();
@@ -187,11 +190,25 @@ public class Interface3 {
 		JButton apagar = new JButton("Apagar");
 		apagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String apagado=null;
+				
 				if(mostrador.getText().length() > 0) {
-					StringBuilder st = new StringBuilder(mostrador.getText());
-					st.deleteCharAt(mostrador.getText().length() -1);
-					apagado = st.toString();
+					
+		
+					String regra = mostrador.getText();
+					System.out.println("regra: "+regra);
+					
+					ArrayList<String> arr = new ArrayList<String>(Arrays.asList(regra.split(" ")));
+					System.out.println("array com as coisas: "+ arr);
+					if(arr!=null) {
+						if(arr.size() > 0) {
+							arr.remove(arr.size() -1);
+						}
+					}
+					
+					System.out.println(arr);
+					String apagado = String.join(" ", arr);
+					System.out.println("apagado: "+apagado);
+
 					mostrador.setText(apagado);
 				}
 				
