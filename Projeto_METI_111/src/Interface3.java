@@ -31,7 +31,7 @@ public class Interface3 {
 		//painel onde se lê o excell
 		JPanel painelcentro = new JPanel ();
 		painelcentro.setLayout(new FlowLayout());
-		frame.add(excelDisplay.getInstance().getSp(),BorderLayout.NORTH); //onde entra  excell (está criado o espaço)
+		frame.add(excelDisplay.getInstance().getSp(),BorderLayout.NORTH); //onde entra  excell (está criado o espaço) com scroll
 		
 		JLabel aviso = new JLabel ("Valores da Tabela selecionada");
 		painelcentro.add(aviso,BorderLayout.NORTH);
@@ -226,8 +226,7 @@ public class Interface3 {
 		
 		
 		
-		
-		
+				
 		
 		JLabel inserir = new JLabel ("Insira os valores de limiares pretendidos");
 		fatores.add(inserir,BorderLayout.NORTH);
