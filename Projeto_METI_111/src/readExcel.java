@@ -10,8 +10,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
-
 public class readExcel {
 	private ArrayList<record> records=new ArrayList<record>();
 	private Openfile of;
@@ -20,18 +18,16 @@ public class readExcel {
 	private int rowCount;
 	private int columnCount;
 	private ArrayList<String> columnNames;
-	private ArrayList<String> data;
+	private ArrayList<String> date;
 	private XSSFWorkbook workbook;
 	private static readExcel INSTANCE = null;
-	
-
 	
 	
 	public readExcel(File excelF, Openfile of) {
 	try {
 		fis = new FileInputStream(excelF);
 		columnNames = new ArrayList<String>();
-		data = new ArrayList<String>();
+		date = new ArrayList<String>();
 		workbook = new XSSFWorkbook(fis);
 		XSSFSheet firstSheet = workbook.getSheetAt(0);
 		Iterator<Row> iterator = firstSheet.iterator();
@@ -63,7 +59,7 @@ public class readExcel {
 					i++;
 					Cell cell = cellIterator.next();
 					rec.add(i, cell.toString());
-					data.add(cell.toString());
+					date.add(cell.toString());
 				}
 				records.add(rec);
 			}
@@ -80,16 +76,16 @@ public class readExcel {
 	}
 	
 	
-	public String [] [] getData(){
-		String [] [] dataMatrix = new String [rowCount-1] [columnCount];
+	public String [] [] getDate(){
+		String [] [] dateMatrix = new String [rowCount-1] [columnCount];
 		int index = 0;
 		for(int i = 0; i < (rowCount-1); i++) {
 			for(int j = 0; j < columnCount; j++) {
-				dataMatrix [i] [j] = this.data.get(index);
+				dateMatrix [i] [j] = this.date.get(index);
 				index++;
 			}
 		}
-		return dataMatrix;
+		return dateMatrix;
 	}
 	
 	

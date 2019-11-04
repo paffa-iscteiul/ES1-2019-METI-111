@@ -6,18 +6,18 @@ import javax.swing.JFileChooser;
 public class Openfile {
 	private Interface1 i;
 	public static File Excelfile;
-	JFileChooser escolherficheiro = new JFileChooser();
+	JFileChooser chooseFile = new JFileChooser();
 	
 	public Openfile (Interface1 i) {
 		this.i=i;
 	}
 	
 	public void Browser() throws Exception{
-		if(escolherficheiro.showOpenDialog(null)==JFileChooser.APPROVE_OPTION) {
+		if(chooseFile.showOpenDialog(null)==JFileChooser.APPROVE_OPTION) {
 			
 			//agora vamos buscar o ficheiro 
-			java.io.File file = escolherficheiro.getSelectedFile();
-			Excelfile = new File(escolherficheiro.getSelectedFile().toString());
+			java.io.File file = chooseFile.getSelectedFile();
+			Excelfile = new File(chooseFile.getSelectedFile().toString());
 			//irei realizar aqui a leitura do ficheiro Excel para uma estrutura de dados (Pedro)
 			readExcel readExcel = new readExcel(Excelfile, this);
 			excelDisplay.startInstance(readExcel);
