@@ -31,19 +31,19 @@ public class Interface1 {
 		JLabel aviso = new JLabel ("Clique no botão browser para escolher o ficheiro Excel");
 		frame.add(aviso,BorderLayout.NORTH);
 		//painel sul para o botao nao ocupar mt espaco
-		JPanel painelsul = new JPanel ();
-		painelsul.setLayout(new FlowLayout());
-		frame.add(painelsul,BorderLayout.SOUTH);
+		JPanel southPanel= new JPanel ();
+		southPanel.setLayout(new FlowLayout());
+		frame.add(southPanel,BorderLayout.SOUTH);
 		
 		// painel centro
-		JPanel painelcentro = new JPanel();
-		painelcentro.setLayout(new FlowLayout());
-		frame.add(painelcentro,BorderLayout.CENTER);
+		JPanel centerPanel= new JPanel();
+		centerPanel.setLayout(new FlowLayout());
+		frame.add(centerPanel,BorderLayout.CENTER);
 		
 		
 		//botao de executa a janela
 		JButton browser = new JButton ("Browser");
-		painelsul.add(browser, BorderLayout.WEST);
+		southPanel.add(browser, BorderLayout.WEST);
 		
 		//acao do botao invoca o objecto da outra class para se ir buscar o ficheiro 
 		browser.addActionListener(new ActionListener() {
@@ -51,14 +51,14 @@ public class Interface1 {
 				try {
 					of.Browser();
 					JLabel fille = new JLabel("ficheiro carregado:"+ of.Excelfile.getName());
-					painelcentro.add(fille);
+					centerPanel.add(fille);
 					frame.setSize(400,111);
 				}catch(Exception a) {a.printStackTrace();}
 			}
 	});
 		
 		JButton finish = new JButton ("Finish");
-		painelsul.add(finish, BorderLayout.CENTER);
+		southPanel.add(finish, BorderLayout.CENTER);
 		finish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(fileSelected) {
