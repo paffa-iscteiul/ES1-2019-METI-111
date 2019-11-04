@@ -12,6 +12,7 @@ public class record {
 	String iplasma;
 	String pmd;
 	String isfeatureenvy;
+	String teste;
 	
 	public record(String methodID, String pack, String classe, String method, String loc, String cyclo,
 			String atfd, String laa, String islongmethod, String iplasma, String pmd, String isfeatureenvy) {
