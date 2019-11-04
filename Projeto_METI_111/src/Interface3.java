@@ -26,7 +26,6 @@ public class Interface3 {
 		addFrameContent();
 	}	
 	
-	
 	private void addFrameContent() {
 		//painel onde se lê o excell
 		JPanel centerPanel = new JPanel ();
@@ -36,7 +35,6 @@ public class Interface3 {
 		JLabel aviso = new JLabel ("Valores da Tabela selecionada");
 		centerPanel.add(aviso,BorderLayout.NORTH);
 		
-		
 		JPanel factors = new JPanel();
 		factors.setLayout(new BorderLayout());
 		frame.add(factors);
@@ -45,18 +43,17 @@ public class Interface3 {
 		thresholdsPanel.setLayout(new GridLayout(4,2));
 		factors.add(thresholdsPanel, BorderLayout.CENTER);
 		
-			
 		JPanel calculator = new JPanel();  //onde entra a calculadora (está criado o espaço)
 		calculator.setLayout(new BorderLayout());
 		frame.add(calculator, BorderLayout.EAST);
 		
-		// Organização do Painel da "Calculadora" - mais tarde terá provavelmente a sua propria classe
+		// Organização do Painel da "Calculadora" - mais tarde poderá ter a sua propria classe
 		calculator.setLayout(new BorderLayout());
 		
 		JPanel cpainel = new JPanel();
 		
 		//Mostrador
-		JTextField screen = new JTextField();   //mostrador
+		JTextField screen = new JTextField();   
 		calculator.add(screen, BorderLayout.NORTH);
 		
 		// Painel com os termos das regras
@@ -215,22 +212,14 @@ public class Interface3 {
 			}
 		});
 		
-		
-		
 		actions.add(submit);
 		actions.add(clean);
 		cpainel.add(actions);
 		calculator.add(cpainel, BorderLayout.CENTER);
-		
-		
-		
-		
-		
-				
+			
 		
 		JLabel inserir = new JLabel ("Insira os valores de limiares pretendidos");
 		factors.add(inserir,BorderLayout.NORTH);
-		
 		
 		JLabel labelloc = new JLabel("LOC");
 		JLabel labelcyclo = new JLabel("CYCLO");
@@ -258,7 +247,5 @@ public class Interface3 {
 		
 		frame.setVisible(true);
 	}
-	
-	
 }
 		

@@ -30,6 +30,7 @@ public class Interface1 {
 	private void addFrameContent() {
 		JLabel aviso = new JLabel ("Clique no botão browser para escolher o ficheiro Excel");
 		frame.add(aviso,BorderLayout.NORTH);
+		
 		//painel sul para o botao nao ocupar mt espaco
 		JPanel southPanel= new JPanel ();
 		southPanel.setLayout(new FlowLayout());

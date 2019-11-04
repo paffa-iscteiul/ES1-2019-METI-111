@@ -22,7 +22,6 @@ public class readExcel {
 	private XSSFWorkbook workbook;
 	private static readExcel INSTANCE = null;
 	
-	
 	public readExcel(File excelF, Openfile of) {
 	try {
 		fis = new FileInputStream(excelF);
@@ -38,7 +37,7 @@ public class readExcel {
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
-	}
+  }
 	
 	public void ReadFile() {
 		XSSFSheet sheet = workbook.getSheetAt(0);

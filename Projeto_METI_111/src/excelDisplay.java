@@ -1,6 +1,4 @@
 
-import java.io.File;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -57,8 +55,4 @@ public class excelDisplay {
 	public void setSp(JScrollPane sp) {
 		this.sp = sp;
 	}
-	
-	
-	
-	
 }
