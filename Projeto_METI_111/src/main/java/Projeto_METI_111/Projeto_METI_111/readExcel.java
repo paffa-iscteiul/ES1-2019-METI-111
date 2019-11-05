@@ -20,7 +20,7 @@ public class readExcel {
 	private int rowCount;
 	private int columnCount;
 	private ArrayList<String> columnNames;
-	private ArrayList<String> date;
+	private ArrayList<String> data;
 	private XSSFWorkbook workbook;
 	private static readExcel INSTANCE = null;
 	
@@ -28,7 +28,7 @@ public class readExcel {
 	try {
 		fis = new FileInputStream(excelF);
 		columnNames = new ArrayList<String>();
-		date = new ArrayList<String>();
+		data = new ArrayList<String>();
 		workbook = new XSSFWorkbook(fis);
 		XSSFSheet firstSheet = workbook.getSheetAt(0);
 		Iterator<Row> iterator = firstSheet.iterator();
@@ -60,7 +60,7 @@ public class readExcel {
 					i++;
 					Cell cell = cellIterator.next();
 					rec.add(i, cell.toString());
-					date.add(cell.toString());
+					data.add(cell.toString());
 				}
 				records.add(rec);
 			}
@@ -77,16 +77,16 @@ public class readExcel {
 	}
 	
 	
-	public String [] [] getDate(){
-		String [] [] dateMatrix = new String [rowCount-1] [columnCount];
+	public String [] [] getData(){
+		String [] [] dataMatrix = new String [rowCount-1] [columnCount];
 		int index = 0;
 		for(int i = 0; i < (rowCount-1); i++) {
 			for(int j = 0; j < columnCount; j++) {
-				dateMatrix [i] [j] = this.date.get(index);
+				dataMatrix [i] [j] = this.data.get(index);
 				index++;
 			}
 		}
-		return dateMatrix;
+		return dataMatrix;
 	}
 	
 	

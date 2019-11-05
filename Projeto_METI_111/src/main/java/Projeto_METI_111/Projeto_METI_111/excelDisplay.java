@@ -16,7 +16,7 @@ public class excelDisplay {
 		String [] columnNames = excel.getColumnNames();
 		
 		//Excel Data
-		String [] [] data = excel.getDate();
+		String [] [] data = excel.getData();
 		
 		//Initializing the JTable
 		table = new JTable(data, columnNames);

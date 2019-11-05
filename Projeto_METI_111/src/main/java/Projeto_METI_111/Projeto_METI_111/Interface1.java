@@ -30,8 +30,8 @@ public class Interface1 {
 	
 	
 	private void addFrameContent() {
-		JLabel aviso = new JLabel ("Clique no botão browser para escolher o ficheiro Excel");
-		frame.add(aviso,BorderLayout.NORTH);
+		JLabel alert = new JLabel ("Clique no botão browser para escolher o ficheiro Excel");
+		frame.add(alert,BorderLayout.NORTH);
 		
 		//painel sul para o botao nao ocupar mt espaco
 		JPanel southPanel= new JPanel ();
@@ -83,6 +83,6 @@ public class Interface1 {
 	}
 	
 	public static void main (String[] args) {
-		Interface1 i = new Interface1 ();
+		Interface1 i1 = new Interface1 ();
 	}
 }
