@@ -24,8 +24,7 @@ public class readExcel {
 	private XSSFWorkbook workbook;
 	private static readExcel INSTANCE = null;
 	
-	public readExcel(File excelF, Openfile of) {
-	try {
+	public readExcel(File excelF) throws IOException{
 		fis = new FileInputStream(excelF);
 		columnNames = new ArrayList<String>();
 		data = new ArrayList<String>();
@@ -36,9 +35,6 @@ public class readExcel {
 		this.rowCount = ((XSSFSheet) firstSheet).getLastRowNum();
 		this.columnCount = nextRow.getLastCellNum();
 		ReadFile();
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
   }
 	
 	public void ReadFile() {
