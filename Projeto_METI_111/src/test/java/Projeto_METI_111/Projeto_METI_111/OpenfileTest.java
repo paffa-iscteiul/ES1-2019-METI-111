@@ -7,18 +7,10 @@ import org.junit.Test;
 
 public class OpenfileTest {
 
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@Test
-	public void testOpenfile() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testBrowser() {
-		fail("Not yet implemented");
+		
 	}
 
 }

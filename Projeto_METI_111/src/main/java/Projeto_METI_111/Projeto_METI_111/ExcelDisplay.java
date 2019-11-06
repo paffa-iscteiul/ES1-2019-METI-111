@@ -1,17 +1,16 @@
 package Projeto_METI_111.Projeto_METI_111;
 
-
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class excelDisplay {
+public class ExcelDisplay {
 
 	private JTable table;
 	private JScrollPane sp;
-	private static excelDisplay INSTANCE = null;
+	private static ExcelDisplay INSTANCE = null;
 	
 	//Constructor
-	public excelDisplay(readExcel excel) {		
+	public ExcelDisplay(ReadExcel excel) {		
 		//Column Names
 		String [] columnNames = excel.getColumnNames();
 		
@@ -27,14 +26,14 @@ public class excelDisplay {
 	}
 	
 	
-	public static excelDisplay startInstance(readExcel readExcel) {
+	public static ExcelDisplay startInstance(ReadExcel readExcel) {
 		if(INSTANCE == null) {
-	         INSTANCE = new excelDisplay(readExcel);
+	         INSTANCE = new ExcelDisplay(readExcel);
 	      }
 	      return INSTANCE;
 	}
 	
-	public static excelDisplay getInstance() {
+	public static ExcelDisplay getInstance() {
 		return INSTANCE;
 	}
 

@@ -32,7 +32,7 @@ public class Interface3 {
 		//painel onde se lê o excell
 		JPanel centerPanel = new JPanel ();
 		centerPanel.setLayout(new FlowLayout());
-		frame.add(excelDisplay.getInstance().getSp(),BorderLayout.NORTH); //onde entra  excell (está criado o espaço) com scroll
+		frame.add(ExcelDisplay.getInstance().getSp(),BorderLayout.NORTH); //onde entra  excell (está criado o espaço) com scroll
 		
 		JLabel aviso = new JLabel ("Valores da Tabela selecionada");
 		centerPanel.add(aviso,BorderLayout.NORTH);

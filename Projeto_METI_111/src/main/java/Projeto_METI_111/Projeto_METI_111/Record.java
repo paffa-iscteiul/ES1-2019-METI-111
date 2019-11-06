@@ -1,7 +1,7 @@
 package Projeto_METI_111.Projeto_METI_111;
 
 
-public class record {
+public class Record {
 	String methodID;
 	String pack;
 	String classe;
@@ -15,7 +15,7 @@ public class record {
 	String pmd;
 	String isfeatureenvy;
 	
-	public record(String methodID, String pack, String classe, String method, String loc, String cyclo,
+	public Record(String methodID, String pack, String classe, String method, String loc, String cyclo,
 			String atfd, String laa, String islongmethod, String iplasma, String pmd, String isfeatureenvy) {
 		this.methodID=methodID;
 		this.pack=pack;
@@ -31,7 +31,7 @@ public class record {
 		this.isfeatureenvy=isfeatureenvy;
 	}
 	
-	public record() {}
+	public Record() {}
 	
 	public String getMethodID() {
 		return methodID;

@@ -12,8 +12,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class readExcel {
-	private ArrayList<record> records=new ArrayList<record>();
+public class ReadExcel {
+	private ArrayList<Record> records=new ArrayList<Record>();
 	private Openfile of;
 	
 	private FileInputStream fis;
@@ -22,9 +22,9 @@ public class readExcel {
 	private ArrayList<String> columnNames;
 	private ArrayList<String> data;
 	private XSSFWorkbook workbook;
-	private static readExcel INSTANCE = null;
+	private static ReadExcel INSTANCE = null;
 	
-	public readExcel(File excelF) throws IOException{
+	public ReadExcel(File excelF) throws IOException{
 		fis = new FileInputStream(excelF);
 		columnNames = new ArrayList<String>();
 		data = new ArrayList<String>();
@@ -50,7 +50,7 @@ public class readExcel {
 					columnNames.add(cell.toString());
 				}
 			}else {
-				record rec = new record();
+				Record rec = new Record();
 				int i=0;
 				while (cellIterator.hasNext()) {
 					i++;

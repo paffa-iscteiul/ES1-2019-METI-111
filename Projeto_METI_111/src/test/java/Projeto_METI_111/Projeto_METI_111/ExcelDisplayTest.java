@@ -11,7 +11,7 @@ import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
 import org.junit.Before;
 import org.junit.Test;
 
-public class excelDisplayTest {
+public class ExcelDisplayTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -20,29 +20,29 @@ public class excelDisplayTest {
 	@Test
 	public void testExcelDisplayWorks() throws IOException {
 		File excelfile = new File("files/Long-Method.xlsx");
-		readExcel readExcel = new readExcel(excelfile);
-		excelDisplay.startInstance(readExcel);
+		ReadExcel readExcel = new ReadExcel(excelfile);
+		ExcelDisplay.startInstance(readExcel);
 	}
 	
 	@Test(expected = FileNotFoundException.class)
 	public void testExcelDisplayFileDontExists() throws IOException {
 		File excelfile = new File("files/Long-Method2.xlsx");
-		readExcel readExcel = new readExcel(excelfile);
+		ReadExcel readExcel = new ReadExcel(excelfile);
 	}
 
 	@Test(expected = NotOfficeXmlFileException.class)
 	public void testExcelDisplayFileInvalid() throws IOException {
 		File excelfile = new File("files/teste.txt");
-		readExcel readExcel = new readExcel(excelfile);
-		excelDisplay.startInstance(readExcel);
+		ReadExcel readExcel = new ReadExcel(excelfile);
+		ExcelDisplay.startInstance(readExcel);
 	}
 	
 	@Test
 	public void testStartInstance() throws IOException {
 		File excelfile = new File("files/Long-Method.xlsx");
-		readExcel readExcel = new readExcel(excelfile);
-		excelDisplay object1 = excelDisplay.startInstance(readExcel);
-		excelDisplay object2 = excelDisplay.startInstance(readExcel);
+		ReadExcel readExcel = new ReadExcel(excelfile);
+		ExcelDisplay object1 = ExcelDisplay.startInstance(readExcel);
+		ExcelDisplay object2 = ExcelDisplay.startInstance(readExcel);
 		assertEquals(object1, object2);	
 	}
 }
