@@ -24,10 +24,20 @@ public class Regra {
 		numero_de_regras=count_ocorrences(metricas);
 		String metricas1 = metricas;
 			if(metricas.contains("OR")) {
-				
+				op="OR";
+				metricas1 = metricas.replace("OR ", "");
 			}
-		
-		
+			if(metricas.contains("AND")) {
+				op="AND";
+				metricas1 = metricas.replace("AND ", "");
+			}
+			
+			String aux[] = metricas1.split(" ");
+			String metricas2[] = new String [aux.length / 3];
+				for(int i = 0; i<aux.length;i=i+3) {
+					metricas2[i/3]= aux[i]+aux[i+1]+aux[i+2];
+				}
+				vetor_metricas=metricas2 ;
 	}
 	private int count_ocorrences(String m) {
 		String a1[]=m.split(" ");
