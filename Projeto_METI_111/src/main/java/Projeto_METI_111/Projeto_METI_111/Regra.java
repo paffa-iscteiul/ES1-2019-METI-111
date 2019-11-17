@@ -51,6 +51,7 @@ public class Regra {
 		
 		
 		return count;
+		
 	}
 	
 }
