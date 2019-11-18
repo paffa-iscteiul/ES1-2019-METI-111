@@ -24,6 +24,14 @@ public class ReadExcel {
 	private XSSFWorkbook workbook;
 	private static ReadExcel INSTANCE = null;
 	
+	
+	/**
+	 * Construtor da classe
+	 * Recebe o Ficheiro Excel e a partir deste conta o nº de linhas e colunas de modo a
+	 * criar a matrix de informação que posteriormente irá ser introduzida no ExcelDisplay.java
+	 * @param excelF
+	 * @throws IOException
+	 */
 	public ReadExcel(File excelF) throws IOException{
 		fis = new FileInputStream(excelF);
 		columnNames = new ArrayList<String>();
@@ -36,7 +44,10 @@ public class ReadExcel {
 		this.columnCount = nextRow.getLastCellNum();
 		ReadFile();
   }
-	
+	/**
+	 * ReadFile() É uma função que armazena toda a informação do ficheiro Excel
+	 * nas listas de informação
+	 */
 	public void ReadFile() {
 		XSSFSheet sheet = workbook.getSheetAt(0);
 		Iterator<Row> rowIt = sheet.iterator();
@@ -64,6 +75,11 @@ public class ReadExcel {
 		}
 	}
 	
+	/**
+	 * getColumnNames() Irá buscar toda a informação sobre os Titulos e 
+	 * converter de ArrayList para Vector
+	 * @return columnVector, são os títulos do excel, 1º Linha
+	 */
 	public String [] getColumnNames() {
 		String [] columnVector = new String [columnCount];
 		for(int i = 0; i < columnCount; i++) {
@@ -72,11 +88,15 @@ public class ReadExcel {
 	return columnVector;
 	}
 	
-	
+	/**
+	 * getData() Irá buscar toda a informação, sem contar com os titulos.
+	 * Para além de converter Arraylist em Matriz
+	 * @return Matriz de Data do Excel
+	 */
 	public String [] [] getData(){
-		String [] [] dataMatrix = new String [rowCount-1] [columnCount];
+		String [] [] dataMatrix = new String [rowCount] [columnCount];
 		int index = 0;
-		for(int i = 0; i < (rowCount-1); i++) {
+		for(int i = 0; i < (rowCount); i++) {
 			for(int j = 0; j < columnCount; j++) {
 				dataMatrix [i] [j] = this.data.get(index);
 				index++;
