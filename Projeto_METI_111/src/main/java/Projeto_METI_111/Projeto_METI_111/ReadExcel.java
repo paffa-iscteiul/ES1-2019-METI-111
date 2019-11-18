@@ -47,8 +47,9 @@ public class ReadExcel {
 	/**
 	 * ReadFile() É uma função que armazena toda a informação do ficheiro Excel
 	 * nas listas de informação
+	 * @throws IOException 
 	 */
-	public void ReadFile() {
+	public void ReadFile() throws IOException {
 		XSSFSheet sheet = workbook.getSheetAt(0);
 		Iterator<Row> rowIt = sheet.iterator();
 		Boolean Titles = true;
