@@ -29,7 +29,7 @@ public class ExcelDisplay {
 	}
 	
 	/**
-	 * startInstance()
+	 * startInstance(ReadExcel readExcel)
 	 * getInstance()
 	 * Foi criada uma instância de display para que o display 
 	 * seja de fácil acesso e facilmente actualizavel
