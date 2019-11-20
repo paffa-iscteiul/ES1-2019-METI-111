@@ -20,6 +20,10 @@ import javax.swing.WindowConstants;
 public class Interface3 {
 	private JFrame frame;
 	
+	/**
+	 * startInstance Interface3
+	 * criar a interface com título e dimensão
+	 */
 	public Interface3 () {
 		frame = new JFrame ("Aplicação de avaliaçao de código");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -27,6 +31,11 @@ public class Interface3 {
 		frame.setSize(500,300);
 		addFrameContent();
 	}	
+	
+	/**
+	 * Criação de todos os paineis necessários para a janela
+	 * de introdução dos parâmetros pelo utilizador
+	 */
 	
 	private void addFrameContent() {
 		//painel onde se lê o excell
@@ -53,6 +62,12 @@ public class Interface3 {
 		calculator.setLayout(new BorderLayout());
 		
 		JPanel cpainel = new JPanel();
+		
+		
+		/**
+		 * Criação do mostrador para introduzir a calculadora 
+		 * botões para fácil utilização e adição dos parâmetros e condições
+		 */
 		
 		//Mostrador
 		JTextField screen = new JTextField();   
@@ -159,6 +174,9 @@ public class Interface3 {
 			}
 		});
 		
+		/**
+		 * adicionar os botões ao painel de vizualização
+		 */
 		
 		terms.add(and);
 		terms.add(smaller);
@@ -175,6 +193,11 @@ public class Interface3 {
 		
 		cpainel.add(terms);
 		
+		
+		/**
+		 * criação de painel com as ações do utilizador
+		 * opçoes de submeter ou apagar
+		 */
 		//Painel com as ações
 		JPanel actions = new JPanel();
 		actions.setLayout(new GridLayout(2,1));
@@ -233,6 +256,9 @@ public class Interface3 {
 		JTextField limatfd = new JTextField();
 		JTextField limlaa = new JTextField();
 		
+		/**
+		 * introdução de todos os botões nas respetivas posições
+		 */
 		thresholdsPanel.add(labelloc,0);
 		thresholdsPanel.add(limloc,1);
 		thresholdsPanel.add(labelcyclo,2);
