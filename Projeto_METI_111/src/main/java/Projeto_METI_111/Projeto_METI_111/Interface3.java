@@ -19,10 +19,10 @@ import javax.swing.WindowConstants;
 
 public class Interface3 {
 	private JFrame frame;
-	JTextField limloc;
-	JTextField limatfd;
-	JTextField limcyclo;
-	JTextField limlaa;
+	private String limloc;
+	private String limatfd;
+	private String limcyclo;
+	private String limlaa;
 	
 	/**
 	 * startInstance Interface3
@@ -255,17 +255,25 @@ public class Interface3 {
 		JLabel labelatfd = new JLabel("ATFD");
 		JLabel labellaa = new JLabel("LAA");
 		
-		limloc = new JTextField();
+		JTextField limloc = new JTextField();
 		limloc.setText("0");
-		limcyclo = new JTextField();
+		JTextField limcyclo = new JTextField();
 		limcyclo.setText("0");
-		limatfd = new JTextField();
+		JTextField limatfd = new JTextField();
 		limatfd.setText("0");
-		limlaa = new JTextField();
+		JTextField limlaa = new JTextField();
 		limlaa.setText("0");
 		
 		
 		JButton guardarLOC =new JButton("Guardar");
+		guardarLOC.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		JButton guardarCYCLO=new JButton("Guardar");
 		JButton guardarATFD=new JButton("Guardar");
 		JButton guardarLAA=new JButton("Guardar");
