@@ -19,11 +19,12 @@ import javax.swing.WindowConstants;
 
 public class Interface3 {
 	private JFrame frame;
-	private String limlocLer;
-	private String limatfdLer;
-	private String limcycloLer;
-	private String limlaaLer;
+	private String limlocLer="";
+	private String limatfdLer="";
+	private String limcycloLer="";
+	private String limlaaLer="";
 	
+
 	/**
 	 * startInstance Interface3
 	 * criar a interface com título e dimensão
@@ -269,14 +270,38 @@ public class Interface3 {
 		guardarLOC.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				limlocLer=limloc.getText();
+				System.out.println(limlocLer);
 			}
 		});
 		
 		JButton guardarCYCLO=new JButton("Guardar");
+		guardarCYCLO.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				limcycloLer=limcyclo.getText();
+				System.out.println(limcycloLer);
+			}
+		});
+		
 		JButton guardarATFD=new JButton("Guardar");
+		guardarATFD.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				limatfdLer=limatfd.getText();
+				System.out.println(limatfdLer);
+			}
+		});
+		
+		
 		JButton guardarLAA=new JButton("Guardar");
+		guardarLAA.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				limlaaLer=limlaa.getText();
+				System.out.println(limlaaLer);
+			}
+		});
 		
 		
 		/**
