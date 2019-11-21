@@ -55,7 +55,7 @@ public class Interface3 {
 		frame.add(factors);
 
 		JPanel thresholdsPanel = new JPanel();
-		thresholdsPanel.setLayout(new GridLayout(4,2));
+		thresholdsPanel.setLayout(new GridLayout(4,3));
 		factors.add(thresholdsPanel, BorderLayout.CENTER);
 		
 		JPanel calculator = new JPanel();  //onde entra a calculadora (está criado o espaço)
@@ -264,18 +264,29 @@ public class Interface3 {
 		limlaa = new JTextField();
 		limlaa.setText("0");
 		
+		
+		JButton guardarLOC =new JButton("Guardar");
+		JButton guardarCYCLO=new JButton("Guardar");
+		JButton guardarATFD=new JButton("Guardar");
+		JButton guardarLAA=new JButton("Guardar");
+		
+		
 		/**
 		 * introdução de todos os botões nas respetivas posições
 		 */
 		thresholdsPanel.add(labelloc,0);
 		thresholdsPanel.add(limloc,1);
-		thresholdsPanel.add(labelcyclo,2);
-		thresholdsPanel.add(limcyclo,3);
-		thresholdsPanel.add(labelatfd,4);
-		thresholdsPanel.add(limatfd,5);
-		thresholdsPanel.add(labellaa,6);
-		thresholdsPanel.add(limlaa,7);
-		
+		thresholdsPanel.add(guardarLOC,2);
+		thresholdsPanel.add(labelcyclo,3);
+		thresholdsPanel.add(limcyclo,4);
+		thresholdsPanel.add(guardarCYCLO,5);
+		thresholdsPanel.add(labelatfd,6);
+		thresholdsPanel.add(limatfd,7);
+		thresholdsPanel.add(guardarATFD,8);
+		thresholdsPanel.add(labellaa,9);
+		thresholdsPanel.add(limlaa,10);
+		thresholdsPanel.add(guardarLAA,11);
+				
 		limloc.setSize(20,20);
 		limcyclo.setSize(20,20);
 		limatfd.setSize(20,20);
