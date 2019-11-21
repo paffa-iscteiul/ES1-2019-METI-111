@@ -19,10 +19,10 @@ import javax.swing.WindowConstants;
 
 public class Interface3 {
 	private JFrame frame;
-	private String limloc;
-	private String limatfd;
-	private String limcyclo;
-	private String limlaa;
+	private String limlocLer;
+	private String limatfdLer;
+	private String limcycloLer;
+	private String limlaaLer;
 	
 	/**
 	 * startInstance Interface3
