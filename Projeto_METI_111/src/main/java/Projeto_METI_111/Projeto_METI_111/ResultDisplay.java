@@ -123,7 +123,7 @@ public class ResultDisplay {
 
 	public static void main(String[] args) throws IOException {
 		
-		ResultDisplay teste2 = new ResultDisplay();
+		ResultDisplay teste = new ResultDisplay();
 		
 	}
 
