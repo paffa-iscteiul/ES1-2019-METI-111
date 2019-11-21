@@ -19,6 +19,10 @@ import javax.swing.WindowConstants;
 
 public class Interface3 {
 	private JFrame frame;
+	JTextField limloc;
+	JTextField limatfd;
+	JTextField limcyclo;
+	JTextField limlaa;
 	
 	/**
 	 * startInstance Interface3
@@ -251,10 +255,14 @@ public class Interface3 {
 		JLabel labelatfd = new JLabel("ATFD");
 		JLabel labellaa = new JLabel("LAA");
 		
-		JTextField limloc = new JTextField();
-		JTextField limcyclo = new JTextField();
-		JTextField limatfd = new JTextField();
-		JTextField limlaa = new JTextField();
+		limloc = new JTextField();
+		limloc.setText("0");
+		limcyclo = new JTextField();
+		limcyclo.setText("0");
+		limatfd = new JTextField();
+		limatfd.setText("0");
+		limlaa = new JTextField();
+		limlaa.setText("0");
 		
 		/**
 		 * introdução de todos os botões nas respetivas posições
