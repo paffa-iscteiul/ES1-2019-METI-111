@@ -7,6 +7,7 @@ public class ExcelDisplay {
 
 	private JTable table;
 	private JScrollPane sp;
+	private String [] [] data; 
 	private static ExcelDisplay INSTANCE = null;
 	
 	/**
@@ -18,7 +19,7 @@ public class ExcelDisplay {
 		String [] columnNames = excel.getColumnNames();
 		
 		//Excel Data
-		String [] [] data = excel.getData();
+		data = excel.getData();
 		
 		//Initializing the JTable
 		table = new JTable(data, columnNames);
@@ -28,6 +29,7 @@ public class ExcelDisplay {
 		sp = new JScrollPane(table);
 	}
 	
+
 	/**
 	 * startInstance(ReadExcel readExcel)
 	 * getInstance()
@@ -65,5 +67,9 @@ public class ExcelDisplay {
 
 	public void setSp(JScrollPane sp) {
 		this.sp = sp;
+	}
+	
+	public String[][] getData() {
+		return data;
 	}
 }
