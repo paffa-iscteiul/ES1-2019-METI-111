@@ -93,8 +93,34 @@ public class Interface3 {
 		JButton smaller = new JButton(" <");
 		smaller.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String enterTerm = screen.getText() + smaller.getText();
-				screen.setText(enterTerm);
+				String metric = null;
+				if(screen.getText().length() > 0) {
+					String regra = screen.getText();
+					ArrayList<String> arr = new ArrayList<String>(Arrays.asList(regra.split(" ")));
+					metric = arr.get(arr.size() -1);
+					
+					if(metric.equals("CYCLO")) {
+						String enterTerm = screen.getText() + smaller.getText() + " " + limcycloLer;
+						
+						screen.setText(enterTerm);
+					}
+					if(metric.equals("LAA")) {
+						String enterTerm = screen.getText() + smaller.getText() + " " + limlaaLer;
+						screen.setText(enterTerm);
+					}
+						
+					if(metric.equals("ATFD")) {
+						String enterTerm = screen.getText() + smaller.getText() + " " + limatfdLer;
+						screen.setText(enterTerm);
+					}
+						
+					if(metric.equals("LOC")) {
+						String enterTerm = screen.getText() + smaller.getText() + " " + limlocLer;
+						screen.setText(enterTerm);
+					}
+				}
+				
+				
 			}
 		});
 		
@@ -150,8 +176,37 @@ public class Interface3 {
 		JButton bigger = new JButton(" >");
 		bigger.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String enterTerm = screen.getText() +bigger.getText();
-				screen.setText(enterTerm);
+				String metric = null;
+				if(screen.getText().length() > 0) {
+					String regra = screen.getText();
+					ArrayList<String> arr = new ArrayList<String>(Arrays.asList(regra.split(" ")));
+					metric = arr.get(arr.size() -1);
+					
+					if(metric.equals("CYCLO")) {
+						String enterTerm = screen.getText() + bigger.getText() + " " + limcycloLer;
+						
+						screen.setText(enterTerm);
+					}
+					if(metric.equals("LAA")) {
+						String enterTerm = screen.getText() + bigger.getText() + " " + limlaaLer;
+						screen.setText(enterTerm);
+					}
+						
+					if(metric.equals("ATFD")) {
+						String enterTerm = screen.getText() + bigger.getText() + " " + limatfdLer;
+						screen.setText(enterTerm);
+					}
+						
+					if(metric.equals("LOC")) {
+						String enterTerm = screen.getText() + bigger.getText() + " " + limlocLer;
+						screen.setText(enterTerm);
+					}
+				}
+								
+								
+				
+					
+					
 			}
 		});
 		
@@ -179,6 +234,54 @@ public class Interface3 {
 			}
 		});
 		
+		JButton loc = new JButton(" LOC");
+		loc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTerm = screen.getText() + loc.getText();
+				screen.setText(enterTerm);
+			}
+		});
+		
+		JButton cyclo = new JButton(" CYCLO");
+		cyclo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTerm = screen.getText() + cyclo.getText();
+				screen.setText(enterTerm);
+			}
+		});
+		
+		JButton atfd = new JButton(" ATFD");
+		atfd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTerm = screen.getText() + atfd.getText();
+				screen.setText(enterTerm);
+			}
+		});
+		
+		JButton laa = new JButton(" LAA");
+		laa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTerm = screen.getText() + laa.getText();
+				screen.setText(enterTerm);
+			}
+		});
+		
+		JButton open = new JButton(" (");
+		open.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTerm = screen.getText() + open.getText();
+				screen.setText(enterTerm);
+			}
+		});
+		
+		JButton close = new JButton(" )");
+		close.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String enterTerm = screen.getText() + close.getText();
+				screen.setText(enterTerm);
+			}
+		});
+		
 		/**
 		 * adicionar os botões ao painel de vizualização
 		 */
@@ -195,6 +298,12 @@ public class Interface3 {
 		terms.add(tso);
 		terms.add(isfeatureenvy);
 		terms.add(islongmethod);
+		terms.add(loc);
+		terms.add(cyclo);
+		terms.add(atfd);
+		terms.add(laa);
+		terms.add(open);
+		terms.add(close);
 		
 		cpainel.add(terms);
 		
@@ -219,22 +328,18 @@ public class Interface3 {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(screen.getText().length() > 0) {
-					
-		
+							
 					String regra = screen.getText();
-					System.out.println("regra: "+regra);
 					
 					ArrayList<String> arr = new ArrayList<String>(Arrays.asList(regra.split(" ")));
-					System.out.println("array com as coisas: "+ arr);
+
 					if(arr!=null) {
 						if(arr.size() > 0) {
 							arr.remove(arr.size() -1);
 						}
 					}
 					
-					System.out.println(arr);
 					String apagado = String.join(" ", arr);
-					System.out.println("apagado: "+apagado);
 
 					screen.setText(apagado);
 				}
@@ -258,13 +363,16 @@ public class Interface3 {
 		
 		JTextField limloc = new JTextField();
 		limloc.setText("0");
+		limlocLer="0";
 		JTextField limcyclo = new JTextField();
 		limcyclo.setText("0");
+		limcycloLer="0";
 		JTextField limatfd = new JTextField();
 		limatfd.setText("0");
+		limatfdLer="0";
 		JTextField limlaa = new JTextField();
 		limlaa.setText("0");
-		
+		limlaaLer="0";
 		
 		JButton guardarLOC =new JButton("Guardar");
 		guardarLOC.addActionListener(new ActionListener() {
