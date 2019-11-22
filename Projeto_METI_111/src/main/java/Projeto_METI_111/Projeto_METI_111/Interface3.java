@@ -337,9 +337,10 @@ public class Interface3 {
 				 String temporary3= posicao2[1].replace("( ", "");
 				 ELSEfinal= temporary3.replace(" )", "");
 				
-				 System.out.println(main);
+				 //  para quem quiser testar descomente estas 3 linhas  
+				/* System.out.println(main);
 				 System.out.println(THENfinal);
-				 System.out.println(ELSEfinal);
+				 System.out.println(ELSEfinal);*/
 			}
 		});
 		
