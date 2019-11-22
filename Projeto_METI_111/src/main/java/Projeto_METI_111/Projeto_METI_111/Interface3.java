@@ -23,6 +23,10 @@ public class Interface3 {
 	private String limatfdLer="";
 	private String limcycloLer="";
 	private String limlaaLer="";
+	ArrayList <String> regras ;
+	String main ;
+	String THENfinal;
+	String ELSEfinal;
 	
 
 	/**
@@ -319,6 +323,23 @@ public class Interface3 {
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String regra = screen.getText();
+				String posicao[] = regra.split(" IF ");
+				String posicao1[] = posicao[1].split(" THEN ");
+				
+				String temporary1= posicao1[0].replace("( ","");
+				main = temporary1.replace(" )","");
+				
+				String posicao2 [] = posicao1[1].split(" ELSE ");
+				
+				String temporary2= posicao2[0].replace("( ", "");
+				 THENfinal= temporary2.replace(" )", "");
+				 
+				 String temporary3= posicao2[1].replace("( ", "");
+				 ELSEfinal= temporary3.replace(" )", "");
+				
+				 System.out.println(main);
+				 System.out.println(THENfinal);
+				 System.out.println(ELSEfinal);
 			}
 		});
 		
