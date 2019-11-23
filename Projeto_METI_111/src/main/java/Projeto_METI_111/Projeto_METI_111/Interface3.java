@@ -23,7 +23,7 @@ public class Interface3 {
 	private String limatfdLer="";
 	private String limcycloLer="";
 	private String limlaaLer="";
-	ArrayList <String> regras ;
+	ArrayList <Regra> regras = new ArrayList<Regra>() ;
 	String main ;
 	String THENfinal;
 	String ELSEfinal;
@@ -325,22 +325,38 @@ public class Interface3 {
 				String regra = screen.getText();
 				String posicao[] = regra.split(" IF ");
 				String posicao1[] = posicao[1].split(" THEN ");
-				
 				String temporary1= posicao1[0].replace("( ","");
 				main = temporary1.replace(" )","");
-				
 				String posicao2 [] = posicao1[1].split(" ELSE ");
-				
 				String temporary2= posicao2[0].replace("( ", "");
-				 THENfinal= temporary2.replace(" )", "");
-				 
-				 String temporary3= posicao2[1].replace("( ", "");
-				 ELSEfinal= temporary3.replace(" )", "");
-				
-				 //  para quem quiser testar descomente estas 3 linhas  
-				/* System.out.println(main);
-				 System.out.println(THENfinal);
-				 System.out.println(ELSEfinal);*/
+				THENfinal= temporary2.replace(" )", ""); 
+				String temporary3= posicao2[1].replace("( ", "");
+				ELSEfinal= temporary3.replace(" )", "");
+				construcaoRegra(main, THENfinal, ELSEfinal);
+			}
+
+			private void construcaoRegra(String main, String THENfinal, String ELSEfinal) {
+				if(main.contains("AND") && main.contains("OR")) {
+					char c1 = 'O';
+					char c2 = 'R';
+					int indice = 0;
+					for(int i=0; i!=main.length();i++) {
+						if(main.charAt(i)==c1 && main.charAt(i+1)==c2) {
+							indice=i;
+							break;
+						}
+					}
+					String main1 = main.substring(0, indice);
+					String main2 = main.substring(indice+3, main.length());
+					Regra r1 = new Regra(main1,THENfinal,ELSEfinal);
+					Regra r2 = new Regra(main2,THENfinal,ELSEfinal);
+					regras.add(r1);
+					regras.add(r2);
+					
+				} else {
+					Regra r3 = new Regra(main,THENfinal,ELSEfinal);
+					regras.add(r3);
+				}
 			}
 		});
 		
@@ -401,7 +417,6 @@ public class Interface3 {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				limlocLer=limloc.getText();
-				System.out.println(limlocLer);
 			}
 		});
 		
@@ -410,7 +425,6 @@ public class Interface3 {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				limcycloLer=limcyclo.getText();
-				System.out.println(limcycloLer);
 			}
 		});
 		
@@ -419,7 +433,6 @@ public class Interface3 {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				limatfdLer=limatfd.getText();
-				System.out.println(limatfdLer);
 			}
 		});
 		
@@ -429,7 +442,6 @@ public class Interface3 {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				limlaaLer=limlaa.getText();
-				System.out.println(limlaaLer);
 			}
 		});
 		
