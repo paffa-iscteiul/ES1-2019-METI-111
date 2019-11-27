@@ -18,6 +18,7 @@ public class Interface1 {
 	private JFrame frame;
 	private Openfile of = new Openfile(this);
 	private boolean fileSelected = false;
+	private String string = "";
 	
 	public Interface1 () {
 		frame = new JFrame ("Aplicação de avaliaçao de código");
@@ -66,7 +67,7 @@ public class Interface1 {
 			public void actionPerformed(ActionEvent e) {
 				if(fileSelected) {
 					JOptionPane.showMessageDialog(null, "Avançar para nova janela?");
-					Interface3 interface3 = new Interface3();
+					Interface3 interface3 = new Interface3(string, of.getRecords());
 					frame.dispose();
 				}else {
 					JOptionPane.showMessageDialog(null, "Tem de selecionar algum ficheiro");
@@ -77,9 +78,10 @@ public class Interface1 {
 		
 	}
 	
-	public void fileConfirmed (String s) {
+	public void fileConfirmed (String s, String string) {
 		JOptionPane.showMessageDialog(null, "O ficheiro " + s + " foi carregado corretamente. Carregue Finish para continuar");
 		fileSelected=true;
+		this.string=string;
 	}
 	
 	public static void main (String[] args) {

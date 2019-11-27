@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -24,21 +25,27 @@ public class Interface3 {
 	private String limcycloLer="";
 	private String limlaaLer="";
 	ArrayList <Regra> regras = new ArrayList<Regra>() ;
+	ArrayList <Record> records = new ArrayList<Record>() ;	
 	String main ;
 	String THENfinal;
 	String ELSEfinal;
+	String string;
 	
 
 	/**
 	 * startInstance Interface3
 	 * criar a interface com título e dimensão
+	 * @param string 
+	 * @param records 
 	 */
-	public Interface3 () {
+	public Interface3 (String string, ArrayList<Record> records) {
 		frame = new JFrame ("Aplicação de avaliaçao de código");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		frame.setSize(500,300);
 		addFrameContent();
+		this.string=string;
+		this.records=records;
 	}	
 	
 	/**
@@ -385,8 +392,20 @@ public class Interface3 {
 			}
 		});
 		
+		JButton finalizar = new JButton("Finalizar");
+		finalizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ResultDisplay rd = new ResultDisplay(string, regras, records);
+				} catch(Exception e1) {
+					
+				}
+			}
+		});
+		
 		actions.add(submit);
 		actions.add(clean);
+		actions.add(finalizar);
 		cpainel.add(actions);
 		calculator.add(cpainel, BorderLayout.CENTER);
 			

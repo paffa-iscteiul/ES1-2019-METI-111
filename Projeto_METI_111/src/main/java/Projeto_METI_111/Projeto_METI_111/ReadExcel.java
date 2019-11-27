@@ -106,5 +106,9 @@ public class ReadExcel {
 		return dataMatrix;
 	}
 	
+	public ArrayList<Record> getRecord() {
+		return records;
+	}
+	
 	
 }

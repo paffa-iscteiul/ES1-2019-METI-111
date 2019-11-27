@@ -52,5 +52,25 @@ public class Regra {
 		
 		return count;
 	}
+
+	public String[] getVetor_metricas() {
+		return vetor_metricas;
+	}
+
+	public String getMetricas() {
+		return metricas;
+	}
+
+	public String getEntao() {
+		return entao;
+	}
+
+	public String getSenao() {
+		return senao;
+	}
+
+	public String getOp() {
+		return op;
+	}
 	
 }
