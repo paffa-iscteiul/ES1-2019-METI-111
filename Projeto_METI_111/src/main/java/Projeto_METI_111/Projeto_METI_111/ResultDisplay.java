@@ -25,6 +25,9 @@ public class ResultDisplay {
 	 * ->Saber o número de Methods
 	 * ->Saber o número de defeitos em comparação ao nosso is_long_method
 	 * ->Saber o número de defeitos em comparação ao nosso is_feature_envy
+	 * @param ficheiro
+	 * @param regras
+	 * @param records
 	 * @throws IOException 
 	 * 
 	 */
@@ -50,21 +53,1027 @@ public class ResultDisplay {
 			for(int j=0;j!=records.size();j++) {
 				String [] vetor_metricas = regras.get(i).getVetor_metricas();
 				if(occurrences(regras.get(i).getMetricas())==2) {
-					verificar(records.get(j), vetor_metricas[0], regras.get(i).getEntao(),regras.get(i).getSenao());
+					//if(aux(regras.get(i),regras)) {
+						verificar(records.get(j), vetor_metricas[0], regras.get(i).getEntao(),regras.get(i).getSenao());
+					//}
 				}else {
 					if(regras.get(i).getOp().equals("AND")) {
 						for(int k=0;k!=vetor_metricas.length-1;k++) {
-							//verificarAND(records.get(j), vetor_metricas[k],vetor_metricas[k+1],regras.get(i).getEntao(),regras.get(i).getSenao());
+							verificarAND(records.get(j), vetor_metricas[k],vetor_metricas[k+1],regras.get(i).getEntao(),regras.get(i).getSenao());
 						}
 					}
 					if(regras.get(i).getOp().equals("OR")) {
 						for(int k=0;k!=vetor_metricas.length-1;k++) {
-							//verificarOR(records.get(j), vetor_metricas[k],vetor_metricas[k+1],regras.get(i).getEntao(),regras.get(i).getSenao());
+							verificarOR(records.get(j), vetor_metricas[k],vetor_metricas[k+1],regras.get(i).getEntao(),regras.get(i).getSenao());
 						}
 					}
 				}
 			}
 		}
+	}
+
+	private boolean aux(Regra regra, ArrayList<Regra> regras2) {
+		int c=0;
+		String [] s = regra.getMetricas().split("<|\\>");
+		String [] s1 = regra.getMetricas().split(s[0]);
+		String [] s2 = s1[0].split(s[1]);
+		for(int i=0;i!=regras2.size();i++) {
+			if(regras2.get(i).getEntao().equals(regra.getEntao())&&regras2.get(i).getSenao().equals(regra.getSenao())&&regras2.get(i).getMetricas().contains(s[0])&&regras2.get(i).getOp().equals(s2[0])) {
+				if(s2[0].equals("<")) {
+					String [] s3 = regras.get(i).getMetricas().split("<|\\>");
+					if((Double.parseDouble(s3[1]))<(Double.parseDouble(s[1]))) {
+						c++;
+					}
+				}else {
+					String [] s3 = regras.get(i).getMetricas().split("<|\\>");
+					if((Double.parseDouble(s3[1]))>(Double.parseDouble(s[1]))) {
+						c++;
+					}
+				}
+			}
+		}
+		if(c==0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private void verificarOR(Record record, String string2, String string3, String entao, String senao) {
+		String [] tokens1 = string2.split("<|\\>");
+		String [] tokens2 = string3.split("<|\\>");
+		double d1 = Double.parseDouble(tokens1[1]);
+		double d2 = Double.parseDouble(tokens2[1]);
+		if((tokens1[0].equals("LAA")) && (tokens2[0].equals("LAA"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)||((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)||((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)||((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)||((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("LAA")) && (tokens2[0].equals("LOC"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)||((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)||((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)||((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)||((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("LAA")) && (tokens2[0].equals("CYCLO"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)||((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)||((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)||((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)||((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("LAA")) && (tokens2[0].equals("ATFD"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)||((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)||((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)||((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)||((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("LOC")) && (tokens2[0].equals("LAA"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)||((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)||((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)||((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)||((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("LOC")) && (tokens2[0].equals("LOC"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)||((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)||((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)||((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)||((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("LOC")) && (tokens2[0].equals("CYCLO"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)||((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)||((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)||((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)||((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("LOC")) && (tokens2[0].equals("ATFD"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)||((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)||((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)||((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)||((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("CYCLO")) && (tokens2[0].equals("LAA"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)||((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)||((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)||((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)||((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("CYCLO")) && (tokens2[0].equals("LOC"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)||((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)||((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)||((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)||((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("CYCLO")) && (tokens2[0].equals("CYCLO"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)||((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)||((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)||((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)||((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("CYCLO")) && (tokens2[0].equals("ATFD"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)||((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)||((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)||((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)||((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("ATFD")) && (tokens2[0].equals("LAA"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)||((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)||((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)||((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)||((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("ATFD")) && (tokens2[0].equals("LOC"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)||((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)||((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)||((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)||((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("ATFD")) && (tokens2[0].equals("CYCLO"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)||((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)||((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)||((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)||((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("ATFD")) && (tokens2[0].equals("ATFD"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)||((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)||((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)||((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)||((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		
+	}
+
+	private void verificarAND(Record record, String string2, String string3, String entao, String senao) {
+		String [] tokens1 = string2.split("<|\\>");
+		String [] tokens2 = string3.split("<|\\>");
+		double d1 = Double.parseDouble(tokens1[1]);
+		double d2 = Double.parseDouble(tokens2[1]);
+		if((tokens1[0].equals("LAA")) && (tokens2[0].equals("LAA"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)&&((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)&&((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)&&((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)&&((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("LAA")) && (tokens2[0].equals("LOC"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)&&((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)&&((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)&&((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)&&((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("LAA")) && (tokens2[0].equals("CYCLO"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)&&((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)&&((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)&&((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)&&((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("LAA")) && (tokens2[0].equals("ATFD"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)&&((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))<d1)&&((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)&&((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLaa()))>d1)&&((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("LOC")) && (tokens2[0].equals("LAA"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)&&((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)&&((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)&&((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)&&((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("LOC")) && (tokens2[0].equals("LOC"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)&&((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)&&((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)&&((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)&&((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("LOC")) && (tokens2[0].equals("CYCLO"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)&&((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)&&((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)&&((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)&&((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("LOC")) && (tokens2[0].equals("ATFD"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)&&((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))<d1)&&((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)&&((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getLoc()))>d1)&&((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("CYCLO")) && (tokens2[0].equals("LAA"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)&&((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)&&((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)&&((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)&&((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("CYCLO")) && (tokens2[0].equals("LOC"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)&&((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)&&((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)&&((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)&&((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("CYCLO")) && (tokens2[0].equals("CYCLO"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)&&((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)&&((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)&&((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)&&((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("CYCLO")) && (tokens2[0].equals("ATFD"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)&&((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))<d1)&&((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)&&((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getCyclo()))>d1)&&((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("ATFD")) && (tokens2[0].equals("LAA"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)&&((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)&&((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)&&((Double.parseDouble(record.getLaa()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)&&((Double.parseDouble(record.getLaa()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("ATFD")) && (tokens2[0].equals("LOC"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)&&((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)&&((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)&&((Double.parseDouble(record.getLoc()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)&&((Double.parseDouble(record.getLoc()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("ATFD")) && (tokens2[0].equals("CYCLO"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)&&((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)&&((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)&&((Double.parseDouble(record.getCyclo()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)&&((Double.parseDouble(record.getCyclo()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		if((tokens1[0].equals("ATFD")) && (tokens2[0].equals("ATFD"))) {
+			if(string2.contains("<")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)&&((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains("<")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))<d1)&&((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains("<")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)&&((Double.parseDouble(record.getAtfd()))<d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+			if(string2.contains(">")&&string3.contains(">")) {
+				if(((Double.parseDouble(record.getAtfd()))>d1)&&((Double.parseDouble(record.getAtfd()))>d2)) {
+					setVal(((int) Double.parseDouble(record.methodID)-1), entao);
+				}else {
+					setVal(((int) Double.parseDouble(record.methodID)-1), senao);
+				}
+			}
+		}
+		
 	}
 
 	private void verificar(Record record, String string2, String entao, String senao) {
