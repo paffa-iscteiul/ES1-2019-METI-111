@@ -53,9 +53,9 @@ public class ResultDisplay {
 			for(int j=0;j!=records.size();j++) {
 				String [] vetor_metricas = regras.get(i).getVetor_metricas();
 				if(occurrences(regras.get(i).getMetricas())==2) {
-					//if(aux(regras.get(i),regras)) {
+					if(aux(regras.get(i),regras)==true) {
 						verificar(records.get(j), vetor_metricas[0], regras.get(i).getEntao(),regras.get(i).getSenao());
-					//}
+					}
 				}else {
 					if(regras.get(i).getOp().equals("AND")) {
 						for(int k=0;k!=vetor_metricas.length-1;k++) {
@@ -74,19 +74,26 @@ public class ResultDisplay {
 
 	private boolean aux(Regra regra, ArrayList<Regra> regras2) {
 		int c=0;
-		String [] s = regra.getMetricas().split("<|\\>");
-		String [] s1 = regra.getMetricas().split(s[0]);
-		String [] s2 = s1[0].split(s[1]);
+		String regra1 = regra.getMetricas().replaceAll(" ", "");
+		String [] s = regra1.split("<|\\>");
+		String [] s1 = regra1.split(s[1]);
+		String [] s2 = s1[0].split(s[0]);
+		String simbolo = s1[0].substring(s1[0].length()-1);
 		for(int i=0;i!=regras2.size();i++) {
-			if(regras2.get(i).getEntao().equals(regra.getEntao())&&regras2.get(i).getSenao().equals(regra.getSenao())&&regras2.get(i).getMetricas().contains(s[0])&&regras2.get(i).getOp().equals(s2[0])) {
-				if(s2[0].equals("<")) {
-					String [] s3 = regras.get(i).getMetricas().split("<|\\>");
-					if((Double.parseDouble(s3[1]))<(Double.parseDouble(s[1]))) {
+			String regra2 = regras2.get(i).getMetricas().replaceAll(" ", "");
+			String [] s3 = regra2.split("<|\\>");
+			String [] s4 = regra2.split(s3[1]);
+			String [] s5 = s4[0].split(s3[0]);
+			String simboloRegra = s4[0].substring(s4[0].length()-1);
+			if(regras2.get(i).getEntao().contains(regra.getEntao())&&regras2.get(i).getSenao().contains(regra.getSenao())&&regras2.get(i).getMetricas().contains(s[0])&&simbolo.contains(simboloRegra)) {
+				if(simboloRegra.equals("<")) {
+					String [] s7 = regras.get(i).getMetricas().split("<|\\>");
+					if((Double.parseDouble(s7[1].replaceAll(" ", "")))<(Double.parseDouble(s[1]))) {
 						c++;
 					}
 				}else {
-					String [] s3 = regras.get(i).getMetricas().split("<|\\>");
-					if((Double.parseDouble(s3[1]))>(Double.parseDouble(s[1]))) {
+					String [] s7 = regras.get(i).getMetricas().split("<|\\>");
+					if((Double.parseDouble(s7[1].replaceAll(" ", "")))>(Double.parseDouble(s[1]))) {
 						c++;
 					}
 				}
