@@ -46,6 +46,7 @@ public class ResultDisplay {
 			}
 		}
 		analizarMetricas();
+		rulesResults();
 	}
 	
 	private void analizarMetricas() {
@@ -1260,6 +1261,36 @@ public class ResultDisplay {
 		}
 		
 	}
+	
+	public void rulesResults() {
+
+		String [] [] aux = data;
+		
+		for(int linha = 0; linha < aux.length; linha++) {	
+			String valor1 = (String) table.getValueAt(linha,1);
+			String valor2 = (String) table.getValueAt(linha,5);
+			
+			if( valor1.equals(valor2)) {
+				table.setValueAt("FALSE", linha, 7);
+			} else {
+				table.setValueAt("TRUE", linha, 7);
+			}
+		
+			
+			String valor3 = (String) table.getValueAt(linha,4);
+			String valor4 = (String) table.getValueAt(linha,6);
+			
+			if( valor3.equals(valor4)) {
+				table.setValueAt("FALSE", linha, 8);
+			} else {
+				table.setValueAt("TRUE", linha, 8);
+			}
+		
+
+		}
+	}
+		
+	
 	
 
 }
