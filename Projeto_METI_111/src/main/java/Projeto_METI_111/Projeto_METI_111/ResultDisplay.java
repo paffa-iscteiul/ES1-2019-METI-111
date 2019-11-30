@@ -17,10 +17,10 @@ public class ResultDisplay {
 	private JTable table;
 	private JScrollPane sp;
 	private JPanel panel;
-	private JLabel labelTable;    //acrescentei filipa
-	private JPanel results;
+//	private JLabel labelTable;    //acrescentei filipa
+//	private JPanel results;
 	private JLabel labelResults;  //acrescentei filipa
-	private JPanel panelResults;
+//	private JPanel panelResults;
 	private JFrame frame;
 	private String [] columnTitles;
 	private String [] [] data;
@@ -1341,10 +1341,10 @@ public class ResultDisplay {
 		int countADII2=0;
 		int countADCI2=0;
 
-		int countDCI3=0; //ES_is_feature_envy com is_feature_envy
-		int countDII3=0;
-		int countADII3=0;
-		int countADCI3=0;
+//		int countDCI3=0; //ES_is_feature_envy com is_feature_envy
+//		int countDII3=0;
+//		int countADII3=0;
+//		int countADCI3=0;
 		
 	//	int countDCI4=0; //ES_is_feature_envy com is_long_method
 	//	int countDII4=0;
@@ -1357,18 +1357,19 @@ public class ResultDisplay {
 			String valoriPlasma = (String) table.getValueAt(linha, 2); //iPlasma
 			String valorPMD = (String) table.getValueAt(linha, 3); //PMD
 			String valorESILM = (String) table.getValueAt(linha, 5); //ES_is_longMethod
-			String valorESIFE = (String) table.getValueAt(linha, 6); //ES_is_feature_envy
-			String valorIFE=(String) table.getValueAt(linha, 4);  //is_feature_envy
+	//		String valorESIFE = (String) table.getValueAt(linha, 6); //ES_is_feature_envy
+	//		String valorIFE=(String) table.getValueAt(linha, 4);  //is_feature_envy
 					
 			if(valorILM.equals("TRUE")) {							
 				if(valoriPlasma.equals("TRUE")) { //Def.corretos	//iPlasma
 					countDCI++;
-					System.out.println("DCIplasma" + "\n" + countDCI + "\n" + "estamos na linha" + "\n" + linha);	
-					tt.setValueAt(countDCI,2,1);
+//					System.out.println("DCIplasma" + "\n" + countDCI + "\n" + "estamos na linha" + "\n" + linha);	
+					//tt.setValueAt(countDCI,2,1);
 				}else {
 					countADII++; //ausencias de def.corretos
 					System.out.println("ADIIplasma" + "\n" + countADII);
 				}
+				
 				if(valorPMD.equals("TRUE")) { //Def.corretos 		//PMD
 					countDCI1++;
 					System.out.println("DCI1PMD" + "\n" + countDCI1 + "estamos na linha" + "\n" + linha);
@@ -1392,13 +1393,13 @@ public class ResultDisplay {
 			//		System.out.println("ADII3IFE" + "\n" +countADII4);
 			//	}
 				
-			if(valorIFE.equals("TRUE"))	{
-				if(valorESIFE.equals("TRUE")) {
-					countDCI3++;
-				}else {
-					countADII3++;
-				}		
-			}
+//			if(valorIFE.equals("TRUE"))	{					//is_feature_envy com ES_is_feature_envy
+//				if(valorESIFE.equals("TRUE")) {
+//					countDCI3++;
+//				}else {
+//					countADII3++;
+//				}		
+//			}
 			
 			if(valorILM.equals("FALSE")) { 
 				if(valoriPlasma.equals("TRUE")){ 				//iPlasma
@@ -1414,7 +1415,7 @@ public class ResultDisplay {
 					System.out.println("DII1PMD" + "\n" +countDII1);
 				}else {
 					countADCI1++; //aus.def.incorr
-					System.out.println("ADCI1PMD" + "\n" +countADCI1);
+					System.out.println("ADCI1PMD" + "\n" +countADCI1 + "estamos na linha" + linha);
 				}
 				
 				if(valorESILM.equals("TRUE")){ 						//ES_is_long_method
@@ -1433,18 +1434,19 @@ public class ResultDisplay {
 				}	
 			}
 				
-		if(valorIFE.equals("FALSE"))	{ //is_feature_envy com ES_is_feature_envy
-			if(valorESIFE.equals("TRUE")) {
-				countDII3++;
-				System.out.println("DII3IFE" + "\n" +countDII3);
-			}else {
-				countADCI3++;
-				System.out.println("ADCI3IFE" + "\n" +countADCI3);
-			}
-			
-		}
-	
+//		if(valorIFE.equals("FALSE"))	{ 						//is_feature_envy com ES_is_feature_envy
+//			if(valorESIFE.equals("TRUE")) {
+//				countDII3++;
+//				System.out.println("DII3IFE" + "\n" +countDII3);
+//			}else {
+//				countADCI3++;
+//				System.out.println("ADCI3IFE" + "\n" +countADCI3);
+//			}
+//			
+//		}
 
+	}
+	
 		tt.setValueAt(countDCI,2,1);
 		tt.setValueAt(countDII,2,2);
 		tt.setValueAt(countADCI,2,3);
@@ -1457,7 +1459,6 @@ public class ResultDisplay {
 		tt.setValueAt(countDII2, 3, 2);
 		tt.setValueAt(countADII2, 3, 4);
 		tt.setValueAt(countADCI2,3,3);
-	}
 	}
 	
 }
