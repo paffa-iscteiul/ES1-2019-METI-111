@@ -1,18 +1,23 @@
 package Projeto_METI_111.Projeto_METI_111;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
-
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class ResultDisplay {
 	
 	private JTable table;
+	private JLabel labelTable;
+	private JPanel panelResults;
+	private JLabel labelResults;
 	private JScrollPane sp;
 	private JFrame frame;
 	private String [] columnTitles;
@@ -20,6 +25,7 @@ public class ResultDisplay {
 	private String string;
 	private ArrayList<Regra> regras = new ArrayList<Regra>();
 	private ArrayList<Record> records = new ArrayList<Record>();
+	
 	
 	/**
 	 * O que pode dar jeito?
@@ -37,19 +43,30 @@ public class ResultDisplay {
 		setTitles();
 		setData(string);
 		addFrameContent();
-		setFrameVisible();
+		setFrameVisible();		
 		this.string=string;
 		this.regras=regras;
 		this.records=records;
+			
 		for(int i=5;i!=9;i++) {
 			for(int j=0;j!=records.size();j++) {
 				table.setValueAt("FALSE", j, i);
 			}
+					
 		}
+	
 		analizarMetricas();
 		rulesResults();
 		comparatorsResults();
+		
+			
+		labelTable.add(table);
+		frame.add(labelTable);
+		frame.add(labelResults);
+	
+	
 	}
+
 	
 	private void analizarMetricas() {
 		for(int i=0;i!=regras.size();i++) {
@@ -1201,6 +1218,16 @@ public class ResultDisplay {
 						
 		//Adding it to JScrollPane
 		sp = new JScrollPane(table);
+		
+		
+		//segunda label
+		labelResults = new JLabel("Resultados das Deteções de Erros em relação à Ferramente 'Is_long_method'");
+		panelResults = new JPanel();
+		panelResults.setLayout(new GridLayout(5,4)); //pde ter que ser alterado
+		labelResults.add(panelResults, BorderLayout.CENTER);
+		
+		
+		
 	}
 	
 	/**
@@ -1218,7 +1245,7 @@ public class ResultDisplay {
 		columnTitles[7] = "Defeito is_long_Method";
 		columnTitles[8] = "Defeito is_feature_envy";
 	}
-	
+		
 	/**
 	 * Vai buscar informação necessária ao já formado display
 	 * @throws IOException 
@@ -1308,32 +1335,39 @@ public class ResultDisplay {
 		int countADII2=0;
 		int countADCI2=0;
 
-		int countDCI3=0; //ES_is_feature_envy
+		int countDCI3=0; //ES_is_feature_envy com is_feature_envy
 		int countDII3=0;
 		int countADII3=0;
 		int countADCI3=0;
-
 		
+	//	int countDCI4=0; //ES_is_feature_envy com is_long_method
+	//	int countDII4=0;
+	//	int countADII4=0;
+	//	int countADCI4=0;
+		
+	
+
 		for(int linha=0; linha<aux1.length;linha++) {
 			
 			String valorILM = (String) table.getValueAt(linha, 1); //is_long_method para comparar com os restantes 4
 			String valoriPlasma = (String) table.getValueAt(linha, 2); //iPlasma
 			String valorPMD = (String) table.getValueAt(linha, 3); //PMD
 			String valorESILM = (String) table.getValueAt(linha, 5); //ES_is_longMethod
-			String valorESIFE = (String) table.getValueAt(linha, 6); //ES_is_longMethod
+			String valorESIFE = (String) table.getValueAt(linha, 6); //ES_is_feature_envy
+			String valorIFE=(String) table.getValueAt(linha, 4);  //is_feature_envy
 			
 					
 			if(valorILM.equals("TRUE")) {							
 				if(valoriPlasma.equals("TRUE")) { //Def.corretos	//iPlasma
 					countDCI++;
-					System.out.println("DCIplasma" + "\n" + countDCI);
+					System.out.println("DCIplasma" + "\n" + countDCI + "\n" + "estamos na linha" + "\n" + linha);
 				}else {
 					countADII++; //ausencias de def.corretos
 					System.out.println("ADIIplasma" + "\n" + countADII);
 				}
 				if(valorPMD.equals("TRUE")) { //Def.corretos 		//PMD
 					countDCI1++;
-					System.out.println("DCI1PMD" + "\n" + countDCI1);
+					System.out.println("DCI1PMD" + "\n" + countDCI1 + "estamos na linha" + "\n" + linha);
 					
 				}else {
 					countADII1++; //ausencias de def.corretos
@@ -1346,14 +1380,21 @@ public class ResultDisplay {
 					countADII2++; //ausencias de def.corretos
 					System.out.println("ADII2ESILM" + "\n" +countADII2);
 				}
-				if(valorESIFE.equals("TRUE")) { //Def.corretos 		//ES_is_feature_envy
+			//	if(valorESIFE.equals("TRUE")) { //Def.corretos 		//ES_is_feature_envy com is_long_method   DEVE SAIR(!)
+			//		countDCI4++;
+			//		System.out.println("DCI3ESIFE" + "\n" +countDCI4);
+			//	}else {
+			//		countADII4++; //ausencias de def.corretos
+			//		System.out.println("ADII3IFE" + "\n" +countADII4);
+			//	}
+				
+			if(valorIFE.equals("TRUE"))	{
+				if(valorESIFE.equals("TRUE")) {
 					countDCI3++;
-					System.out.println("DCI3ESIFE" + "\n" +countDCI3);
 				}else {
-					countADII3++; //ausencias de def.corretos
-					System.out.println("ADII3IFE" + "\n" +countADII3);
+					countADII3++;
 				}
-							
+				
 			}
 			
 			if(valorILM.equals("FALSE")) { 
@@ -1380,15 +1421,26 @@ public class ResultDisplay {
 					countADCI2++; //aus.def.incorr
 					System.out.println("ADCI2ILM" + "\n" +countADCI2);
 				}	
-				if(valorESIFE.equals("TRUE")){ 						//ES_is_feature_envy
-					countDII3++; //defeitos incorretos
-					System.out.println("DII3IFE" + "\n" +countDII3);
-				}else {
-					countADCI3++; //aus.def.incorr
-					System.out.println("ADCI3IFE" + "\n" +countADCI3);
+			//	if(valorESIFE.equals("TRUE")){ 						//ES_is_feature_envy  -- DEVE SAIR (!)
+			//		countDII4++; //defeitos incorretos
+			//		System.out.println("DII3IFE" + "\n" +countDII4);
+			//	}else {
+			//		countADCI4++; //aus.def.incorr
+			//		System.out.println("ADCI3IFE" + "\n" +countADCI4);
 				}	
 			}
+				
+		if(valorIFE.equals("FALSE"))	{ //is_feature_envy com ES_is_feature_envy
+			if(valorESIFE.equals("TRUE")) {
+				countDII3++;
+				System.out.println("DII3IFE" + "\n" +countDII3);
+			}else {
+				countADCI3++;
+				System.out.println("ADCI3IFE" + "\n" +countADCI3);
+			}
+			
 		}
+	}
 	}
 }
 	
