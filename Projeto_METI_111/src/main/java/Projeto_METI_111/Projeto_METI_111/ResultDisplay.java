@@ -27,7 +27,7 @@ public class ResultDisplay {
 	private String string;
 	private ArrayList<Regra> regras = new ArrayList<Regra>();
 	private ArrayList<Record> records = new ArrayList<Record>();
-	private int iPlasmaDCI;
+	private JTable tt;
 	
 	
 	/**
@@ -1221,7 +1221,7 @@ public class ResultDisplay {
 		panel.setLayout(new BorderLayout());
 		labelResults = new JLabel("                      Resultados das Deteções de Erros em relação à Ferramenta 'Is_long_method'");
 		
-		JTable tt = new JTable(4,5);
+		tt = new JTable(4,5);
 		tt.setValueAt("DCI",0,1);
 		tt.setValueAt("DII",0,2);
 		tt.setValueAt("ADCI",0,3);
@@ -1229,7 +1229,7 @@ public class ResultDisplay {
 		tt.setValueAt("PMD",1,0);
 		tt.setValueAt("iPlasma",2,0);
 		tt.setValueAt("ES_is_long_method",3,0);
-		tt.setValueAt(iPlasmaDCI,1,1);
+		
 		
 							
 		panel.add(labelResults, BorderLayout.NORTH);
@@ -1363,8 +1363,8 @@ public class ResultDisplay {
 			if(valorILM.equals("TRUE")) {							
 				if(valoriPlasma.equals("TRUE")) { //Def.corretos	//iPlasma
 					countDCI++;
-					System.out.println("DCIplasma" + "\n" + countDCI + "\n" + "estamos na linha" + "\n" + linha);
-					iPlasmaDCI=countDCI;
+					System.out.println("DCIplasma" + "\n" + countDCI + "\n" + "estamos na linha" + "\n" + linha);	
+					tt.setValueAt(countDCI,2,1);
 				}else {
 					countADII++; //ausencias de def.corretos
 					System.out.println("ADIIplasma" + "\n" + countADII);
@@ -1397,8 +1397,7 @@ public class ResultDisplay {
 					countDCI3++;
 				}else {
 					countADII3++;
-				}
-				
+				}		
 			}
 			
 			if(valorILM.equals("FALSE")) { 
@@ -1444,8 +1443,23 @@ public class ResultDisplay {
 			}
 			
 		}
+	
+
+		tt.setValueAt(countDCI,2,1);
+		tt.setValueAt(countDII,2,2);
+		tt.setValueAt(countADCI,2,3);
+		tt.setValueAt(countADII,2,4);
+		tt.setValueAt(countDCI1,1,1);
+		tt.setValueAt(countDII1,1,2);
+		tt.setValueAt(countADII,1,4);
+		tt.setValueAt(countADCI,1,3);
+		tt.setValueAt(countDCI2,3,1);
+		tt.setValueAt(countDII2, 3, 2);
+		tt.setValueAt(countADII2, 3, 4);
+		tt.setValueAt(countADCI2,3,3);
 	}
 	}
+	
 }
 	
 	
