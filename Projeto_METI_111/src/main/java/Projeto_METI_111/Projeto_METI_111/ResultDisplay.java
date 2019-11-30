@@ -48,6 +48,7 @@ public class ResultDisplay {
 		}
 		analizarMetricas();
 		rulesResults();
+		comparatorsResults();
 	}
 	
 	private void analizarMetricas() {
@@ -1312,38 +1313,45 @@ public class ResultDisplay {
 		int countADII3=0;
 		int countADCI3=0;
 
+		
 		for(int linha=0; linha<aux1.length;linha++) {
-			String valorILM = (String) table.getValueAt(linha, 1); //is_long_method
+			
+			String valorILM = (String) table.getValueAt(linha, 1); //is_long_method para comparar com os restantes 4
 			String valoriPlasma = (String) table.getValueAt(linha, 2); //iPlasma
 			String valorPMD = (String) table.getValueAt(linha, 3); //PMD
 			String valorESILM = (String) table.getValueAt(linha, 5); //ES_is_longMethod
 			String valorESIFE = (String) table.getValueAt(linha, 6); //ES_is_longMethod
 			
-			
-			
-			
-			if(valorILM.equals("TRUE")) {							//iPlasma
-				if(valoriPlasma.equals("TRUE")) { //Def.corretos
+					
+			if(valorILM.equals("TRUE")) {							
+				if(valoriPlasma.equals("TRUE")) { //Def.corretos	//iPlasma
 					countDCI++;
+					System.out.println("DCIplasma" + "\n" + countDCI);
 				}else {
 					countADII++; //ausencias de def.corretos
+					System.out.println("ADIIplasma" + "\n" + countADII);
 				}
-				
 				if(valorPMD.equals("TRUE")) { //Def.corretos 		//PMD
 					countDCI1++;
+					System.out.println("DCI1PMD" + "\n" + countDCI1);
+					
 				}else {
 					countADII1++; //ausencias de def.corretos
+					System.out.println("ADII1PMD" + "\n" + countADII1);
 				}
-				
 				if(valorESILM.equals("TRUE")) { //Def.corretos 		//ES_is_long_method
 					countDCI2++;
+					System.out.println("ADCI12ESILM" + "\n" +countDCI2);
 				}else {
 					countADII2++; //ausencias de def.corretos
+					System.out.println("ADII2ESILM" + "\n" +countADII2);
 				}
 				if(valorESIFE.equals("TRUE")) { //Def.corretos 		//ES_is_feature_envy
 					countDCI3++;
+					System.out.println("DCI3ESIFE" + "\n" +countDCI3);
 				}else {
 					countADII3++; //ausencias de def.corretos
+					System.out.println("ADII3IFE" + "\n" +countADII3);
 				}
 							
 			}
@@ -1351,33 +1359,37 @@ public class ResultDisplay {
 			if(valorILM.equals("FALSE")) { 
 				if(valoriPlasma.equals("TRUE")){ 				//iPlasma
 					countDII++; //defeitos incorretos
+					System.out.println("DIIILM" + "\n" +countDII);
 				}else {
 					countADCI++; //aus.def.incorr
+					System.out.println("ADCIILM" + "\n" +countADCI);
 				}
 				
 				if(valorPMD.equals("TRUE")){ 						//PMD
 					countDII1++; //defeitos incorretos
+					System.out.println("DII1PMD" + "\n" +countDII1);
 				}else {
 					countADCI1++; //aus.def.incorr
+					System.out.println("ADCI1PMD" + "\n" +countADCI1);
 				}
 				
 				if(valorESILM.equals("TRUE")){ 						//ES_is_long_method
 					countDII2++; //defeitos incorretos
+					System.out.println("DII2ILM" + "\n" +countDII2);
 				}else {
 					countADCI2++; //aus.def.incorr
+					System.out.println("ADCI2ILM" + "\n" +countADCI2);
 				}	
 				if(valorESIFE.equals("TRUE")){ 						//ES_is_feature_envy
 					countDII3++; //defeitos incorretos
+					System.out.println("DII3IFE" + "\n" +countDII3);
 				}else {
 					countADCI3++; //aus.def.incorr
+					System.out.println("ADCI3IFE" + "\n" +countADCI3);
 				}	
 			}
-			
-
 		}
-		
 	}
-	
 }
 	
 	
