@@ -27,6 +27,7 @@ public class ResultDisplay {
 	private String string;
 	private ArrayList<Regra> regras = new ArrayList<Regra>();
 	private ArrayList<Record> records = new ArrayList<Record>();
+	private int iPlasmaDCI;
 	
 	
 	/**
@@ -1219,21 +1220,18 @@ public class ResultDisplay {
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		labelResults = new JLabel("                      Resultados das Deteções de Erros em relação à Ferramenta 'Is_long_method'");
-		//JLabel label = new JLabel("pões aqui 1 dos designs definidos"); //panelResults
 		
-		JTable tt = new JTable(5,4);
-//		
-//		JLabel DCI = new JLabel("DCI");
-//		JLabel DII = new JLabel("DII");
-//		JLabel ADCI = new JLabel("ADCI");
-//		JLabel ADII = new JLabel("ADII");
+		JTable tt = new JTable(4,5);
 		tt.setValueAt("DCI",0,1);
 		tt.setValueAt("DII",0,2);
 		tt.setValueAt("ADCI",0,3);
 		tt.setValueAt("ADII",0,4);
-	
+		tt.setValueAt("PMD",1,0);
+		tt.setValueAt("iPlasma",2,0);
+		tt.setValueAt("ES_is_long_method",3,0);
+		tt.setValueAt(iPlasmaDCI,1,1);
 		
-					
+							
 		panel.add(labelResults, BorderLayout.NORTH);
 		panel.add(tt, BorderLayout.CENTER);
 	}
@@ -1329,7 +1327,6 @@ public class ResultDisplay {
 			
 		String [] [] aux1 = data;
 		int countDCI=0; //iPlasma
-		String DCI;
 		int countDII=0; 
 		int countADII=0;
 		int countADCI=0;
@@ -1354,8 +1351,6 @@ public class ResultDisplay {
 	//	int countADII4=0;
 	//	int countADCI4=0;
 		
-	
-
 		for(int linha=0; linha<aux1.length;linha++) {
 			
 			String valorILM = (String) table.getValueAt(linha, 1); //is_long_method para comparar com os restantes 4
@@ -1364,12 +1359,12 @@ public class ResultDisplay {
 			String valorESILM = (String) table.getValueAt(linha, 5); //ES_is_longMethod
 			String valorESIFE = (String) table.getValueAt(linha, 6); //ES_is_feature_envy
 			String valorIFE=(String) table.getValueAt(linha, 4);  //is_feature_envy
-			
 					
 			if(valorILM.equals("TRUE")) {							
 				if(valoriPlasma.equals("TRUE")) { //Def.corretos	//iPlasma
 					countDCI++;
 					System.out.println("DCIplasma" + "\n" + countDCI + "\n" + "estamos na linha" + "\n" + linha);
+					iPlasmaDCI=countDCI;
 				}else {
 					countADII++; //ausencias de def.corretos
 					System.out.println("ADIIplasma" + "\n" + countADII);
