@@ -1218,16 +1218,6 @@ public class ResultDisplay {
 						
 		//Adding it to JScrollPane
 		sp = new JScrollPane(table);
-		
-		
-		//segunda label
-		labelResults = new JLabel("Resultados das Deteções de Erros em relação à Ferramente 'Is_long_method'");
-		panelResults = new JPanel();
-		panelResults.setLayout(new GridLayout(5,4)); //pde ter que ser alterado
-		labelResults.add(panelResults, BorderLayout.CENTER);
-		
-		
-		
 	}
 	
 	/**
@@ -1321,6 +1311,7 @@ public class ResultDisplay {
 			
 		String [] [] aux1 = data;
 		int countDCI=0; //iPlasma
+		String DCI;
 		int countDII=0; 
 		int countADII=0;
 		int countADCI=0;
