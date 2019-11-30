@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -1285,12 +1286,98 @@ public class ResultDisplay {
 			} else {
 				table.setValueAt("TRUE", linha, 8);
 			}
-		
-
 		}
 	}
+	
+	public void comparatorsResults() { //contadores para os defeitos 
+			
+		String [] [] aux1 = data;
+		int countDCI=0; //iPlasma
+		int countDII=0; 
+		int countADII=0;
+		int countADCI=0;
 		
-	
-	
+		int countDCI1=0; //PMD
+		int countDII1=0;
+		int countADII1=0;
+		int countADCI1=0;
+		
+		int countDCI2=0;  //ES_is_long_method
+		int countDII2=0;
+		int countADII2=0;
+		int countADCI2=0;
 
+		int countDCI3=0; //ES_is_feature_envy
+		int countDII3=0;
+		int countADII3=0;
+		int countADCI3=0;
+
+		for(int linha=0; linha<aux1.length;linha++) {
+			String valorILM = (String) table.getValueAt(linha, 1); //is_long_method
+			String valoriPlasma = (String) table.getValueAt(linha, 2); //iPlasma
+			String valorPMD = (String) table.getValueAt(linha, 3); //PMD
+			String valorESILM = (String) table.getValueAt(linha, 5); //ES_is_longMethod
+			String valorESIFE = (String) table.getValueAt(linha, 6); //ES_is_longMethod
+			
+			
+			
+			
+			if(valorILM.equals("TRUE")) {							//iPlasma
+				if(valoriPlasma.equals("TRUE")) { //Def.corretos
+					countDCI++;
+				}else {
+					countADII++; //ausencias de def.corretos
+				}
+				
+				if(valorPMD.equals("TRUE")) { //Def.corretos 		//PMD
+					countDCI1++;
+				}else {
+					countADII1++; //ausencias de def.corretos
+				}
+				
+				if(valorESILM.equals("TRUE")) { //Def.corretos 		//ES_is_long_method
+					countDCI2++;
+				}else {
+					countADII2++; //ausencias de def.corretos
+				}
+				if(valorESIFE.equals("TRUE")) { //Def.corretos 		//ES_is_feature_envy
+					countDCI3++;
+				}else {
+					countADII3++; //ausencias de def.corretos
+				}
+							
+			}
+			
+			if(valorILM.equals("FALSE")) { 
+				if(valoriPlasma.equals("TRUE")){ 				//iPlasma
+					countDII++; //defeitos incorretos
+				}else {
+					countADCI++; //aus.def.incorr
+				}
+				
+				if(valorPMD.equals("TRUE")){ 						//PMD
+					countDII1++; //defeitos incorretos
+				}else {
+					countADCI1++; //aus.def.incorr
+				}
+				
+				if(valorESILM.equals("TRUE")){ 						//ES_is_long_method
+					countDII2++; //defeitos incorretos
+				}else {
+					countADCI2++; //aus.def.incorr
+				}	
+				if(valorESIFE.equals("TRUE")){ 						//ES_is_feature_envy
+					countDII3++; //defeitos incorretos
+				}else {
+					countADCI3++; //aus.def.incorr
+				}	
+			}
+			
+
+		}
+		
+	}
+	
 }
+	
+	
