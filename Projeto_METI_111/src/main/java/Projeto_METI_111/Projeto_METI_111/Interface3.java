@@ -393,6 +393,7 @@ public class Interface3 {
 		finalizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					
 					ResultDisplay rd = new ResultDisplay(string, regras, records);
 				} catch(Exception e1) {
 					

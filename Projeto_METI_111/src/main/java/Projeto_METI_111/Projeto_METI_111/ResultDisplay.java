@@ -15,10 +15,9 @@ import javax.swing.JTable;
 public class ResultDisplay {
 	
 	private JTable table;
-	private JLabel labelTable;
-	private JPanel panelResults;
-	private JLabel labelResults;
 	private JScrollPane sp;
+	private JLabel labelTable;    //acrescentei filipa
+	private JLabel labelResults;  //acrescentei filipa
 	private JFrame frame;
 	private String [] columnTitles;
 	private String [] [] data;
@@ -58,13 +57,7 @@ public class ResultDisplay {
 		analizarMetricas();
 		rulesResults();
 		comparatorsResults();
-		
 			
-		labelTable.add(table);
-		frame.add(labelTable);
-		frame.add(labelResults);
-	
-	
 	}
 
 	
@@ -1205,19 +1198,33 @@ public class ResultDisplay {
 		frame.pack();
 		frame.setVisible(true);
 		
+		
 	}
 
 	/**
 	 * Set do panel display
 	 */
 	
-	public void addFrameContent() {
+	public void addFrameContent() {	
+		labelTable = new JLabel("Resultados das métricas adicionadas"); //acrescentado filipa
+		
 		//Initializing the JTable
 		table = new JTable(data, columnTitles);
 		table.setBounds(30, 40, 300, 600);
 						
 		//Adding it to JScrollPane
 		sp = new JScrollPane(table);
+		
+		//acrescentar à labelresults
+		labelTable.add(sp);     //acrescentei Filipa
+		labelTable.add(table);	//acrescentei Filipa
+		
+		//segunda label
+		labelResults = new JLabel("Resultados das Deteções de Erros em relação à Ferramenta 'Is_long_method'"); //acrescentado filipa
+	
+		//acrescentad0 Filipa
+		frame.add(labelTable);
+		frame.add(labelResults);
 	}
 	
 	/**
