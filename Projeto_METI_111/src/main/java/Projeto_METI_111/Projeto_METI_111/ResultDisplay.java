@@ -18,7 +18,9 @@ public class ResultDisplay {
 	private JScrollPane sp;
 	private JPanel panel;
 	private JLabel labelTable;    //acrescentei filipa
+	private JPanel results;
 	private JLabel labelResults;  //acrescentei filipa
+	private JPanel panelResults;
 	private JFrame frame;
 	private String [] columnTitles;
 	private String [] [] data;
@@ -1194,13 +1196,11 @@ public class ResultDisplay {
 
 	private void setFrameVisible() {
 		frame = new JFrame ("Resultados");
-		frame.setLayout(new GridLayout(2,1)); 
-		frame.add(sp);
-		frame.add(panel);
+		frame.setLayout(new BorderLayout());
+		frame.add(sp, BorderLayout.NORTH);
+		frame.add(panel, BorderLayout.CENTER);
 		frame.pack();
 		frame.setVisible(true);
-		
-		
 	}
 
 	/**
@@ -1208,35 +1208,34 @@ public class ResultDisplay {
 	 */
 	
 	public void addFrameContent() {	
-		labelTable = new JLabel("Resultados das métricas adicionadas"); //acrescentado filipa
-		
+				
 		//Initializing the JTable
 		table = new JTable(data, columnTitles);
 		table.setBounds(30, 40, 300, 600);
 						
 		//Adding it to JScrollPane
 		sp = new JScrollPane(table);
-		
-		//Painel com os indicadores de qualidade : fazes a tabela que desenhei mais o design que o Pedro disse e depois adicionas apenas um ao panel
+			
 		panel = new JPanel();
-		panel.setLayout(new GridLayout(2,1)); 
-		labelResults = new JLabel("Resultados das Deteções de Erros em relação à Ferramenta 'Is_long_method'");
-		JLabel label = new JLabel("pões aqui 1 dos designs definidos");
-		panel.add(labelResults);
-		panel.add(label);
+		panel.setLayout(new BorderLayout());
+		labelResults = new JLabel("                      Resultados das Deteções de Erros em relação à Ferramenta 'Is_long_method'");
+		//JLabel label = new JLabel("pões aqui 1 dos designs definidos"); //panelResults
 		
-// Todo este código que escreveste aqui em baixo deve ser apagado		
+		JTable tt = new JTable(5,4);
+//		
+//		JLabel DCI = new JLabel("DCI");
+//		JLabel DII = new JLabel("DII");
+//		JLabel ADCI = new JLabel("ADCI");
+//		JLabel ADII = new JLabel("ADII");
+		tt.setValueAt("DCI",0,1);
+		tt.setValueAt("DII",0,2);
+		tt.setValueAt("ADCI",0,3);
+		tt.setValueAt("ADII",0,4);
+	
 		
-//		//acrescentar à labelresults
-//		labelTable.add(sp);     //acrescentei Filipa
-//		labelTable.add(table);	//acrescentei Filipa
-		
-		//segunda label
-//		labelResults = new JLabel("Resultados das Deteções de Erros em relação à Ferramenta 'Is_long_method'"); //acrescentado filipa
-//
-//		//acrescentad0 Filipa
-//		frame.add(labelTable);
-//		frame.add(labelResults);
+					
+		panel.add(labelResults, BorderLayout.NORTH);
+		panel.add(tt, BorderLayout.CENTER);
 	}
 	
 	/**
