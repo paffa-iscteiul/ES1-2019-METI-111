@@ -16,6 +16,7 @@ public class ResultDisplay {
 	
 	private JTable table;
 	private JScrollPane sp;
+	private JPanel panel;
 	private JLabel labelTable;    //acrescentei filipa
 	private JLabel labelResults;  //acrescentei filipa
 	private JFrame frame;
@@ -1193,8 +1194,9 @@ public class ResultDisplay {
 
 	private void setFrameVisible() {
 		frame = new JFrame ("Resultados");
-		frame.setLayout(new BorderLayout());
+		frame.setLayout(new GridLayout(2,1)); 
 		frame.add(sp);
+		frame.add(panel);
 		frame.pack();
 		frame.setVisible(true);
 		
@@ -1215,16 +1217,26 @@ public class ResultDisplay {
 		//Adding it to JScrollPane
 		sp = new JScrollPane(table);
 		
-		//acrescentar à labelresults
-		labelTable.add(sp);     //acrescentei Filipa
-		labelTable.add(table);	//acrescentei Filipa
+		//Painel com os indicadores de qualidade : fazes a tabela que desenhei mais o design que o Pedro disse e depois adicionas apenas um ao panel
+		panel = new JPanel();
+		panel.setLayout(new GridLayout(2,1)); 
+		labelResults = new JLabel("Resultados das Deteções de Erros em relação à Ferramenta 'Is_long_method'");
+		JLabel label = new JLabel("pões aqui 1 dos designs definidos");
+		panel.add(labelResults);
+		panel.add(label);
+		
+// Todo este código que escreveste aqui em baixo deve ser apagado		
+		
+//		//acrescentar à labelresults
+//		labelTable.add(sp);     //acrescentei Filipa
+//		labelTable.add(table);	//acrescentei Filipa
 		
 		//segunda label
-		labelResults = new JLabel("Resultados das Deteções de Erros em relação à Ferramenta 'Is_long_method'"); //acrescentado filipa
-	
-		//acrescentad0 Filipa
-		frame.add(labelTable);
-		frame.add(labelResults);
+//		labelResults = new JLabel("Resultados das Deteções de Erros em relação à Ferramenta 'Is_long_method'"); //acrescentado filipa
+//
+//		//acrescentad0 Filipa
+//		frame.add(labelTable);
+//		frame.add(labelResults);
 	}
 	
 	/**
