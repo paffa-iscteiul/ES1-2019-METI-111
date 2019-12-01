@@ -53,9 +53,13 @@ public class ResultDisplay {
 			
 		for(int i=5;i!=9;i++) {
 			for(int j=0;j!=records.size();j++) {
-				table.setValueAt("FALSE", j, i);
-			}
-					
+				if(i==5) {
+					table.setValueAt("", j, i);
+				}
+				if(i==6) {
+					table.setValueAt("", j, i);
+				}
+			}	
 		}
 	
 		analizarMetricas();
@@ -1308,7 +1312,12 @@ public class ResultDisplay {
 			if( valor1.equals(valor2)) {
 				table.setValueAt("FALSE", linha, 7);
 			} else {
-				table.setValueAt("TRUE", linha, 7);
+				if(valor2.equals("")) {
+					table.setValueAt("FALSE", linha, 7);
+				}else {
+					table.setValueAt("TRUE", linha, 7);
+				}
+
 			}
 		
 			
@@ -1318,9 +1327,13 @@ public class ResultDisplay {
 			if( valor3.equals(valor4)) {
 				table.setValueAt("FALSE", linha, 8);
 			} else {
-				table.setValueAt("TRUE", linha, 8);
-			}
-		}
+				if(valor4.equals("")) {
+					table.setValueAt("FALSE", linha, 8);
+				}else {
+					table.setValueAt("TRUE", linha, 8);
+				}
+
+			}		}
 	}
 	
 	public void comparatorsResults() { //contadores para os defeitos 
