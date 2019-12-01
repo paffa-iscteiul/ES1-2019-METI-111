@@ -3,11 +3,16 @@ package Projeto_METI_111.Projeto_METI_111;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -26,6 +31,7 @@ public class ResultDisplay {
 	private String [] [] data;
 	private String string;
 	private ArrayList<Regra> regras = new ArrayList<Regra>();
+	private ArrayList<Regra> regras2 = new ArrayList<Regra>();
 	private ArrayList<Record> records = new ArrayList<Record>();
 	private JTable tt;
 	
@@ -43,88 +49,87 @@ public class ResultDisplay {
 	 */
 	
 	public ResultDisplay(String string, ArrayList<Regra> regras, ArrayList<Record> records) throws IOException {
-		setTitles();
-		setData(string);
-		addFrameContent();
-		setFrameVisible();		
-		this.string=string;
+		regras2.clear();
+		JFrame f = new JFrame("frame"); 
+        JPanel p =new JPanel(new BorderLayout()); 
+        JLabel l= new JLabel("Select rule"); 
+        String week[]=new String [regras.size()];
+        for(int o = 0; o!=regras.size();o++){
+        	String iff=regras.get(o).getMetricas();
+        	String then=regras.get(o).getEntao();
+        	String elsee=regras.get(o).getSenao(); 
+        	week[o] = "IF( " + iff + " ) THEN ( " + then + " ) ELSE ( " + elsee + " )";
+        }
+        JList b= new JList(week); 
+        p.add(b, BorderLayout.NORTH); 
+        JButton bt = new JButton("Avançar");
+        p.add(bt, BorderLayout.CENTER);
+        f.add(p); 
+        f.setSize(600,200);  
+        f.setVisible(true);
+        this.string=string;
 		this.regras=regras;
 		this.records=records;
-			
-		for(int i=5;i!=9;i++) {
-			for(int j=0;j!=records.size();j++) {
-				if(i==5) {
-					table.setValueAt("", j, i);
-				}
-				if(i==6) {
-					table.setValueAt("", j, i);
-				}
-			}	
-		}
-	
-		analizarMetricas();
-		rulesResults();
-		comparatorsResults();
-			
+        bt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{
+					String s = b.getSelectedValue().toString();
+					System.out.println(s);
+					setTitles();
+					setData(string);
+					addFrameContent();
+					setFrameVisible();		
+					for(int i=5;i!=9;i++) {
+						for(int j=0;j!=records.size();j++) {
+							if(i==5) {
+								table.setValueAt("", j, i);
+							}
+							if(i==6) {
+								table.setValueAt("", j, i);
+							}
+						}	
+					}
+					for(int b=0;b!=regras.size();b++) {
+						String aux = "IF( " + regras.get(b).getMetricas() + " ) THEN ( " + regras.get(b).getEntao() + " ) ELSE ( " + regras.get(b).getSenao() + " )";
+						if(aux.equals(s)){
+							regras2.add(regras.get(b));
+							System.out.println(regras.get(b).getMetricas() + " " + regras.get(b).getEntao() + " " + regras.get(b).getSenao());
+						}
+					}
+
+					f.dispose();
+					analizarMetricas();
+					rulesResults();
+					comparatorsResults();
+				} catch(IOException e1) {
+					
+				}						
+
+			}
+		});    
+		
 	}
 
-	
+
 	private void analizarMetricas() {
-		for(int i=0;i!=regras.size();i++) {
-			for(int j=0;j!=records.size();j++) {
-				String [] vetor_metricas = regras.get(i).getVetor_metricas();
-				if(occurrences(regras.get(i).getMetricas())==2) {
-					if(aux(regras.get(i),regras)==true) {
-						verificar(records.get(j), vetor_metricas[0], regras.get(i).getEntao(),regras.get(i).getSenao());
-					}
-				}else {
-					if(regras.get(i).getOp().equals("AND")) {
-						for(int k=0;k!=vetor_metricas.length-1;k++) {
-							verificarAND(records.get(j), vetor_metricas[k],vetor_metricas[k+1],regras.get(i).getEntao(),regras.get(i).getSenao());
-						}
-					}
-					if(regras.get(i).getOp().equals("OR")) {
-						for(int k=0;k!=vetor_metricas.length-1;k++) {
-							verificarOR(records.get(j), vetor_metricas[k],vetor_metricas[k+1],regras.get(i).getEntao(),regras.get(i).getSenao());
-						}
-					}
-				}
-			}
-		}
-	}
-
-	private boolean aux(Regra regra, ArrayList<Regra> regras2) {
-		int c=0;
-		String regra1 = regra.getMetricas().replaceAll(" ", "");
-		String [] s = regra1.split("<|\\>");
-		String [] s1 = regra1.split(s[1]);
-		String [] s2 = s1[0].split(s[0]);
-		String simbolo = s1[0].substring(s1[0].length()-1);
 		for(int i=0;i!=regras2.size();i++) {
-			String regra2 = regras2.get(i).getMetricas().replaceAll(" ", "");
-			String [] s3 = regra2.split("<|\\>");
-			String [] s4 = regra2.split(s3[1]);
-			String [] s5 = s4[0].split(s3[0]);
-			String simboloRegra = s4[0].substring(s4[0].length()-1);
-			if(regras2.get(i).getEntao().contains(regra.getEntao())&&regras2.get(i).getSenao().contains(regra.getSenao())&&regras2.get(i).getMetricas().contains(s[0])&&simbolo.contains(simboloRegra)) {
-				if(simboloRegra.equals("<")) {
-					String [] s7 = regras.get(i).getMetricas().split("<|\\>");
-					if((Double.parseDouble(s7[1].replaceAll(" ", "")))<(Double.parseDouble(s[1]))) {
-						c++;
-					}
+			for(int j=0;j!=records.size();j++) {
+				String [] vetor_metricas = regras2.get(i).getVetor_metricas();
+				if(occurrences(regras2.get(i).getMetricas())==2) {
+					verificar(records.get(j), vetor_metricas[0], regras2.get(i).getEntao(),regras2.get(i).getSenao());
 				}else {
-					String [] s7 = regras.get(i).getMetricas().split("<|\\>");
-					if((Double.parseDouble(s7[1].replaceAll(" ", "")))>(Double.parseDouble(s[1]))) {
-						c++;
+					if(regras2.get(i).getOp().equals("AND")) {
+						for(int k=0;k!=vetor_metricas.length-1;k++) {
+							verificarAND(records.get(j), vetor_metricas[k],vetor_metricas[k+1],regras2.get(i).getEntao(),regras2.get(i).getSenao());
+						}
+					}
+					if(regras2.get(i).getOp().equals("OR")) {
+						for(int k=0;k!=vetor_metricas.length-1;k++) {
+							verificarOR(records.get(j), vetor_metricas[k],vetor_metricas[k+1],regras2.get(i).getEntao(),regras2.get(i).getSenao());
+						}
 					}
 				}
 			}
-		}
-		if(c==0) {
-			return true;
-		}
-		else {
-			return false;
 		}
 	}
 
