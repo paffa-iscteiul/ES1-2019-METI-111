@@ -17,16 +17,17 @@ public class ResultDisplay {
 	private JTable table;
 	private JScrollPane sp;
 	private JPanel panel;
-	private JLabel labelTable;    //acrescentei filipa
-	private JPanel results;
+//	private JLabel labelTable;    //acrescentei filipa
+//	private JPanel results;
 	private JLabel labelResults;  //acrescentei filipa
-	private JPanel panelResults;
+//	private JPanel panelResults;
 	private JFrame frame;
 	private String [] columnTitles;
 	private String [] [] data;
 	private String string;
 	private ArrayList<Regra> regras = new ArrayList<Regra>();
 	private ArrayList<Record> records = new ArrayList<Record>();
+	private JTable tt;
 	
 	
 	/**
@@ -1219,21 +1220,18 @@ public class ResultDisplay {
 		panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		labelResults = new JLabel("                      Resultados das Deteções de Erros em relação à Ferramenta 'Is_long_method'");
-		//JLabel label = new JLabel("pões aqui 1 dos designs definidos"); //panelResults
 		
-		JTable tt = new JTable(5,4);
-//		
-//		JLabel DCI = new JLabel("DCI");
-//		JLabel DII = new JLabel("DII");
-//		JLabel ADCI = new JLabel("ADCI");
-//		JLabel ADII = new JLabel("ADII");
+		tt = new JTable(4,5);
 		tt.setValueAt("DCI",0,1);
 		tt.setValueAt("DII",0,2);
 		tt.setValueAt("ADCI",0,3);
 		tt.setValueAt("ADII",0,4);
-	
+		tt.setValueAt("PMD",1,0);
+		tt.setValueAt("iPlasma",2,0);
+		tt.setValueAt("ES_is_long_method",3,0);
 		
-					
+		
+							
 		panel.add(labelResults, BorderLayout.NORTH);
 		panel.add(tt, BorderLayout.CENTER);
 	}
@@ -1329,7 +1327,6 @@ public class ResultDisplay {
 			
 		String [] [] aux1 = data;
 		int countDCI=0; //iPlasma
-		String DCI;
 		int countDII=0; 
 		int countADII=0;
 		int countADCI=0;
@@ -1344,36 +1341,35 @@ public class ResultDisplay {
 		int countADII2=0;
 		int countADCI2=0;
 
-		int countDCI3=0; //ES_is_feature_envy com is_feature_envy
-		int countDII3=0;
-		int countADII3=0;
-		int countADCI3=0;
+//		int countDCI3=0; //ES_is_feature_envy com is_feature_envy
+//		int countDII3=0;
+//		int countADII3=0;
+//		int countADCI3=0;
 		
 	//	int countDCI4=0; //ES_is_feature_envy com is_long_method
 	//	int countDII4=0;
 	//	int countADII4=0;
 	//	int countADCI4=0;
 		
-	
-
 		for(int linha=0; linha<aux1.length;linha++) {
 			
 			String valorILM = (String) table.getValueAt(linha, 1); //is_long_method para comparar com os restantes 4
 			String valoriPlasma = (String) table.getValueAt(linha, 2); //iPlasma
 			String valorPMD = (String) table.getValueAt(linha, 3); //PMD
 			String valorESILM = (String) table.getValueAt(linha, 5); //ES_is_longMethod
-			String valorESIFE = (String) table.getValueAt(linha, 6); //ES_is_feature_envy
-			String valorIFE=(String) table.getValueAt(linha, 4);  //is_feature_envy
-			
+	//		String valorESIFE = (String) table.getValueAt(linha, 6); //ES_is_feature_envy
+	//		String valorIFE=(String) table.getValueAt(linha, 4);  //is_feature_envy
 					
 			if(valorILM.equals("TRUE")) {							
 				if(valoriPlasma.equals("TRUE")) { //Def.corretos	//iPlasma
 					countDCI++;
-					System.out.println("DCIplasma" + "\n" + countDCI + "\n" + "estamos na linha" + "\n" + linha);
+//					System.out.println("DCIplasma" + "\n" + countDCI + "\n" + "estamos na linha" + "\n" + linha);	
+					//tt.setValueAt(countDCI,2,1);
 				}else {
 					countADII++; //ausencias de def.corretos
 					System.out.println("ADIIplasma" + "\n" + countADII);
 				}
+				
 				if(valorPMD.equals("TRUE")) { //Def.corretos 		//PMD
 					countDCI1++;
 					System.out.println("DCI1PMD" + "\n" + countDCI1 + "estamos na linha" + "\n" + linha);
@@ -1389,6 +1385,7 @@ public class ResultDisplay {
 					countADII2++; //ausencias de def.corretos
 					System.out.println("ADII2ESILM" + "\n" +countADII2);
 				}
+			}
 			//	if(valorESIFE.equals("TRUE")) { //Def.corretos 		//ES_is_feature_envy com is_long_method   DEVE SAIR(!)
 			//		countDCI4++;
 			//		System.out.println("DCI3ESIFE" + "\n" +countDCI4);
@@ -1397,14 +1394,13 @@ public class ResultDisplay {
 			//		System.out.println("ADII3IFE" + "\n" +countADII4);
 			//	}
 				
-			if(valorIFE.equals("TRUE"))	{
-				if(valorESIFE.equals("TRUE")) {
-					countDCI3++;
-				}else {
-					countADII3++;
-				}
-				
-			}
+//			if(valorIFE.equals("TRUE"))	{					//is_feature_envy com ES_is_feature_envy
+//				if(valorESIFE.equals("TRUE")) {
+//					countDCI3++;
+//				}else {
+//					countADII3++;
+//				}		
+//			}
 			
 			if(valorILM.equals("FALSE")) { 
 				if(valoriPlasma.equals("TRUE")){ 				//iPlasma
@@ -1420,7 +1416,7 @@ public class ResultDisplay {
 					System.out.println("DII1PMD" + "\n" +countDII1);
 				}else {
 					countADCI1++; //aus.def.incorr
-					System.out.println("ADCI1PMD" + "\n" +countADCI1);
+					System.out.println("ADCI1PMD" + "\n" +countADCI1 + "estamos na linha" + linha);
 				}
 				
 				if(valorESILM.equals("TRUE")){ 						//ES_is_long_method
@@ -1430,27 +1426,45 @@ public class ResultDisplay {
 					countADCI2++; //aus.def.incorr
 					System.out.println("ADCI2ILM" + "\n" +countADCI2);
 				}	
+			}
 			//	if(valorESIFE.equals("TRUE")){ 						//ES_is_feature_envy  -- DEVE SAIR (!)
 			//		countDII4++; //defeitos incorretos
 			//		System.out.println("DII3IFE" + "\n" +countDII4);
 			//	}else {
 			//		countADCI4++; //aus.def.incorr
 			//		System.out.println("ADCI3IFE" + "\n" +countADCI4);
-				}	
-			}
-				
-		if(valorIFE.equals("FALSE"))	{ //is_feature_envy com ES_is_feature_envy
-			if(valorESIFE.equals("TRUE")) {
-				countDII3++;
-				System.out.println("DII3IFE" + "\n" +countDII3);
-			}else {
-				countADCI3++;
-				System.out.println("ADCI3IFE" + "\n" +countADCI3);
-			}
+	//			}	
 			
-		}
+				
+//		if(valorIFE.equals("FALSE"))	{ 						//is_feature_envy com ES_is_feature_envy
+//			if(valorESIFE.equals("TRUE")) {
+//				countDII3++;
+//				System.out.println("DII3IFE" + "\n" +countDII3);
+//			}else {
+//				countADCI3++;
+//				System.out.println("ADCI3IFE" + "\n" +countADCI3);
+//			}
+//			
+//		}
+			
+			tt.setValueAt(countDCI,2,1);
+			tt.setValueAt(countDII,2,2);
+			tt.setValueAt(countADCI,2,3);
+			tt.setValueAt(countADII,2,4);
+			tt.setValueAt(countDCI1,1,1);
+			tt.setValueAt(countDII1,1,2);
+			tt.setValueAt(countADII1,1,4);
+			tt.setValueAt(countADCI1,1,3);
+			tt.setValueAt(countDCI2,3,1);
+			tt.setValueAt(countDII2, 3, 2);
+			tt.setValueAt(countADII2, 3, 4);
+			tt.setValueAt(countADCI2,3,3);
+
 	}
+	
+		
+		
+		
 	}
+	
 }
-	
-	
