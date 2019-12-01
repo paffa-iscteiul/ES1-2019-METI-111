@@ -1385,6 +1385,7 @@ public class ResultDisplay {
 					countADII2++; //ausencias de def.corretos
 					System.out.println("ADII2ESILM" + "\n" +countADII2);
 				}
+			}
 			//	if(valorESIFE.equals("TRUE")) { //Def.corretos 		//ES_is_feature_envy com is_long_method   DEVE SAIR(!)
 			//		countDCI4++;
 			//		System.out.println("DCI3ESIFE" + "\n" +countDCI4);
@@ -1425,14 +1426,15 @@ public class ResultDisplay {
 					countADCI2++; //aus.def.incorr
 					System.out.println("ADCI2ILM" + "\n" +countADCI2);
 				}	
+			}
 			//	if(valorESIFE.equals("TRUE")){ 						//ES_is_feature_envy  -- DEVE SAIR (!)
 			//		countDII4++; //defeitos incorretos
 			//		System.out.println("DII3IFE" + "\n" +countDII4);
 			//	}else {
 			//		countADCI4++; //aus.def.incorr
 			//		System.out.println("ADCI3IFE" + "\n" +countADCI4);
-				}	
-			}
+	//			}	
+			
 				
 //		if(valorIFE.equals("FALSE"))	{ 						//is_feature_envy com ES_is_feature_envy
 //			if(valorESIFE.equals("TRUE")) {
@@ -1444,21 +1446,25 @@ public class ResultDisplay {
 //			}
 //			
 //		}
+			
+			tt.setValueAt(countDCI,2,1);
+			tt.setValueAt(countDII,2,2);
+			tt.setValueAt(countADCI,2,3);
+			tt.setValueAt(countADII,2,4);
+			tt.setValueAt(countDCI1,1,1);
+			tt.setValueAt(countDII1,1,2);
+			tt.setValueAt(countADII1,1,4);
+			tt.setValueAt(countADCI1,1,3);
+			tt.setValueAt(countDCI2,3,1);
+			tt.setValueAt(countDII2, 3, 2);
+			tt.setValueAt(countADII2, 3, 4);
+			tt.setValueAt(countADCI2,3,3);
 
 	}
 	
-		tt.setValueAt(countDCI,2,1);
-		tt.setValueAt(countDII,2,2);
-		tt.setValueAt(countADCI,2,3);
-		tt.setValueAt(countADII,2,4);
-		tt.setValueAt(countDCI1,1,1);
-		tt.setValueAt(countDII1,1,2);
-		tt.setValueAt(countADII,1,4);
-		tt.setValueAt(countADCI,1,3);
-		tt.setValueAt(countDCI2,3,1);
-		tt.setValueAt(countDII2, 3, 2);
-		tt.setValueAt(countADII2, 3, 4);
-		tt.setValueAt(countADCI2,3,3);
+		
+		
+		
 	}
 	
 }
