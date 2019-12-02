@@ -1465,6 +1465,8 @@ public class ResultDisplay {
 //			
 //		}
 			
+		//ORGANIZAR MELHOR	
+
 			tt.setValueAt(countDCI,2,1);
 			tt.setValueAt(countDII,2,2);
 			tt.setValueAt(countADCI,2,3);
