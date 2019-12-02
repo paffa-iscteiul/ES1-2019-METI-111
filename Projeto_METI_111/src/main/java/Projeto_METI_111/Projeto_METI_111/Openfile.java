@@ -1,6 +1,7 @@
 package Projeto_METI_111.Projeto_METI_111;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -12,10 +13,20 @@ public class Openfile {
 	JFileChooser chooseFile = new JFileChooser();
 	private ArrayList<Record> records = new ArrayList<Record>();
 	
+	
+	/**
+	 * Construtor da classe
+	 * Recebe a interface 1 como atributo apenas para realizar a confirmacao se o ficheiro se encontra carregado
+	 * @param Interface1
+	 */
 	public Openfile (Interface1 i) {
 		this.i=i;
 	}
-	
+	/**
+	 * Browser() neste metodo é aberta a janela browser onde se procura o ficheiro e
+	 * e tambem é realizada a leitura do ficheiro excel para uma estrutura de dados
+	 * também se realiza a confrmação do carregamento do ficheiro
+	 */
 	public void Browser() throws Exception{
 		if(chooseFile.showOpenDialog(null)==JFileChooser.APPROVE_OPTION) {
 			

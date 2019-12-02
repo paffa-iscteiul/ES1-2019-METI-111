@@ -14,6 +14,15 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+
+/**
+ * Construtor da class 
+ *Nao recebe nenhum atributo 
+ *faz criaçao da frame inicial
+ *define o tamanho da mesma 
+ *invoca metodo addFrameContent para adicionar os restantes elementos da interface 
+ *
+ */
 public class Interface1 {
 	private JFrame frame;
 	private Openfile of = new Openfile(this);
@@ -28,8 +37,12 @@ public class Interface1 {
 		frame.setSize(400,100);
 		addFrameContent();
 	}
-	
-	
+	/** addFrameContent() é um metodo que vai criar o paineis novos as Labels é neste 
+	 * metodo que é chamada a class openfile para carregar para se procurar o ficheiro
+	 * e a interface 3 
+	 *
+	 */
+
 	private void addFrameContent() {
 		JLabel alert = new JLabel ("Clique no botão browser para escolher o ficheiro Excel");
 		frame.add(alert,BorderLayout.NORTH);
@@ -77,12 +90,17 @@ public class Interface1 {
 	});
 		
 	}
-	
+	/** fileConfirmed() é um metodo que vai vereficar se o ficheiro esta escolhido
+	 *  @param s nome do ficheiro escolhido
+	 * @param string é o nome completo do ficheiro  
+	 *
+	 */
 	public void fileConfirmed (String s, String string) {
 		JOptionPane.showMessageDialog(null, "O ficheiro " + s + " foi carregado corretamente. Carregue Finish para continuar");
 		fileSelected=true;
 		this.string=string;
 	}
+	
 	
 	public static void main (String[] args) {
 		Interface1 i1 = new Interface1 ();
