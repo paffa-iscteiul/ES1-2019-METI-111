@@ -64,7 +64,6 @@ public class ExcelDisplay {
 		return sp;
 	}
 
-
 	public void setSp(JScrollPane sp) {
 		this.sp = sp;
 	}
