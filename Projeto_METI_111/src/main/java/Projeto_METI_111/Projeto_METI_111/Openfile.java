@@ -1,18 +1,16 @@
 package Projeto_METI_111.Projeto_METI_111;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 
 
 public class Openfile {
-	private Interface1 i;
+	public Interface1 i;
 	public static File Excelfile;
 	JFileChooser chooseFile = new JFileChooser();
-	private ArrayList<Record> records = new ArrayList<Record>();
-	
+	public ArrayList<Record> records = new ArrayList<Record>();
 	
 	/**
 	 * Construtor da classe

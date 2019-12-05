@@ -50,7 +50,7 @@ public class Interface3 {
 	 * de introdução dos parâmetros pelo utilizador
 	 */
 	
-	private void addFrameContent() {
+	public void addFrameContent() {
 		//painel onde se lê o excell
 		JPanel centerPanel = new JPanel ();
 		centerPanel.setLayout(new FlowLayout());
