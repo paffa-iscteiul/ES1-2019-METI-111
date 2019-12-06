@@ -1,18 +1,14 @@
 package Projeto_METI_111.Projeto_METI_111;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class Interface3Test {
+class Interface1Test {
 	
-	Interface3 int3;
+	Interface1 int1; 
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -31,13 +27,17 @@ class Interface3Test {
 	}
 
 	@Test
-	void testInterface3() {
-		int3 = new Interface3("int3", new ArrayList<Record>());
-		assertDoesNotThrow(()->int3);
+	void testInterface1() {
+		int1 = new Interface1();
 	}
 
 	@Test
-	void testAddFrameContent() {
+	void testFileConfirmed() {
+		
+	}
+
+	@Test
+	void testMain() {
 		
 	}
 
