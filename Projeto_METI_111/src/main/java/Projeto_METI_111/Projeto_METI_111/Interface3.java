@@ -27,7 +27,6 @@ public class Interface3 {
 	String THENfinal;
 	String ELSEfinal;
 	String string;
-	
 
 	/**
 	 * startInstance Interface3

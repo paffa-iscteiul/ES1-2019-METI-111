@@ -24,9 +24,11 @@ import javax.swing.WindowConstants;
  */
 public class Interface1 {
 	private JFrame frame;
-	private Openfile of = new Openfile(this);
+	Openfile of = new Openfile(this);
 	private boolean fileSelected = false;
 	private String string = "";
+	JButton finish;
+	JButton browser;
 	
 	public Interface1 () {
 		frame = new JFrame ("Aplicação de avaliaçao de código");
@@ -58,7 +60,7 @@ public class Interface1 {
 		
 		
 		//botao de executa a janela
-		JButton browser = new JButton ("Browser");
+		browser = new JButton ("Browser");
 		southPanel.add(browser, BorderLayout.WEST);
 		
 		//acao do botao invoca o objecto da outra class para se ir buscar o ficheiro 
@@ -73,7 +75,7 @@ public class Interface1 {
 			}
 	});
 		
-		JButton finish = new JButton ("Finish");
+		finish = new JButton ("Finish");
 		southPanel.add(finish, BorderLayout.CENTER);
 		finish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

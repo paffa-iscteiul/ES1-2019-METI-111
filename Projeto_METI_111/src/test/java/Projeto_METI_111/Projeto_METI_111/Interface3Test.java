@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 class Interface3Test {
 	
 	Interface3 int3;
+	Regra rteste;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
