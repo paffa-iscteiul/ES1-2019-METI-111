@@ -1,6 +1,8 @@
 package Projeto_METI_111.Projeto_METI_111;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -25,6 +27,7 @@ public class ResultDisplay {
 	private JLabel labelResults;  //acrescentei filipa
 //	private JPanel panelResults;
 	private JFrame frame;
+	private JFrame f;
 	private String [] columnTitles;
 	private String [] [] data;
 	private String string;
@@ -32,6 +35,7 @@ public class ResultDisplay {
 	private ArrayList<Regra> regras2 = new ArrayList<Regra>();
 	private ArrayList<Record> records = new ArrayList<Record>();
 	private JTable tt;
+	private JButton button;
 	
 	
 	/**
@@ -46,9 +50,18 @@ public class ResultDisplay {
 	 * 
 	 */
 	
+	public ResultDisplay(String string, ArrayList<Regra> regras, ArrayList<Record> records,String selectedValue) {
+		try {
+			inic(string,regras,records,selectedValue);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public ResultDisplay(String string, ArrayList<Regra> regras, ArrayList<Record> records) throws IOException {
 		regras2.clear();
-		JFrame f = new JFrame("frame"); 
+		f = new JFrame("frame"); 
         JPanel p =new JPanel(new BorderLayout()); 
         JLabel l= new JLabel("Select rule"); 
         String week[]=new String [regras.size()];
@@ -68,6 +81,7 @@ public class ResultDisplay {
         this.string=string;
 		this.regras=regras;
 		this.records=records;
+		button=bt;
         bt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
@@ -107,8 +121,7 @@ public class ResultDisplay {
 		});    
 		
 	}
-
-
+	
 	private void analizarMetricas() {
 		for(int i=0;i!=regras2.size();i++) {
 			for(int j=0;j!=records.size();j++) {
@@ -1129,7 +1142,7 @@ public class ResultDisplay {
 		if((tokens1[0].equals("LOC"))) {
 			if(string2.contains("<")) {
 				if(((Double.parseDouble(record.getLoc()))<d1)) {
-					setVal(((int) Double.parseDouble(record.methodID)-1),entao);					
+					setVal(((int) Double.parseDouble(record.methodID)-1),entao);	
 				}else {
 					setVal(((int) Double.parseDouble(record.methodID)-1),senao);
 				}
@@ -1188,8 +1201,7 @@ public class ResultDisplay {
 		}
 		if(aux.contains("feature_envy")&&aux.contains("FALSE")) {
 			table.setValueAt("FALSE", i, 6);
-		}
-		
+		}	
 	}
 
 	private int occurrences(String metricas) {
@@ -1209,6 +1221,12 @@ public class ResultDisplay {
 		frame.add(panel, BorderLayout.CENTER);
 		frame.pack();
 		frame.setVisible(true);
+	}
+	private void setFrameVisible2() {
+		frame = new JFrame ("Resultados");
+		frame.setLayout(new BorderLayout());
+		frame.add(sp, BorderLayout.NORTH);
+		frame.add(panel, BorderLayout.CENTER);
 	}
 
 	/**
@@ -1239,6 +1257,7 @@ public class ResultDisplay {
 		tt.setValueAt("ES_is_long_method",3,0);
 		tt.setValueAt("ES_is_feature_envy",4,0);
 		
+		
 							
 		panel.add(labelResults, BorderLayout.NORTH);
 		panel.add(tt, BorderLayout.CENTER);
@@ -1260,6 +1279,53 @@ public class ResultDisplay {
 		columnTitles[8] = "Defeito is_feature_envy";
 	}
 		
+	/**
+	 * Vai buscar informação necessária ao já formado display
+	 * @throws IOException 
+	 */
+	public void setData1(String string2) throws IOException {
+		String s = System.getProperty("user.dir");
+		String a = s + "\\files\\Long-Method.xlsx";
+		ExcelDisplay teste = new ExcelDisplay(new ReadExcel (new File(a)));
+		String [] [] aux = teste.getData();
+		data = new String [aux.length] [columnTitles.length];
+		for(int linha = 0; linha < aux.length; linha++) {				//this equals to the row in our matrix
+			for(int coluna = 0; coluna < aux[0].length; coluna++) {				//this equals to the column in each row
+				switch (coluna) {
+				case 0: data[linha][coluna] = aux [linha][coluna];				//MethodID 			 / Em uso
+					break;
+				case 1: 														//Package 			 / Sem uso
+					break;
+				case 2: 														//Class 			 / Sem uso
+					break;
+				case 3: 														//method			 / Sem uso
+					break;
+				case 4: 														//LOC 				 / Sem uso
+					break;
+				case 5: 														//CYCLO 			 / Sem uso
+					break;
+				case 6: 														//ATFD				 / Sem uso
+					break;
+				case 7: 														//LAA 				 / Sem uso
+					break;
+				case 8: data[linha][1] = aux [linha][coluna];					//is_long_method 	 / Em uso
+					break;
+				case 9: data[linha][2] = aux [linha][coluna];					//iPlasma			 / Em uso
+					break;
+				case 10: data[linha][3] = aux [linha][coluna];					//PMD				 / Em uso
+					break;
+				case 11: data[linha][4] = aux [linha][coluna];					//is_feature_envy	 / Em uso
+					break;
+				default:
+					break;
+				}
+				
+			
+			}
+		}
+		
+	}
+
 	/**
 	 * Vai buscar informação necessária ao já formado display
 	 * @throws IOException 
@@ -1302,9 +1368,8 @@ public class ResultDisplay {
 			
 			}
 		}
-		
-	}
-	
+			}
+
 	public void rulesResults() {
 
 		String [] [] aux = data;
@@ -1341,8 +1406,7 @@ public class ResultDisplay {
 	}
 	
 	public void comparatorsResults() { //contadores para os defeitos 
-			
-		String [] [] aux1 = data;
+String [] [] aux1 = data;
 		
 		//CONTADORES PARA O IS_LONG_METHOD
 		int countDCI=0; //iPlasma
@@ -1486,12 +1550,64 @@ public class ResultDisplay {
 			tt.setValueAt(countDII3,4,2);
 			tt.setValueAt(countADCI3,4,3);
 			tt.setValueAt(countADII3,4,4);
-
+		}
 	}
 	
-		
-		
-		
+	public String getValue() {
+		return (String) table.getValueAt(0, 5);
 	}
+	
+	public void inic(String string, ArrayList<Regra> regras, ArrayList<Record> records,String selectedValue) throws IOException {
+		regras2.clear();
+		f = new JFrame("frame"); 
+        JPanel p =new JPanel(new BorderLayout()); 
+        JLabel l= new JLabel("Select rule"); 
+        String week[]=new String [regras.size()];
+        for(int o = 0; o!=regras.size();o++){
+        	String iff=regras.get(o).getMetricas();
+        	String then=regras.get(o).getEntao();
+        	String elsee=regras.get(o).getSenao(); 
+        	week[o] = "IF( " + iff + " ) THEN ( " + then + " ) ELSE ( " + elsee + " )";
+        }
+        JList b= new JList(week); 
+        p.add(b, BorderLayout.NORTH); 
+        JButton bt = new JButton("Avançar");
+        p.add(bt, BorderLayout.CENTER);
+        f.add(p); 
+        f.setSize(600,200);  
+        f.setVisible(true);
+        this.string=string;
+		this.regras=regras;
+		this.records=records;
+		button=bt;
+		
+		String s = selectedValue;
+		System.out.println(s);
+		setTitles();
+		setData1(string);
+		addFrameContent();
+		setFrameVisible2();		
+		for(int i=5;i!=9;i++) {
+			for(int j=0;j!=records.size();j++) {
+				if(i==5) {
+					table.setValueAt("", j, i);
+				}
+				if(i==6) {
+					table.setValueAt("", j, i);
+				}
+			}	
+		}
+		for(int b1=0;b1!=regras.size();b1++) {
+			String aux = "IF( " + regras.get(b1).getMetricas() + " ) THEN ( " + regras.get(b1).getEntao() + " ) ELSE ( " + regras.get(b1).getSenao() + " )";
+			if(aux.equals(s)){
+				regras2.add(regras.get(b1));
+				System.out.println(regras.get(b1).getMetricas() + " " + regras.get(b1).getEntao() + " " + regras.get(b1).getSenao());
+			}
+		}
+
+		f.dispose();
+		analizarMetricas();
+	}
+
 	
 }
