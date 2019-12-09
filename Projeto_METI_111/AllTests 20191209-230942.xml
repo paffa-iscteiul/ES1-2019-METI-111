@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="AllTests" project="Projeto_METI_111" tests="39" started="39" failures="0" errors="0" ignored="0">
+  <testsuite name="Projeto_METI_111.Projeto_METI_111.AllTests" time="69.949">
+    <testsuite name="JUnit Jupiter" time="69.949">
+      <testsuite name="ExcelDisplayTest" time="5.49">
+        <testcase name="testStartInstance()" classname="ExcelDisplayTest" time="4.73"/>
+        <testcase name="testGetSp()" classname="ExcelDisplayTest" time="0.02"/>
+        <testcase name="testSetSp()" classname="ExcelDisplayTest" time="0.0"/>
+        <testcase name="testGetJ()" classname="ExcelDisplayTest" time="0.01"/>
+        <testcase name="testSetJ()" classname="ExcelDisplayTest" time="0.02"/>
+        <testcase name="testExcelDisplayFileInvalid()" classname="ExcelDisplayTest" time="0.0"/>
+        <testcase name="testGetData()" classname="ExcelDisplayTest" time="0.0"/>
+        <testcase name="testExcelDisplayWorks()" classname="ExcelDisplayTest" time="0.38"/>
+        <testcase name="testExcelDisplayFileDontExists()" classname="ExcelDisplayTest" time="0.0"/>
+        <testcase name="testGetRecord()" classname="ExcelDisplayTest" time="0.32"/>
+        <testcase name="testGetInstance()" classname="ExcelDisplayTest" time="0.01"/>
+      </testsuite>
+      <testsuite name="RecordTest" time="0.69">
+        <testcase name="testGetCyclo()" classname="RecordTest" time="0.01"/>
+        <testcase name="testGetIsLongMethod()" classname="RecordTest" time="0.0"/>
+        <testcase name="testGetAtfd()" classname="RecordTest" time="0.0"/>
+        <testcase name="testGetPack()" classname="RecordTest" time="0.01"/>
+        <testcase name="testGetIsFeatureEnvy()" classname="RecordTest" time="0.0"/>
+        <testcase name="testGetMethodID()" classname="RecordTest" time="0.0"/>
+        <testcase name="testGetClasse()" classname="RecordTest" time="0.0"/>
+        <testcase name="testGetMethod()" classname="RecordTest" time="0.0"/>
+        <testcase name="testGetLaa()" classname="RecordTest" time="0.0"/>
+        <testcase name="testGetLoc()" classname="RecordTest" time="0.0"/>
+        <testcase name="testGetPmd()" classname="RecordTest" time="0.01"/>
+        <testcase name="testGetRegisto()" classname="RecordTest" time="0.0"/>
+        <testcase name="testGetIPlasma()" classname="RecordTest" time="0.0"/>
+        <testcase name="testRecordStringStringStringStringStringStringStringStringStringStringStringString()" classname="RecordTest" time="0.65"/>
+      </testsuite>
+      <testsuite name="OpenfileTest" time="0.32">
+        <testcase name="testBrowser()" classname="OpenfileTest" time="0.05"/>
+        <testcase name="testOpenfile()" classname="OpenfileTest" time="0.26"/>
+        <testcase name="testGetRecords()" classname="OpenfileTest" time="0.01"/>
+      </testsuite>
+      <testsuite name="RegraTest" time="0.01">
+        <testcase name="testGetEntao()" classname="RegraTest" time="0.0"/>
+        <testcase name="testGetSenao()" classname="RegraTest" time="0.0"/>
+        <testcase name="testGetOp()" classname="RegraTest" time="0.01"/>
+        <testcase name="testGetMetricas()" classname="RegraTest" time="0.0"/>
+        <testcase name="testGetVetor_metricas()" classname="RegraTest" time="0.0"/>
+      </testsuite>
+      <testsuite name="ResultDisplayTest" time="33.931">
+        <testcase name="testResultDisplayStringArrayListOfRegraArrayListOfRecordString()" classname="ResultDisplayTest" time="33.931"/>
+      </testsuite>
+      <testsuite name="Interface1Test" time="29.421">
+        <testcase name="testMain()" classname="Interface1Test" time="0.2"/>
+        <testcase name="testClickFinish()" classname="Interface1Test" time="29.221"/>
+      </testsuite>
+      <testsuite name="Interface3Test" time="0.087">
+        <testcase name="testAddFrameContent()" classname="Interface3Test" time="0.0"/>
+        <testcase name="testInterface3()" classname="Interface3Test" time="0.087"/>
+      </testsuite>
+    </testsuite>
+    <testcase name="JUnit Vintage" classname="JUnit Vintage" time="0.0"/>
+  </testsuite>
+</testrun>
