@@ -27,6 +27,8 @@ public class Interface3 {
 	private String limatfdLer="";
 	private String limcycloLer="";
 	private String limlaaLer="";
+	private JButton and, smaller, telse, or, equal, tif, ttrue, tfalse, bigger, tso, islongmethod, isfeatureenvy, loc, cyclo, atfd, laa, open, close;
+	private JTextField screen, limloc, limlaa, limcyclo, limatfd;
 	ArrayList <Regra> regras = new ArrayList<Regra>() ;
 	ArrayList <Record> records = new ArrayList<Record>() ;	
 	String main ;
@@ -88,14 +90,14 @@ public class Interface3 {
 		 */
 		
 		//Mostrador
-		JTextField screen = new JTextField();   
+		screen = new JTextField();   
 		calculator.add(screen, BorderLayout.NORTH);
 		
 		// Painel com os termos das regras
 		JPanel terms = new JPanel();
 		terms.setLayout(new GridLayout(3,4));
 		
-		JButton and = new JButton(" AND");
+		and = new JButton(" AND");
 		and.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm = screen.getText() + and.getText();
@@ -103,7 +105,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton smaller = new JButton(" <");
+		smaller = new JButton(" <");
 		smaller.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String metric = null;
@@ -137,7 +139,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton telse = new JButton(" ELSE");
+		telse = new JButton(" ELSE");
 		telse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm = screen.getText() + telse.getText();
@@ -146,7 +148,7 @@ public class Interface3 {
 		});
 		
 		
-		JButton or = new JButton(" OR");
+		or = new JButton(" OR");
 		or.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm = screen.getText() + or.getText();
@@ -154,7 +156,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton equal = new JButton(" =");
+		equal = new JButton(" =");
 		equal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm = screen.getText() + equal.getText();
@@ -162,7 +164,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton ttrue = new JButton(" TRUE");     //double t propositado
+		ttrue = new JButton(" TRUE");     //double t propositado
 		ttrue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTermo = screen.getText() + ttrue.getText();
@@ -170,7 +172,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton tif = new JButton(" IF");    //botao if
+		tif = new JButton(" IF");    //botao if
 		tif.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm = screen.getText() + tif.getText();
@@ -178,7 +180,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton tfalse = new JButton(" FALSE");
+		tfalse = new JButton(" FALSE");
 		tfalse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm = screen.getText() + tfalse.getText();
@@ -186,7 +188,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton bigger = new JButton(" >");
+		bigger = new JButton(" >");
 		bigger.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String metric = null;
@@ -223,7 +225,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton tso = new JButton(" THEN");					//'entao'
+		tso = new JButton(" THEN");					//'entao'
 		tso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm = screen.getText() + tso.getText();
@@ -231,7 +233,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton isfeatureenvy = new JButton(" is_feature_envy");
+		isfeatureenvy = new JButton(" is_feature_envy");
 		isfeatureenvy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm =screen.getText() + isfeatureenvy.getText();
@@ -239,7 +241,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton islongmethod = new JButton(" is_long_method");
+		islongmethod = new JButton(" is_long_method");
 		islongmethod.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm = screen.getText() + islongmethod.getText();
@@ -247,7 +249,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton loc = new JButton(" LOC");
+		loc = new JButton(" LOC");
 		loc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm = screen.getText() + loc.getText();
@@ -255,7 +257,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton cyclo = new JButton(" CYCLO");
+		cyclo = new JButton(" CYCLO");
 		cyclo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm = screen.getText() + cyclo.getText();
@@ -263,7 +265,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton atfd = new JButton(" ATFD");
+		atfd = new JButton(" ATFD");
 		atfd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm = screen.getText() + atfd.getText();
@@ -271,7 +273,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton laa = new JButton(" LAA");
+		laa = new JButton(" LAA");
 		laa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm = screen.getText() + laa.getText();
@@ -279,7 +281,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton open = new JButton(" (");
+		open = new JButton(" (");
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm = screen.getText() + open.getText();
@@ -287,7 +289,7 @@ public class Interface3 {
 			}
 		});
 		
-		JButton close = new JButton(" )");
+		close = new JButton(" )");
 		close.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String enterTerm = screen.getText() + close.getText();
@@ -421,22 +423,21 @@ public class Interface3 {
 		JLabel labelatfd = new JLabel("ATFD");
 		JLabel labellaa = new JLabel("LAA");
 		
-		JTextField limloc = new JTextField();
+		limloc = new JTextField();
 		limloc.setText("0");
 		limlocLer="0";
-		JTextField limcyclo = new JTextField();
+		limcyclo = new JTextField();
 		limcyclo.setText("0");
 		limcycloLer="0";
-		JTextField limatfd = new JTextField();
+		limatfd = new JTextField();
 		limatfd.setText("0");
 		limatfdLer="0";
-		JTextField limlaa = new JTextField();
+		limlaa = new JTextField();
 		limlaa.setText("0");
 		limlaaLer="0";
 		
 		JButton guardarLOC =new JButton("Guardar");
 		guardarLOC.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				limlocLer=limloc.getText();
 			}
@@ -444,7 +445,6 @@ public class Interface3 {
 		
 		JButton guardarCYCLO=new JButton("Guardar");
 		guardarCYCLO.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				limcycloLer=limcyclo.getText();
 			}
@@ -452,7 +452,6 @@ public class Interface3 {
 		
 		JButton guardarATFD=new JButton("Guardar");
 		guardarATFD.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				limatfdLer=limatfd.getText();
 			}
@@ -461,7 +460,6 @@ public class Interface3 {
 		
 		JButton guardarLAA=new JButton("Guardar");
 		guardarLAA.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				limlaaLer=limlaa.getText();
 			}

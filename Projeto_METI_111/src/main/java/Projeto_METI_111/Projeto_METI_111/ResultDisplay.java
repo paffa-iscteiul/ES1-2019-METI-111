@@ -40,6 +40,7 @@ public class ResultDisplay {
 	private ArrayList<Regra> regras2 = new ArrayList<Regra>();
 	private ArrayList<Record> records = new ArrayList<Record>();
 	private JTable tt;
+	private JList b;
 	private JButton button;
 	
 	
@@ -69,7 +70,7 @@ public class ResultDisplay {
 	 * @param records lista de registos
 	 * @throws IOException
 	 */
-	public ResultDisplay(String string, ArrayList<Regra> regras, ArrayList<Record> records) throws IOException {
+	public ResultDisplay(final String string, final ArrayList<Regra> regras, final ArrayList<Record> records) throws IOException {
 		regras2.clear();
 		f = new JFrame("frame"); 
         JPanel p =new JPanel(new BorderLayout()); 
@@ -81,7 +82,7 @@ public class ResultDisplay {
         	String elsee=regras.get(o).getSenao(); 
         	week[o] = "IF( " + iff + " ) THEN ( " + then + " ) ELSE ( " + elsee + " )";
         }
-        JList b= new JList(week); 
+        b= new JList(week); 
         p.add(b, BorderLayout.NORTH); 
         JButton bt = new JButton("Avançar");
         p.add(bt, BorderLayout.CENTER);

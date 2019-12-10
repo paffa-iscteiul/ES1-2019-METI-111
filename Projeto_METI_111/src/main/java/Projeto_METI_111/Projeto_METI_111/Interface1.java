@@ -27,6 +27,7 @@ public class Interface1 {
 	Openfile of = new Openfile(this);
 	private boolean fileSelected = false;
 	private String string = "";
+	private JPanel centerPanel= new JPanel();
 	JButton finish;
 	JButton browser;
 	
@@ -54,7 +55,6 @@ public class Interface1 {
 		frame.add(southPanel,BorderLayout.SOUTH);
 		
 		// painel centro
-		JPanel centerPanel= new JPanel();
 		centerPanel.setLayout(new FlowLayout());
 		frame.add(centerPanel,BorderLayout.CENTER);
 		
