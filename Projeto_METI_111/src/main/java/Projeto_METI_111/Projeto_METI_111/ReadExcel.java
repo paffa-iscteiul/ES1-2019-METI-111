@@ -12,6 +12,11 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/**
+* Esta classe permite a leitura do ficheiro excel
+*
+* @author  Pedro Fonseca, Fábio Cardoso, Filipa Gomes, Inês Gomes, Sofia Pérsio, Marco Silva
+*/
 public class ReadExcel {
 	private ArrayList<Record> records=new ArrayList<Record>();
 	private Openfile of;
@@ -106,6 +111,10 @@ public class ReadExcel {
 		return dataMatrix;
 	}
 	
+	/**
+	 * getRecord() Devolve lista de registos do excel
+	 * @return records lista de registos do excel
+	 */
 	public ArrayList<Record> getRecord() {
 		return records;
 	}

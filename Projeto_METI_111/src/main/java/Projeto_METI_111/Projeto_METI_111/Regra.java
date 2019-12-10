@@ -1,6 +1,12 @@
 package Projeto_METI_111.Projeto_METI_111;
 
+import java.io.IOException;
 
+/**
+* Esta classe permite definir uma estrutura de dados para a criação de regras
+*
+* @author  Pedro Fonseca, Fábio Cardoso, Filipa Gomes, Inês Gomes, Sofia Pérsio, Marco Silva
+*/
 public class Regra {
 	public int numero_de_regras;
 	public String[] vetor_metricas;
@@ -10,7 +16,13 @@ public class Regra {
 	public String metricas;
 	
 	
-	
+	/**
+	 * Construtor da classe
+	 * Recebe o corpo de IF, recebe medidas a adotar em caso de regra verificada ou não
+	 * @param metricas metricas (corpo de IF)
+	 * @param metricas entao (corpo de THEN)
+	 * @param metricas senao (corpo de ELSE)
+	 */
 	public Regra (String metricas, String entao, String senao ) {
 		this.entao = entao;
 		this.senao=senao;
@@ -20,6 +32,10 @@ public class Regra {
 		
 	}
 	
+	/**
+	 * analisar_parametros() É um procedimento que permite o processamento dos valores recebidos na construção da instância
+	 * @param metricas
+	 */
 	public void analisar_parametros(String metricas) {
 		numero_de_regras=count_ocorrences(metricas);
 		String metricas1 = metricas;
@@ -39,6 +55,12 @@ public class Regra {
 				}
 				vetor_metricas=metricas2 ;
 	}
+	
+	/**
+	 * count_ocorrences() É um procedimento que permite o cálculo do número de ocorrências de AND ou OR em m
+	 * @param m
+	 * @return count
+	 */
 	private int count_ocorrences(String m) {
 		String a1[]=m.split(" ");
 		int n= a1.length;
@@ -53,22 +75,42 @@ public class Regra {
 		return count;
 	}
 
+	/**
+	 * getVetor_metricas() É uma função que retorna métricas a serem verificadas em forma de lista
+	 * @return vetor_metricas lista de métricas a serem verificadas
+	 */
 	public String[] getVetor_metricas() {
 		return vetor_metricas;
 	}
-
+	
+	/**
+	 * getMetricas() É uma função que retorna métrica
+	 * @return metricas métrica
+	 */
 	public String getMetricas() {
 		return metricas;
 	}
-
+	
+	/**
+	 * getEntao() É uma função que retorna o interior de THEN
+	 * @return entao 
+	 */
 	public String getEntao() {
 		return entao;
 	}
 
+	/**
+	 * getSenao() É uma função que retorna o interior de ELSE
+	 * @return senao 
+	 */
 	public String getSenao() {
 		return senao;
 	}
-
+	
+	/**
+	 * getOp() É uma função que retorna o operador da regra
+	 * @return op 
+	 */
 	public String getOp() {
 		return op;
 	}

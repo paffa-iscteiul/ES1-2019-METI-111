@@ -17,6 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+/**
+* Esta classe permite a visualização dos resultados da deteção de defeitos
+*
+* @author  Pedro Fonseca, Fábio Cardoso, Filipa Gomes, Inês Gomes, Sofia Pérsio, Marco Silva
+*/
 public class ResultDisplay {
 	
 	private JTable table;
@@ -39,17 +44,14 @@ public class ResultDisplay {
 	
 	
 	/**
-	 * O que pode dar jeito?
-	 * ->Saber o número de Methods
-	 * ->Saber o número de defeitos em comparação ao nosso is_long_method
-	 * ->Saber o número de defeitos em comparação ao nosso is_feature_envy
-	 * @param ficheiro
-	 * @param regras
-	 * @param records
-	 * @throws IOException 
-	 * 
+	 * Construtor da classe
+	 * Recebe o nome do ficheiro Excel, lista de regras definidas pelo utilizador, vetor de registos
+	 * @param string nome ficheiro
+	 * @param regras lista de regras
+	 * @param records lista de registos
+	 * @param selectedValue caminho selecionado para teste unitário
+	 * @throws IOException
 	 */
-	
 	public ResultDisplay(String string, ArrayList<Regra> regras, ArrayList<Record> records,String selectedValue) {
 		try {
 			inic(string,regras,records,selectedValue);
@@ -59,6 +61,14 @@ public class ResultDisplay {
 		}
 	}
 	
+	/**
+	 * Outro construtor da classe
+	 * Recebe o nome do ficheiro Excel, lista de regras definidas pelo utilizador e lista de registos
+	 * @param string nome ficheiro
+	 * @param regras lista de regras
+	 * @param records lista de registos
+	 * @throws IOException
+	 */
 	public ResultDisplay(String string, ArrayList<Regra> regras, ArrayList<Record> records) throws IOException {
 		regras2.clear();
 		f = new JFrame("frame"); 
@@ -122,6 +132,9 @@ public class ResultDisplay {
 		
 	}
 	
+	/**
+	 * analizarMetricas() É um procedimento que permite realizar o mecanismo de  processamento das regras
+	 */
 	private void analizarMetricas() {
 		for(int i=0;i!=regras2.size();i++) {
 			for(int j=0;j!=records.size();j++) {
@@ -144,6 +157,14 @@ public class ResultDisplay {
 		}
 	}
 
+	/**
+	 * verificarOR() É um procedimento que permite o preenchimento da tabela conforme as regras recebidas
+	 * @param record Regra
+	 * @param string2 condição a verificar 1
+	 * @param string3 condição a verificar 2
+	 * @param entao o que fazer caso regra seja verificada
+	 * @param senao o que fazer caso regra não seja verificada
+	 */
 	private void verificarOR(Record record, String string2, String string3, String entao, String senao) {
 		String [] tokens1 = string2.split("<|\\>");
 		String [] tokens2 = string3.split("<|\\>");
@@ -631,7 +652,15 @@ public class ResultDisplay {
 		}
 		
 	}
-
+	
+	/**
+	 * verificarAND() É um procedimento que permite o preenchimento da tabela conforme as regras recebidas
+	 * @param record Regra
+	 * @param string2 condição a verificar 1
+	 * @param string3 condição a verificar 2
+	 * @param entao o que fazer caso regra seja verificada
+	 * @param senao o que fazer caso regra não seja verificada
+	 */
 	private void verificarAND(Record record, String string2, String string3, String entao, String senao) {
 		String [] tokens1 = string2.split("<|\\>");
 		String [] tokens2 = string3.split("<|\\>");
@@ -1119,7 +1148,14 @@ public class ResultDisplay {
 		}
 		
 	}
-
+	
+	/**
+	 * verificar() É um procedimento que permite o preenchimento da tabela conforme as regras recebidas sem ORs ou ANDs
+	 * @param record Regra
+	 * @param string2 condição a verificar
+	 * @param entao o que fazer caso regra seja verificada
+	 * @param senao o que fazer caso regra não seja verificada
+	 */
 	private void verificar(Record record, String string2, String entao, String senao) {
 		String [] tokens1 = string2.split("<|\\>");
 		double d1 = Double.parseDouble(tokens1[1]);
@@ -1188,7 +1224,12 @@ public class ResultDisplay {
 			}
 		}
 	}
-
+	
+	/**
+	 * setVal() É um procedimento que escreve resultados na tabela
+	 * @param i linha a ser alterada
+	 * @param aux verificação de colunas
+	 */
 	private void setVal(int i, String aux) {
 		if(aux.contains("long_method")&&aux.contains("TRUE")) {
 			table.setValueAt("TRUE", i, 5);
@@ -1204,6 +1245,11 @@ public class ResultDisplay {
 		}	
 	}
 
+	/**
+	 * occurrences() Cálculo de número de ocorrencias de ' ' na string metricas
+	 * @param metricas métrica
+	 * @return count contagem do número de ocorrências de caracter ' ' em metricas
+	 */
 	private int occurrences(String metricas) {
 		int count = 0;
 		for(int i=0;i!=metricas.length();i++) {
@@ -1214,6 +1260,9 @@ public class ResultDisplay {
 		return count;
 	}
 
+	/**
+	 * setFrameVisible() É um procedimento que permite tornar visivel a frame de resultados
+	 */
 	private void setFrameVisible() {
 		frame = new JFrame ("Resultados");
 		frame.setLayout(new BorderLayout());
@@ -1222,6 +1271,9 @@ public class ResultDisplay {
 		frame.pack();
 		frame.setVisible(true);
 	}
+	/**
+	 * setFrameVisible2() É um procedimento que permite tornar visivel a frame de resultados na realização de testes unitários
+	 */
 	private void setFrameVisible2() {
 		frame = new JFrame ("Resultados");
 		frame.setLayout(new BorderLayout());
@@ -1229,10 +1281,10 @@ public class ResultDisplay {
 		frame.add(panel, BorderLayout.CENTER);
 	}
 
+	
 	/**
 	 * Set do panel display
 	 */
-	
 	public void addFrameContent() {	
 				
 		//Initializing the JTable
@@ -1264,7 +1316,7 @@ public class ResultDisplay {
 	}
 	
 	/**
-	 * Formata a parte dos títulos/nome das colunas
+	 * setTitles() Formata a parte dos títulos/nome das colunas
 	 */
 	public void setTitles() {
 		columnTitles = new String[9];
@@ -1280,7 +1332,8 @@ public class ResultDisplay {
 	}
 		
 	/**
-	 * Vai buscar informação necessária ao já formado display
+	 * setData1() Vai buscar informação necessária ao já formado display
+	 * @param string2 
 	 * @throws IOException 
 	 */
 	public void setData1(String string2) throws IOException {
@@ -1326,8 +1379,10 @@ public class ResultDisplay {
 		
 	}
 
+
 	/**
-	 * Vai buscar informação necessária ao já formado display
+	 * setData() Vai buscar informação necessária ao já formado display
+	 * @param string2 
 	 * @throws IOException 
 	 */
 	public void setData(String string2) throws IOException {
@@ -1370,6 +1425,10 @@ public class ResultDisplay {
 		}
 			}
 
+
+	/**
+	 * rulesResults() Mecanismo de preenchimento das colunas de deteção de defeitos is_long_method e is_feature_envy
+	 */
 	public void rulesResults() {
 
 		String [] [] aux = data;
@@ -1405,8 +1464,12 @@ public class ResultDisplay {
 			}		}
 	}
 	
+
+	/**
+	 * comparatorsResults() Mecanismo de cálculo e apresentação dos resultados de deteção de defeitos
+	 */
 	public void comparatorsResults() { //contadores para os defeitos 
-String [] [] aux1 = data;
+		String [] [] aux1 = data;
 		
 		//CONTADORES PARA O IS_LONG_METHOD
 		int countDCI=0; //iPlasma
@@ -1553,10 +1616,23 @@ String [] [] aux1 = data;
 		}
 	}
 	
+
+	/**
+	 * getValue() Devolve valor na entrada da tabela na linha de indice 0 e coluna de indice 5
+	 */
 	public String getValue() {
 		return (String) table.getValueAt(0, 5);
 	}
 	
+
+	/**
+	 * inic() Inicialização de atributos para a realização de testes unitários
+	 * @param string nome ficheiro
+	 * @param regras regras definidas
+	 * @param records registos do ficheiro Excel
+	 * @param selectedValue caminho do ficheiro 
+	 * @throws IOException 
+	 */
 	public void inic(String string, ArrayList<Regra> regras, ArrayList<Record> records,String selectedValue) throws IOException {
 		regras2.clear();
 		f = new JFrame("frame"); 

@@ -5,7 +5,11 @@ import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 
-
+/**
+* Esta classe permite a importação do ficheiro excel
+*
+* @author  Pedro Fonseca, Fábio Cardoso, Filipa Gomes, Inês Gomes, Sofia Pérsio, Marco Silva
+*/
 public class Openfile {
 	public Interface1 i;
 	public static File Excelfile;

@@ -15,6 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+/**
+* Esta classe permite a visualização do ficheiro excel numa interface gráfica
+* desenhada, bem como a possibilidade de escrita de regras
+*
+* @author  Pedro Fonseca, Fábio Cardoso, Filipa Gomes, Inês Gomes, Sofia Pérsio, Marco Silva
+*/
 public class Interface3 {
 	private JFrame frame;
 	private String limlocLer="";

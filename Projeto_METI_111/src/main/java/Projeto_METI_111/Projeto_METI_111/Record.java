@@ -2,6 +2,11 @@ package Projeto_METI_111.Projeto_METI_111;
 
 import java.io.IOException;
 
+/**
+* Esta classe permite definir uma estrutura de dados para os registos do ficheiro Excel
+*
+* @author  Pedro Fonseca, Fábio Cardoso, Filipa Gomes, Inês Gomes, Sofia Pérsio, Marco Silva
+*/
 public class Record {
 	String methodID;
 	String pack;

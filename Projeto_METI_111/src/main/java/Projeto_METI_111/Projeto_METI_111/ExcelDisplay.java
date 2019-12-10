@@ -1,8 +1,15 @@
 package Projeto_METI_111.Projeto_METI_111;
 
+import java.io.IOException;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+/**
+* Esta classe permite a leitura e visualização do ficheiro excel
+*
+* @author  Pedro Fonseca, Fábio Cardoso, Filipa Gomes, Inês Gomes, Sofia Pérsio, Marco Silva
+*/
 public class ExcelDisplay {
 
 	private JTable table;
@@ -45,29 +52,51 @@ public class ExcelDisplay {
 	      return INSTANCE;
 	}
 	
+
+	/**
+	 * getInstance() Devolve a instância de ExcelDisplay
+	 * @return INSTANCE
+	 */
 	public static ExcelDisplay getInstance() {
 		return INSTANCE;
 	}
 
-
+	/**
+	 * getJ() Devolve a tabela
+	 * @return table tabela excel
+	 */
 	public JTable getJ() {
 		return table;
 	}
 
-
+	/**
+	 * setJ() Coloca tabela j no atributo table
+	 * @param j tabela a atributir ao atributo table
+	 */
 	public void setJ(JTable j) {
 		this.table = j;
 	}
 
-
+	/**
+	 * getSp() Devolve scrollpane
+	 * @return sp scrollpane
+	 */
 	public JScrollPane getSp() {
 		return sp;
 	}
-
+	
+	/**
+	 * setSp() Coloca scrollpane sp no atributo sp
+	 * @param sp scrollpane
+	 */	
 	public void setSp(JScrollPane sp) {
 		this.sp = sp;
 	}
 	
+	/**
+	 * getData() Devolve a matriz de strings que representa a tabela
+	 * @return data matriz de strings que representa a tabela
+	 */
 	public String[][] getData() {
 		return data;
 	}
