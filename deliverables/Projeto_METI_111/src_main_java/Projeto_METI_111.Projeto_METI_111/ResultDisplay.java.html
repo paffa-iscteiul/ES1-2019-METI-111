@@ -1,0 +1,1691 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ResultDisplay.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (10/dez/2019 18:48:54)</a> &gt; <a href="../../index.html" class="el_group">Projeto_METI_111</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">Projeto_METI_111.Projeto_METI_111</a> &gt; <span class="el_source">ResultDisplay.java</span></div><h1>ResultDisplay.java</h1><pre class="source lang-java linenums">package Projeto_METI_111.Projeto_METI_111;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+/**
+* Esta classe permite a visualização dos resultados da deteção de defeitos
+*
+* @author  Pedro Fonseca, Fábio Cardoso, Filipa Gomes, Inês Gomes, Sofia Pérsio, Marco Silva
+*/
+public class ResultDisplay {
+	
+	private JTable table;
+	private JScrollPane sp;
+	private JPanel panel;
+//	private JLabel labelTable;    //acrescentei filipa
+//	private JPanel results;
+	private JLabel labelResults;  //acrescentei filipa
+//	private JPanel panelResults;
+	private JFrame frame;
+	private JFrame f;
+	private String [] columnTitles;
+	private String [] [] data;
+	private String string;
+<span class="fc" id="L39">	private ArrayList&lt;Regra&gt; regras = new ArrayList&lt;Regra&gt;();</span>
+<span class="fc" id="L40">	private ArrayList&lt;Regra&gt; regras2 = new ArrayList&lt;Regra&gt;();</span>
+<span class="fc" id="L41">	private ArrayList&lt;Record&gt; records = new ArrayList&lt;Record&gt;();</span>
+	private JTable tt;
+	private JList b;
+	private JButton button;
+	
+	
+	/**
+	 * Construtor da classe
+	 * Recebe o nome do ficheiro Excel, lista de regras definidas pelo utilizador, vetor de registos
+	 * @param string nome ficheiro
+	 * @param regras lista de regras
+	 * @param records lista de registos
+	 * @param selectedValue caminho selecionado para teste unitário
+	 * @throws IOException
+	 */
+<span class="fc" id="L56">	public ResultDisplay(String string, ArrayList&lt;Regra&gt; regras, ArrayList&lt;Record&gt; records,String selectedValue) {</span>
+		try {
+<span class="fc" id="L58">			inic(string,regras,records,selectedValue);</span>
+<span class="pc" id="L59">		} catch (IOException e) {</span>
+			// TODO Auto-generated catch block
+<span class="nc" id="L61">			e.printStackTrace();</span>
+		}
+<span class="fc" id="L63">	}</span>
+	
+	/**
+	 * Outro construtor da classe
+	 * Recebe o nome do ficheiro Excel, lista de regras definidas pelo utilizador e lista de registos
+	 * @param string nome ficheiro
+	 * @param regras lista de regras
+	 * @param records lista de registos
+	 * @throws IOException
+	 */
+<span class="fc" id="L73">	public ResultDisplay(final String string, final ArrayList&lt;Regra&gt; regras, final ArrayList&lt;Record&gt; records) throws IOException {</span>
+<span class="fc" id="L74">		regras2.clear();</span>
+<span class="fc" id="L75">		f = new JFrame(&quot;frame&quot;); </span>
+<span class="fc" id="L76">        JPanel p =new JPanel(new BorderLayout()); </span>
+<span class="fc" id="L77">        JLabel l= new JLabel(&quot;Select rule&quot;); </span>
+<span class="fc" id="L78">        String week[]=new String [regras.size()];</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        for(int o = 0; o!=regras.size();o++){</span>
+<span class="fc" id="L80">        	String iff=regras.get(o).getMetricas();</span>
+<span class="fc" id="L81">        	String then=regras.get(o).getEntao();</span>
+<span class="fc" id="L82">        	String elsee=regras.get(o).getSenao(); </span>
+<span class="fc" id="L83">        	week[o] = &quot;IF( &quot; + iff + &quot; ) THEN ( &quot; + then + &quot; ) ELSE ( &quot; + elsee + &quot; )&quot;;</span>
+        }
+<span class="fc" id="L85">        b= new JList(week); </span>
+<span class="fc" id="L86">        p.add(b, BorderLayout.NORTH); </span>
+<span class="fc" id="L87">        JButton bt = new JButton(&quot;Avançar&quot;);</span>
+<span class="fc" id="L88">        p.add(bt, BorderLayout.CENTER);</span>
+<span class="fc" id="L89">        f.add(p); </span>
+<span class="fc" id="L90">        f.setSize(600,200);  </span>
+<span class="fc" id="L91">        f.setVisible(true);</span>
+<span class="fc" id="L92">        this.string=string;</span>
+<span class="fc" id="L93">		this.regras=regras;</span>
+<span class="fc" id="L94">		this.records=records;</span>
+<span class="fc" id="L95">		button=bt;</span>
+<span class="fc" id="L96">        bt.addActionListener(new ActionListener() {</span>
+			public void actionPerformed(ActionEvent e) {
+				try{
+<span class="nc" id="L99">					String s = b.getSelectedValue().toString();</span>
+<span class="nc" id="L100">					System.out.println(s);</span>
+<span class="nc" id="L101">					setTitles();</span>
+<span class="nc" id="L102">					setData(string);</span>
+<span class="nc" id="L103">					addFrameContent();</span>
+<span class="nc" id="L104">					setFrameVisible();		</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">					for(int i=5;i!=9;i++) {</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">						for(int j=0;j!=records.size();j++) {</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">							if(i==5) {</span>
+<span class="nc" id="L108">								table.setValueAt(&quot;&quot;, j, i);</span>
+							}
+<span class="nc bnc" id="L110" title="All 2 branches missed.">							if(i==6) {</span>
+<span class="nc" id="L111">								table.setValueAt(&quot;&quot;, j, i);</span>
+							}
+						}	
+					}
+<span class="nc bnc" id="L115" title="All 2 branches missed.">					for(int b=0;b!=regras.size();b++) {</span>
+<span class="nc" id="L116">						String aux = &quot;IF( &quot; + regras.get(b).getMetricas() + &quot; ) THEN ( &quot; + regras.get(b).getEntao() + &quot; ) ELSE ( &quot; + regras.get(b).getSenao() + &quot; )&quot;;</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">						if(aux.equals(s)){</span>
+<span class="nc" id="L118">							regras2.add(regras.get(b));</span>
+<span class="nc" id="L119">							System.out.println(regras.get(b).getMetricas() + &quot; &quot; + regras.get(b).getEntao() + &quot; &quot; + regras.get(b).getSenao());</span>
+						}
+					}
+
+<span class="nc" id="L123">					f.dispose();</span>
+<span class="nc" id="L124">					analizarMetricas();</span>
+<span class="nc" id="L125">					rulesResults();</span>
+<span class="nc" id="L126">					comparatorsResults();</span>
+<span class="nc" id="L127">				} catch(IOException e1) {</span>
+					
+				}						
+
+<span class="nc" id="L131">			}</span>
+		});    
+		
+<span class="fc" id="L134">	}</span>
+	
+	/**
+	 * analizarMetricas() É um procedimento que permite realizar o mecanismo de  processamento das regras
+	 */
+	private void analizarMetricas() {
+<span class="fc bfc" id="L140" title="All 2 branches covered.">		for(int i=0;i!=regras2.size();i++) {</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">			for(int j=0;j!=records.size();j++) {</span>
+<span class="fc" id="L142">				String [] vetor_metricas = regras2.get(i).getVetor_metricas();</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">				if(occurrences(regras2.get(i).getMetricas())==2) {</span>
+<span class="fc" id="L144">					verificar(records.get(j), vetor_metricas[0], regras2.get(i).getEntao(),regras2.get(i).getSenao());</span>
+<span class="fc" id="L145">				}else {</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">					if(regras2.get(i).getOp().equals(&quot;AND&quot;)) {</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">						for(int k=0;k!=vetor_metricas.length-1;k++) {</span>
+<span class="fc" id="L148">							verificarAND(records.get(j), vetor_metricas[k],vetor_metricas[k+1],regras2.get(i).getEntao(),regras2.get(i).getSenao());</span>
+						}
+					}
+<span class="fc bfc" id="L151" title="All 2 branches covered.">					if(regras2.get(i).getOp().equals(&quot;OR&quot;)) {</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">						for(int k=0;k!=vetor_metricas.length-1;k++) {</span>
+<span class="fc" id="L153">							verificarOR(records.get(j), vetor_metricas[k],vetor_metricas[k+1],regras2.get(i).getEntao(),regras2.get(i).getSenao());</span>
+						}
+					}
+				}
+			}
+		}
+<span class="fc" id="L159">	}</span>
+
+	/**
+	 * verificarOR() É um procedimento que permite o preenchimento da tabela conforme as regras recebidas
+	 * @param record Regra
+	 * @param string2 condição a verificar 1
+	 * @param string3 condição a verificar 2
+	 * @param entao o que fazer caso regra seja verificada
+	 * @param senao o que fazer caso regra não seja verificada
+	 */
+	private void verificarOR(Record record, String string2, String string3, String entao, String senao) {
+<span class="fc" id="L170">		String [] tokens1 = string2.split(&quot;&lt;|\\&gt;&quot;);</span>
+<span class="fc" id="L171">		String [] tokens2 = string3.split(&quot;&lt;|\\&gt;&quot;);</span>
+<span class="fc" id="L172">		double d1 = Double.parseDouble(tokens1[1]);</span>
+<span class="fc" id="L173">		double d2 = Double.parseDouble(tokens2[1]);</span>
+<span class="fc bfc" id="L174" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LAA&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LAA&quot;))) {</span>
+<span class="fc bfc" id="L175" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L176" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)||((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="fc" id="L177">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L178">				}else {</span>
+<span class="fc" id="L179">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L182" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L183" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)||((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="fc" id="L184">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L185">				}else {</span>
+<span class="fc" id="L186">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L189" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L190" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)||((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="fc" id="L191">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L192">				}else {</span>
+<span class="fc" id="L193">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L196" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L197" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)||((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="fc" id="L198">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L199">				}else {</span>
+<span class="fc" id="L200">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L204" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LAA&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LOC&quot;))) {</span>
+<span class="fc bfc" id="L205" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L206" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)||((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="fc" id="L207">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L208">				}else {</span>
+<span class="fc" id="L209">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L212" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L213" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)||((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="fc" id="L214">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L215">				}else {</span>
+<span class="fc" id="L216">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L219" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L220" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)||((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="fc" id="L221">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L222">				}else {</span>
+<span class="fc" id="L223">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L226" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="fc bfc" id="L227" title="All 4 branches covered.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)||((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="fc" id="L228">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L229">				}else {</span>
+<span class="fc" id="L230">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L234" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LAA&quot;)) &amp;&amp; (tokens2[0].equals(&quot;CYCLO&quot;))) {</span>
+<span class="fc bfc" id="L235" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L236" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)||((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="fc" id="L237">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L238">				}else {</span>
+<span class="fc" id="L239">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L242" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L243" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)||((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="fc" id="L244">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L245">				}else {</span>
+<span class="fc" id="L246">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L249" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L250" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)||((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="fc" id="L251">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L252">				}else {</span>
+<span class="fc" id="L253">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L256" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L257" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)||((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="fc" id="L258">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L259">				}else {</span>
+<span class="fc" id="L260">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L264" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LAA&quot;)) &amp;&amp; (tokens2[0].equals(&quot;ATFD&quot;))) {</span>
+<span class="fc bfc" id="L265" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L266" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)||((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="fc" id="L267">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L268">				}else {</span>
+<span class="fc" id="L269">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L272" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L273" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)||((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="fc" id="L274">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L275">				}else {</span>
+<span class="fc" id="L276">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L279" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L280" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)||((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="fc" id="L281">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L282">				}else {</span>
+<span class="fc" id="L283">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L286" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L287" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)||((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="fc" id="L288">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L289">				}else {</span>
+<span class="fc" id="L290">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L294" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LOC&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LAA&quot;))) {</span>
+<span class="fc bfc" id="L295" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L296" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)||((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="fc" id="L297">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L298">				}else {</span>
+<span class="fc" id="L299">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L302" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L303" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)||((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="fc" id="L304">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L305">				}else {</span>
+<span class="fc" id="L306">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L309" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L310" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)||((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="fc" id="L311">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L312">				}else {</span>
+<span class="fc" id="L313">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L316" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="fc bfc" id="L317" title="All 4 branches covered.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)||((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="fc" id="L318">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L319">				}else {</span>
+<span class="fc" id="L320">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L324" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LOC&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LOC&quot;))) {</span>
+<span class="fc bfc" id="L325" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L326" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)||((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="fc" id="L327">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L328">				}else {</span>
+<span class="fc" id="L329">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L332" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L333" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)||((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="fc" id="L334">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L335">				}else {</span>
+<span class="fc" id="L336">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L339" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L340" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)||((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="fc" id="L341">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L342">				}else {</span>
+<span class="fc" id="L343">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L346" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="fc bfc" id="L347" title="All 4 branches covered.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)||((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="fc" id="L348">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L349">				}else {</span>
+<span class="fc" id="L350">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L354" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LOC&quot;)) &amp;&amp; (tokens2[0].equals(&quot;CYCLO&quot;))) {</span>
+<span class="fc bfc" id="L355" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L356" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)||((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="fc" id="L357">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L358">				}else {</span>
+<span class="fc" id="L359">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L362" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L363" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)||((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="fc" id="L364">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L365">				}else {</span>
+<span class="fc" id="L366">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L369" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L370" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)||((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="fc" id="L371">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L372">				}else {</span>
+<span class="fc" id="L373">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L376" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L377" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)||((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="fc" id="L378">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L379">				}else {</span>
+<span class="fc" id="L380">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L384" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LOC&quot;)) &amp;&amp; (tokens2[0].equals(&quot;ATFD&quot;))) {</span>
+<span class="fc bfc" id="L385" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L386" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)||((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="fc" id="L387">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L388">				}else {</span>
+<span class="fc" id="L389">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L392" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L393" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)||((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="fc" id="L394">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L395">				}else {</span>
+<span class="fc" id="L396">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L399" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L400" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)||((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="fc" id="L401">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L402">				}else {</span>
+<span class="fc" id="L403">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L406" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L407" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)||((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="fc" id="L408">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L409">				}else {</span>
+<span class="fc" id="L410">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L414" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;CYCLO&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LAA&quot;))) {</span>
+<span class="fc bfc" id="L415" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L416" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)||((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="fc" id="L417">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L418">				}else {</span>
+<span class="fc" id="L419">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L422" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L423" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)||((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="fc" id="L424">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L425">				}else {</span>
+<span class="fc" id="L426">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L429" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L430" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)||((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="fc" id="L431">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L432">				}else {</span>
+<span class="fc" id="L433">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L436" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L437" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)||((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="fc" id="L438">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L439">				}else {</span>
+<span class="fc" id="L440">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L444" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;CYCLO&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LOC&quot;))) {</span>
+<span class="fc bfc" id="L445" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L446" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)||((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="fc" id="L447">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L448">				}else {</span>
+<span class="fc" id="L449">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L452" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L453" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)||((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="fc" id="L454">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L455">				}else {</span>
+<span class="fc" id="L456">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L459" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L460" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)||((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="fc" id="L461">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L462">				}else {</span>
+<span class="fc" id="L463">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L466" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="fc bfc" id="L467" title="All 4 branches covered.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)||((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="fc" id="L468">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L469">				}else {</span>
+<span class="fc" id="L470">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L474" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;CYCLO&quot;)) &amp;&amp; (tokens2[0].equals(&quot;CYCLO&quot;))) {</span>
+<span class="fc bfc" id="L475" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L476" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)||((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="fc" id="L477">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L478">				}else {</span>
+<span class="fc" id="L479">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L482" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L483" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)||((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="fc" id="L484">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L485">				}else {</span>
+<span class="fc" id="L486">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L489" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L490" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)||((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="fc" id="L491">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L492">				}else {</span>
+<span class="fc" id="L493">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L496" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L497" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)||((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="fc" id="L498">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L499">				}else {</span>
+<span class="fc" id="L500">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L504" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;CYCLO&quot;)) &amp;&amp; (tokens2[0].equals(&quot;ATFD&quot;))) {</span>
+<span class="fc bfc" id="L505" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L506" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)||((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="fc" id="L507">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L508">				}else {</span>
+<span class="fc" id="L509">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L512" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L513" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)||((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="fc" id="L514">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L515">				}else {</span>
+<span class="fc" id="L516">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L519" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L520" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)||((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="fc" id="L521">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L522">				}else {</span>
+<span class="fc" id="L523">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L526" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L527" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)||((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="fc" id="L528">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L529">				}else {</span>
+<span class="fc" id="L530">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L534" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;ATFD&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LAA&quot;))) {</span>
+<span class="fc bfc" id="L535" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L536" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)||((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="fc" id="L537">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L538">				}else {</span>
+<span class="fc" id="L539">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L542" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L543" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)||((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="fc" id="L544">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L545">				}else {</span>
+<span class="fc" id="L546">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L549" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L550" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)||((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="fc" id="L551">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L552">				}else {</span>
+<span class="fc" id="L553">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L556" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L557" title="2 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)||((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="nc" id="L558">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L559">				}else {</span>
+<span class="fc" id="L560">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L564" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;ATFD&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LOC&quot;))) {</span>
+<span class="fc bfc" id="L565" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L566" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)||((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="fc" id="L567">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L568">				}else {</span>
+<span class="fc" id="L569">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L572" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L573" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)||((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="fc" id="L574">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L575">				}else {</span>
+<span class="fc" id="L576">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L579" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L580" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)||((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="fc" id="L581">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L582">				}else {</span>
+<span class="fc" id="L583">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L586" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L587" title="2 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)||((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="nc" id="L588">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L589">				}else {</span>
+<span class="fc" id="L590">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L594" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;ATFD&quot;)) &amp;&amp; (tokens2[0].equals(&quot;CYCLO&quot;))) {</span>
+<span class="fc bfc" id="L595" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L596" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)||((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="fc" id="L597">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L598">				}else {</span>
+<span class="fc" id="L599">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L602" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L603" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)||((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="fc" id="L604">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L605">				}else {</span>
+<span class="fc" id="L606">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L609" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L610" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)||((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="fc" id="L611">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L612">				}else {</span>
+<span class="fc" id="L613">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L616" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L617" title="2 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)||((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="nc" id="L618">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L619">				}else {</span>
+<span class="fc" id="L620">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L624" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;ATFD&quot;)) &amp;&amp; (tokens2[0].equals(&quot;ATFD&quot;))) {</span>
+<span class="fc bfc" id="L625" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L626" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)||((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="fc" id="L627">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L628">				}else {</span>
+<span class="fc" id="L629">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L632" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L633" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)||((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="fc" id="L634">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L635">				}else {</span>
+<span class="fc" id="L636">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L639" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L640" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)||((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="fc" id="L641">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L642">				}else {</span>
+<span class="fc" id="L643">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L646" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L647" title="2 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)||((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="nc" id="L648">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L649">				}else {</span>
+<span class="fc" id="L650">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+		
+<span class="fc" id="L655">	}</span>
+	
+	/**
+	 * verificarAND() É um procedimento que permite o preenchimento da tabela conforme as regras recebidas
+	 * @param record Regra
+	 * @param string2 condição a verificar 1
+	 * @param string3 condição a verificar 2
+	 * @param entao o que fazer caso regra seja verificada
+	 * @param senao o que fazer caso regra não seja verificada
+	 */
+	private void verificarAND(Record record, String string2, String string3, String entao, String senao) {
+<span class="fc" id="L666">		String [] tokens1 = string2.split(&quot;&lt;|\\&gt;&quot;);</span>
+<span class="fc" id="L667">		String [] tokens2 = string3.split(&quot;&lt;|\\&gt;&quot;);</span>
+<span class="fc" id="L668">		double d1 = Double.parseDouble(tokens1[1]);</span>
+<span class="fc" id="L669">		double d2 = Double.parseDouble(tokens2[1]);</span>
+<span class="fc bfc" id="L670" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LAA&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LAA&quot;))) {</span>
+<span class="fc bfc" id="L671" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L672" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="nc" id="L673">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L674">				}else {</span>
+<span class="fc" id="L675">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L678" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L679" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="fc" id="L680">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L681">				}else {</span>
+<span class="fc" id="L682">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L685" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L686" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="fc" id="L687">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L688">				}else {</span>
+<span class="fc" id="L689">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L692" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L693" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="fc" id="L694">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L695">				}else {</span>
+<span class="fc" id="L696">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L700" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LAA&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LOC&quot;))) {</span>
+<span class="fc bfc" id="L701" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L702" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="nc" id="L703">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L704">				}else {</span>
+<span class="fc" id="L705">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L708" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L709" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="fc" id="L710">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L711">				}else {</span>
+<span class="fc" id="L712">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L715" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L716" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="fc" id="L717">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L718">				}else {</span>
+<span class="fc" id="L719">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L722" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L723" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="fc" id="L724">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L725">				}else {</span>
+<span class="fc" id="L726">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L730" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LAA&quot;)) &amp;&amp; (tokens2[0].equals(&quot;CYCLO&quot;))) {</span>
+<span class="fc bfc" id="L731" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L732" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="nc" id="L733">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L734">				}else {</span>
+<span class="fc" id="L735">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L738" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L739" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="fc" id="L740">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L741">				}else {</span>
+<span class="fc" id="L742">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L745" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L746" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="fc" id="L747">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L748">				}else {</span>
+<span class="fc" id="L749">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L752" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L753" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="fc" id="L754">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L755">				}else {</span>
+<span class="fc" id="L756">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L760" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LAA&quot;)) &amp;&amp; (tokens2[0].equals(&quot;ATFD&quot;))) {</span>
+<span class="fc bfc" id="L761" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L762" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="nc" id="L763">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L764">				}else {</span>
+<span class="fc" id="L765">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L768" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L769" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="nc" id="L770">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L771">				}else {</span>
+<span class="fc" id="L772">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L775" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L776" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="fc" id="L777">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L778">				}else {</span>
+<span class="fc" id="L779">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L782" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L783" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="nc" id="L784">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L785">				}else {</span>
+<span class="fc" id="L786">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L790" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LOC&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LAA&quot;))) {</span>
+<span class="fc bfc" id="L791" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L792" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="nc" id="L793">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L794">				}else {</span>
+<span class="fc" id="L795">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L798" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L799" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="fc" id="L800">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L801">				}else {</span>
+<span class="fc" id="L802">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L805" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L806" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="fc" id="L807">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L808">				}else {</span>
+<span class="fc" id="L809">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L812" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L813" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="fc" id="L814">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L815">				}else {</span>
+<span class="fc" id="L816">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L820" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LOC&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LOC&quot;))) {</span>
+<span class="fc bfc" id="L821" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L822" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="nc" id="L823">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L824">				}else {</span>
+<span class="fc" id="L825">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L828" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L829" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="fc" id="L830">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L831">				}else {</span>
+<span class="fc" id="L832">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L835" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L836" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="fc" id="L837">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L838">				}else {</span>
+<span class="fc" id="L839">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L842" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L843" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="fc" id="L844">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L845">				}else {</span>
+<span class="fc" id="L846">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L850" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LOC&quot;)) &amp;&amp; (tokens2[0].equals(&quot;CYCLO&quot;))) {</span>
+<span class="fc bfc" id="L851" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L852" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="nc" id="L853">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L854">				}else {</span>
+<span class="fc" id="L855">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L858" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L859" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="fc" id="L860">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L861">				}else {</span>
+<span class="fc" id="L862">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L865" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L866" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="fc" id="L867">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L868">				}else {</span>
+<span class="fc" id="L869">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L872" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L873" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="fc" id="L874">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L875">				}else {</span>
+<span class="fc" id="L876">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L880" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;LOC&quot;)) &amp;&amp; (tokens2[0].equals(&quot;ATFD&quot;))) {</span>
+<span class="fc bfc" id="L881" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L882" title="2 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="nc" id="L883">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L884">				}else {</span>
+<span class="fc" id="L885">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L888" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L889" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="nc" id="L890">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L891">				}else {</span>
+<span class="fc" id="L892">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L895" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L896" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="fc" id="L897">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L898">				}else {</span>
+<span class="fc" id="L899">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L902" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L903" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="nc" id="L904">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L905">				}else {</span>
+<span class="fc" id="L906">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L910" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;CYCLO&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LAA&quot;))) {</span>
+<span class="pc bpc" id="L911" title="1 of 4 branches missed.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="nc bnc" id="L912" title="All 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="nc" id="L913">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L914">				}else {</span>
+<span class="nc" id="L915">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="pc bpc" id="L918" title="1 of 4 branches missed.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L919" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="fc" id="L920">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L921">				}else {</span>
+<span class="fc" id="L922">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="pc bpc" id="L925" title="1 of 4 branches missed.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L926" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="fc" id="L927">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L928">				}else {</span>
+<span class="fc" id="L929">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="pc bpc" id="L932" title="1 of 4 branches missed.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="nc bnc" id="L933" title="All 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="nc" id="L934">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L935">				}else {</span>
+<span class="nc" id="L936">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L940" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;CYCLO&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LOC&quot;))) {</span>
+<span class="fc bfc" id="L941" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L942" title="2 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="nc" id="L943">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L944">				}else {</span>
+<span class="fc" id="L945">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L948" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L949" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="fc" id="L950">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L951">				}else {</span>
+<span class="fc" id="L952">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L955" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L956" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="fc" id="L957">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L958">				}else {</span>
+<span class="fc" id="L959">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L962" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L963" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="nc" id="L964">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L965">				}else {</span>
+<span class="fc" id="L966">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L970" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;CYCLO&quot;)) &amp;&amp; (tokens2[0].equals(&quot;CYCLO&quot;))) {</span>
+<span class="fc bfc" id="L971" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L972" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="nc" id="L973">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L974">				}else {</span>
+<span class="fc" id="L975">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L978" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L979" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="fc" id="L980">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L981">				}else {</span>
+<span class="fc" id="L982">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L985" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L986" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="fc" id="L987">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L988">				}else {</span>
+<span class="fc" id="L989">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L992" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L993" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="fc" id="L994">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L995">				}else {</span>
+<span class="fc" id="L996">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L1000" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;CYCLO&quot;)) &amp;&amp; (tokens2[0].equals(&quot;ATFD&quot;))) {</span>
+<span class="fc bfc" id="L1001" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L1002" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="nc" id="L1003">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1004">				}else {</span>
+<span class="fc" id="L1005">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1008" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L1009" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="nc" id="L1010">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1011">				}else {</span>
+<span class="fc" id="L1012">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1015" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L1016" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="fc" id="L1017">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L1018">				}else {</span>
+<span class="fc" id="L1019">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1022" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L1023" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="nc" id="L1024">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1025">				}else {</span>
+<span class="fc" id="L1026">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L1030" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;ATFD&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LAA&quot;))) {</span>
+<span class="fc bfc" id="L1031" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L1032" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="nc" id="L1033">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1034">				}else {</span>
+<span class="fc" id="L1035">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1038" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L1039" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="fc" id="L1040">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L1041">				}else {</span>
+<span class="fc" id="L1042">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1045" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L1046" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&lt;d2)) {</span>
+<span class="nc" id="L1047">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1048">				}else {</span>
+<span class="fc" id="L1049">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1052" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L1053" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLaa()))&gt;d2)) {</span>
+<span class="nc" id="L1054">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1055">				}else {</span>
+<span class="fc" id="L1056">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L1060" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;ATFD&quot;)) &amp;&amp; (tokens2[0].equals(&quot;LOC&quot;))) {</span>
+<span class="fc bfc" id="L1061" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="fc bfc" id="L1062" title="All 4 branches covered.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="fc" id="L1063">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L1064">				}else {</span>
+<span class="fc" id="L1065">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1068" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L1069" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="fc" id="L1070">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L1071">				}else {</span>
+<span class="fc" id="L1072">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1075" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L1076" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&lt;d2)) {</span>
+<span class="nc" id="L1077">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1078">				}else {</span>
+<span class="fc" id="L1079">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1082" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L1083" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getLoc()))&gt;d2)) {</span>
+<span class="nc" id="L1084">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1085">				}else {</span>
+<span class="fc" id="L1086">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L1090" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;ATFD&quot;)) &amp;&amp; (tokens2[0].equals(&quot;CYCLO&quot;))) {</span>
+<span class="fc bfc" id="L1091" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L1092" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="nc" id="L1093">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1094">				}else {</span>
+<span class="fc" id="L1095">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1098" title="All 4 branches covered.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L1099" title="1 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="fc" id="L1100">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="fc" id="L1101">				}else {</span>
+<span class="fc" id="L1102">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1105" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L1106" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&lt;d2)) {</span>
+<span class="nc" id="L1107">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1108">				}else {</span>
+<span class="fc" id="L1109">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1112" title="All 4 branches covered.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L1113" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getCyclo()))&gt;d2)) {</span>
+<span class="nc" id="L1114">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1115">				}else {</span>
+<span class="fc" id="L1116">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L1120" title="All 4 branches covered.">		if((tokens1[0].equals(&quot;ATFD&quot;)) &amp;&amp; (tokens2[0].equals(&quot;ATFD&quot;))) {</span>
+<span class="pc bpc" id="L1121" title="1 of 4 branches missed.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L1122" title="2 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="nc" id="L1123">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1124">				}else {</span>
+<span class="fc" id="L1125">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="pc bpc" id="L1128" title="1 of 4 branches missed.">			if(string2.contains(&quot;&lt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="nc bnc" id="L1129" title="All 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="nc" id="L1130">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1131">				}else {</span>
+<span class="nc" id="L1132">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="pc bpc" id="L1135" title="1 of 4 branches missed.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&lt;&quot;)) {</span>
+<span class="nc bnc" id="L1136" title="All 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&lt;d2)) {</span>
+<span class="nc" id="L1137">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1138">				}else {</span>
+<span class="nc" id="L1139">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+<span class="pc bpc" id="L1142" title="1 of 4 branches missed.">			if(string2.contains(&quot;&gt;&quot;)&amp;&amp;string3.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L1143" title="3 of 4 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)&amp;&amp;((Double.parseDouble(record.getAtfd()))&gt;d2)) {</span>
+<span class="nc" id="L1144">					setVal(((int) Double.parseDouble(record.methodID)-1), entao);</span>
+<span class="nc" id="L1145">				}else {</span>
+<span class="fc" id="L1146">					setVal(((int) Double.parseDouble(record.methodID)-1), senao);</span>
+				}
+			}
+		}
+		
+<span class="fc" id="L1151">	}</span>
+	
+	/**
+	 * verificar() É um procedimento que permite o preenchimento da tabela conforme as regras recebidas sem ORs ou ANDs
+	 * @param record Regra
+	 * @param string2 condição a verificar
+	 * @param entao o que fazer caso regra seja verificada
+	 * @param senao o que fazer caso regra não seja verificada
+	 */
+	private void verificar(Record record, String string2, String entao, String senao) {
+<span class="fc" id="L1161">		String [] tokens1 = string2.split(&quot;&lt;|\\&gt;&quot;);</span>
+<span class="fc" id="L1162">		double d1 = Double.parseDouble(tokens1[1]);</span>
+<span class="fc bfc" id="L1163" title="All 2 branches covered.">		if((tokens1[0].equals(&quot;LAA&quot;))) {</span>
+<span class="fc bfc" id="L1164" title="All 2 branches covered.">			if(string2.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L1165" title="1 of 2 branches missed.">				if(((Double.parseDouble(record.getLaa()))&lt;d1)) {</span>
+<span class="fc" id="L1166">					setVal(((int) Double.parseDouble(record.methodID)-1),entao);					</span>
+<span class="fc" id="L1167">				}else {</span>
+<span class="nc" id="L1168">					setVal(((int) Double.parseDouble(record.methodID)-1),senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1171" title="All 2 branches covered.">			if(string2.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L1172" title="1 of 2 branches missed.">				if(((Double.parseDouble(record.getLaa()))&gt;d1)) {</span>
+<span class="nc" id="L1173">					setVal(((int) Double.parseDouble(record.methodID)-1),entao);					</span>
+<span class="nc" id="L1174">				}else {</span>
+<span class="fc" id="L1175">					setVal(((int) Double.parseDouble(record.methodID)-1),senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L1179" title="All 2 branches covered.">		if((tokens1[0].equals(&quot;LOC&quot;))) {</span>
+<span class="fc bfc" id="L1180" title="All 2 branches covered.">			if(string2.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L1181" title="1 of 2 branches missed.">				if(((Double.parseDouble(record.getLoc()))&lt;d1)) {</span>
+<span class="fc" id="L1182">					setVal(((int) Double.parseDouble(record.methodID)-1),entao);	</span>
+<span class="fc" id="L1183">				}else {</span>
+<span class="nc" id="L1184">					setVal(((int) Double.parseDouble(record.methodID)-1),senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1187" title="All 2 branches covered.">			if(string2.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L1188" title="1 of 2 branches missed.">				if(((Double.parseDouble(record.getLoc()))&gt;d1)) {</span>
+<span class="nc" id="L1189">					setVal(((int) Double.parseDouble(record.methodID)-1),entao);					</span>
+<span class="nc" id="L1190">				}else {</span>
+<span class="fc" id="L1191">					setVal(((int) Double.parseDouble(record.methodID)-1),senao);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L1195" title="All 2 branches covered.">		if((tokens1[0].equals(&quot;CYCLO&quot;))) {</span>
+<span class="fc bfc" id="L1196" title="All 2 branches covered.">			if(string2.contains(&quot;&lt;&quot;)) {</span>
+<span class="pc bpc" id="L1197" title="1 of 2 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&lt;d1)) {</span>
+<span class="fc" id="L1198">					setVal(((int) Double.parseDouble(record.methodID)-1),entao);					</span>
+<span class="fc" id="L1199">				}else {</span>
+<span class="nc" id="L1200">					setVal(((int) Double.parseDouble(record.methodID)-1),senao);</span>
+				}
+			}
+<span class="fc bfc" id="L1203" title="All 2 branches covered.">			if(string2.contains(&quot;&gt;&quot;)) {</span>
+<span class="pc bpc" id="L1204" title="1 of 2 branches missed.">				if(((Double.parseDouble(record.getCyclo()))&gt;d1)) {</span>
+<span class="nc" id="L1205">					setVal(((int) Double.parseDouble(record.methodID)-1),entao);					</span>
+<span class="nc" id="L1206">				}else {</span>
+<span class="fc" id="L1207">					setVal(((int) Double.parseDouble(record.methodID)-1),senao);</span>
+				}
+			}
+		}
+<span class="pc bpc" id="L1211" title="1 of 2 branches missed.">		if((tokens1[0].equals(&quot;ATFD&quot;))) {</span>
+<span class="nc bnc" id="L1212" title="All 2 branches missed.">			if(string2.contains(&quot;&lt;&quot;)) {</span>
+<span class="nc bnc" id="L1213" title="All 2 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&lt;d1)) {</span>
+<span class="nc" id="L1214">					setVal(((int) Double.parseDouble(record.methodID)-1),entao);					</span>
+<span class="nc" id="L1215">				}else {</span>
+<span class="nc" id="L1216">					setVal(((int) Double.parseDouble(record.methodID)-1),senao);</span>
+				}
+			}
+<span class="nc bnc" id="L1219" title="All 2 branches missed.">			if(string2.contains(&quot;&gt;&quot;)) {</span>
+<span class="nc bnc" id="L1220" title="All 2 branches missed.">				if(((Double.parseDouble(record.getAtfd()))&gt;d1)) {</span>
+<span class="nc" id="L1221">					setVal(((int) Double.parseDouble(record.methodID)-1),entao);					</span>
+<span class="nc" id="L1222">				}else {</span>
+<span class="nc" id="L1223">					setVal(((int) Double.parseDouble(record.methodID)-1),senao);</span>
+				}
+			}
+		}
+<span class="fc" id="L1227">	}</span>
+	
+	/**
+	 * setVal() É um procedimento que escreve resultados na tabela
+	 * @param i linha a ser alterada
+	 * @param aux verificação de colunas
+	 */
+	private void setVal(int i, String aux) {
+<span class="fc bfc" id="L1235" title="All 4 branches covered.">		if(aux.contains(&quot;long_method&quot;)&amp;&amp;aux.contains(&quot;TRUE&quot;)) {</span>
+<span class="fc" id="L1236">			table.setValueAt(&quot;TRUE&quot;, i, 5);</span>
+		}
+<span class="fc bfc" id="L1238" title="All 4 branches covered.">		if(aux.contains(&quot;long_method&quot;)&amp;&amp;aux.contains(&quot;FALSE&quot;)) {</span>
+<span class="fc" id="L1239">			table.setValueAt(&quot;FALSE&quot;, i, 5);</span>
+		}
+<span class="fc bfc" id="L1241" title="All 4 branches covered.">		if(aux.contains(&quot;feature_envy&quot;)&amp;&amp;aux.contains(&quot;TRUE&quot;)) {</span>
+<span class="fc" id="L1242">			table.setValueAt(&quot;TRUE&quot;, i, 6);</span>
+		}
+<span class="fc bfc" id="L1244" title="All 4 branches covered.">		if(aux.contains(&quot;feature_envy&quot;)&amp;&amp;aux.contains(&quot;FALSE&quot;)) {</span>
+<span class="fc" id="L1245">			table.setValueAt(&quot;FALSE&quot;, i, 6);</span>
+		}	
+<span class="fc" id="L1247">	}</span>
+
+	/**
+	 * occurrences() Cálculo de número de ocorrencias de ' ' na string metricas
+	 * @param metricas métrica
+	 * @return count contagem do número de ocorrências de caracter ' ' em metricas
+	 */
+	private int occurrences(String metricas) {
+<span class="fc" id="L1255">		int count = 0;</span>
+<span class="fc bfc" id="L1256" title="All 2 branches covered.">		for(int i=0;i!=metricas.length();i++) {</span>
+<span class="fc bfc" id="L1257" title="All 2 branches covered.">			if(metricas.charAt(i)==' ') {</span>
+<span class="fc" id="L1258">				count++;</span>
+			}
+		}
+<span class="fc" id="L1261">		return count;</span>
+	}
+
+	/**
+	 * setFrameVisible() É um procedimento que permite tornar visivel a frame de resultados
+	 */
+	private void setFrameVisible() {
+<span class="nc" id="L1268">		frame = new JFrame (&quot;Resultados&quot;);</span>
+<span class="nc" id="L1269">		frame.setLayout(new BorderLayout());</span>
+<span class="nc" id="L1270">		frame.add(sp, BorderLayout.NORTH);</span>
+<span class="nc" id="L1271">		frame.add(panel, BorderLayout.CENTER);</span>
+<span class="nc" id="L1272">		frame.pack();</span>
+<span class="nc" id="L1273">		frame.setVisible(true);</span>
+<span class="nc" id="L1274">	}</span>
+	/**
+	 * setFrameVisible2() É um procedimento que permite tornar visivel a frame de resultados na realização de testes unitários
+	 */
+	private void setFrameVisible2() {
+<span class="fc" id="L1279">		frame = new JFrame (&quot;Resultados&quot;);</span>
+<span class="fc" id="L1280">		frame.setLayout(new BorderLayout());</span>
+<span class="fc" id="L1281">		frame.add(sp, BorderLayout.NORTH);</span>
+<span class="fc" id="L1282">		frame.add(panel, BorderLayout.CENTER);</span>
+<span class="fc" id="L1283">	}</span>
+
+	
+	/**
+	 * Set do panel display
+	 */
+	public void addFrameContent() {	
+				
+		//Initializing the JTable
+<span class="fc" id="L1292">		table = new JTable(data, columnTitles);</span>
+<span class="fc" id="L1293">		table.setBounds(30, 40, 300, 600);</span>
+						
+		//Adding it to JScrollPane
+<span class="fc" id="L1296">		sp = new JScrollPane(table);</span>
+			
+<span class="fc" id="L1298">		panel = new JPanel();</span>
+<span class="fc" id="L1299">		panel.setLayout(new BorderLayout());</span>
+<span class="fc" id="L1300">		labelResults = new JLabel(&quot;                      Resultados das Deteções de Erros em relação à Ferramenta 'Is_long_method'&quot;);</span>
+		
+		//acrescentada mais uma linha para o ES_is_feauture_envy
+<span class="fc" id="L1303">		tt = new JTable(5,5);</span>
+<span class="fc" id="L1304">		tt.setValueAt(&quot;DCI&quot;,0,1);</span>
+<span class="fc" id="L1305">		tt.setValueAt(&quot;DII&quot;,0,2);</span>
+<span class="fc" id="L1306">		tt.setValueAt(&quot;ADCI&quot;,0,3);</span>
+<span class="fc" id="L1307">		tt.setValueAt(&quot;ADII&quot;,0,4);</span>
+<span class="fc" id="L1308">		tt.setValueAt(&quot;PMD&quot;,1,0);</span>
+<span class="fc" id="L1309">		tt.setValueAt(&quot;iPlasma&quot;,2,0);</span>
+<span class="fc" id="L1310">		tt.setValueAt(&quot;ES_is_long_method&quot;,3,0);</span>
+<span class="fc" id="L1311">		tt.setValueAt(&quot;ES_is_feature_envy&quot;,4,0);</span>
+		
+		
+							
+<span class="fc" id="L1315">		panel.add(labelResults, BorderLayout.NORTH);</span>
+<span class="fc" id="L1316">		panel.add(tt, BorderLayout.CENTER);</span>
+<span class="fc" id="L1317">	}</span>
+	
+	/**
+	 * setTitles() Formata a parte dos títulos/nome das colunas
+	 */
+	public void setTitles() {
+<span class="fc" id="L1323">		columnTitles = new String[9];</span>
+<span class="fc" id="L1324">		columnTitles[0] = &quot;MethodID&quot;;</span>
+<span class="fc" id="L1325">		columnTitles[1] = &quot;is_long_Method&quot;;</span>
+<span class="fc" id="L1326">		columnTitles[2] = &quot;iPlasma&quot;;</span>
+<span class="fc" id="L1327">		columnTitles[3] = &quot;PMD&quot;;</span>
+<span class="fc" id="L1328">		columnTitles[4] = &quot;is_feature_envy&quot;;</span>
+<span class="fc" id="L1329">		columnTitles[5] = &quot;ES_long&quot;;</span>
+<span class="fc" id="L1330">		columnTitles[6] = &quot;ES_envy&quot;;</span>
+<span class="fc" id="L1331">		columnTitles[7] = &quot;Defeito is_long_Method&quot;;</span>
+<span class="fc" id="L1332">		columnTitles[8] = &quot;Defeito is_feature_envy&quot;;</span>
+<span class="fc" id="L1333">	}</span>
+		
+	/**
+	 * setData1() Vai buscar informação necessária ao já formado display
+	 * @param string2 
+	 * @throws IOException 
+	 */
+	public void setData1(String string2) throws IOException {
+<span class="fc" id="L1341">		String s = System.getProperty(&quot;user.dir&quot;);</span>
+<span class="fc" id="L1342">		String a = s + &quot;\\files\\Long-Method.xlsx&quot;;</span>
+<span class="fc" id="L1343">		ExcelDisplay teste = new ExcelDisplay(new ReadExcel (new File(a)));</span>
+<span class="fc" id="L1344">		String [] [] aux = teste.getData();</span>
+<span class="fc" id="L1345">		data = new String [aux.length] [columnTitles.length];</span>
+<span class="fc bfc" id="L1346" title="All 2 branches covered.">		for(int linha = 0; linha &lt; aux.length; linha++) {				//this equals to the row in our matrix</span>
+<span class="fc bfc" id="L1347" title="All 2 branches covered.">			for(int coluna = 0; coluna &lt; aux[0].length; coluna++) {				//this equals to the column in each row</span>
+<span class="pc bpc" id="L1348" title="1 of 13 branches missed.">				switch (coluna) {</span>
+<span class="fc" id="L1349">				case 0: data[linha][coluna] = aux [linha][coluna];				//MethodID 			 / Em uso</span>
+<span class="fc" id="L1350">					break;</span>
+				case 1: 														//Package 			 / Sem uso
+<span class="fc" id="L1352">					break;</span>
+				case 2: 														//Class 			 / Sem uso
+<span class="fc" id="L1354">					break;</span>
+				case 3: 														//method			 / Sem uso
+<span class="fc" id="L1356">					break;</span>
+				case 4: 														//LOC 				 / Sem uso
+<span class="fc" id="L1358">					break;</span>
+				case 5: 														//CYCLO 			 / Sem uso
+<span class="fc" id="L1360">					break;</span>
+				case 6: 														//ATFD				 / Sem uso
+<span class="fc" id="L1362">					break;</span>
+				case 7: 														//LAA 				 / Sem uso
+<span class="fc" id="L1364">					break;</span>
+<span class="fc" id="L1365">				case 8: data[linha][1] = aux [linha][coluna];					//is_long_method 	 / Em uso</span>
+<span class="fc" id="L1366">					break;</span>
+<span class="fc" id="L1367">				case 9: data[linha][2] = aux [linha][coluna];					//iPlasma			 / Em uso</span>
+<span class="fc" id="L1368">					break;</span>
+<span class="fc" id="L1369">				case 10: data[linha][3] = aux [linha][coluna];					//PMD				 / Em uso</span>
+<span class="fc" id="L1370">					break;</span>
+<span class="fc" id="L1371">				case 11: data[linha][4] = aux [linha][coluna];					//is_feature_envy	 / Em uso</span>
+<span class="fc" id="L1372">					break;</span>
+				default:
+					break;
+				}
+				
+			
+			}
+		}
+		
+<span class="fc" id="L1381">	}</span>
+
+
+	/**
+	 * setData() Vai buscar informação necessária ao já formado display
+	 * @param string2 
+	 * @throws IOException 
+	 */
+	public void setData(String string2) throws IOException {
+<span class="nc" id="L1390">		ExcelDisplay teste = new ExcelDisplay(new ReadExcel (new File(string2)));</span>
+<span class="nc" id="L1391">		String [] [] aux = teste.getData();</span>
+<span class="nc" id="L1392">		data = new String [aux.length] [columnTitles.length];</span>
+<span class="nc bnc" id="L1393" title="All 2 branches missed.">		for(int linha = 0; linha &lt; aux.length; linha++) {				//this equals to the row in our matrix</span>
+<span class="nc bnc" id="L1394" title="All 2 branches missed.">			for(int coluna = 0; coluna &lt; aux[0].length; coluna++) {				//this equals to the column in each row</span>
+<span class="nc bnc" id="L1395" title="All 13 branches missed.">				switch (coluna) {</span>
+<span class="nc" id="L1396">				case 0: data[linha][coluna] = aux [linha][coluna];				//MethodID 			 / Em uso</span>
+<span class="nc" id="L1397">					break;</span>
+				case 1: 														//Package 			 / Sem uso
+<span class="nc" id="L1399">					break;</span>
+				case 2: 														//Class 			 / Sem uso
+<span class="nc" id="L1401">					break;</span>
+				case 3: 														//method			 / Sem uso
+<span class="nc" id="L1403">					break;</span>
+				case 4: 														//LOC 				 / Sem uso
+<span class="nc" id="L1405">					break;</span>
+				case 5: 														//CYCLO 			 / Sem uso
+<span class="nc" id="L1407">					break;</span>
+				case 6: 														//ATFD				 / Sem uso
+<span class="nc" id="L1409">					break;</span>
+				case 7: 														//LAA 				 / Sem uso
+<span class="nc" id="L1411">					break;</span>
+<span class="nc" id="L1412">				case 8: data[linha][1] = aux [linha][coluna];					//is_long_method 	 / Em uso</span>
+<span class="nc" id="L1413">					break;</span>
+<span class="nc" id="L1414">				case 9: data[linha][2] = aux [linha][coluna];					//iPlasma			 / Em uso</span>
+<span class="nc" id="L1415">					break;</span>
+<span class="nc" id="L1416">				case 10: data[linha][3] = aux [linha][coluna];					//PMD				 / Em uso</span>
+<span class="nc" id="L1417">					break;</span>
+<span class="nc" id="L1418">				case 11: data[linha][4] = aux [linha][coluna];					//is_feature_envy	 / Em uso</span>
+<span class="nc" id="L1419">					break;</span>
+				default:
+					break;
+				}
+				
+			
+			}
+		}
+<span class="nc" id="L1427">			}</span>
+
+
+	/**
+	 * rulesResults() Mecanismo de preenchimento das colunas de deteção de defeitos is_long_method e is_feature_envy
+	 */
+	public void rulesResults() {
+
+<span class="nc" id="L1435">		String [] [] aux = data;</span>
+		
+<span class="nc bnc" id="L1437" title="All 2 branches missed.">		for(int linha = 0; linha &lt; aux.length; linha++) {	</span>
+<span class="nc" id="L1438">			String valor1 = (String) table.getValueAt(linha,1);</span>
+<span class="nc" id="L1439">			String valor2 = (String) table.getValueAt(linha,5);</span>
+			
+<span class="nc bnc" id="L1441" title="All 2 branches missed.">			if( valor1.equals(valor2)) {</span>
+<span class="nc" id="L1442">				table.setValueAt(&quot;FALSE&quot;, linha, 7);</span>
+<span class="nc" id="L1443">			} else {</span>
+<span class="nc bnc" id="L1444" title="All 2 branches missed.">				if(valor2.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L1445">					table.setValueAt(&quot;FALSE&quot;, linha, 7);</span>
+<span class="nc" id="L1446">				}else {</span>
+<span class="nc" id="L1447">					table.setValueAt(&quot;TRUE&quot;, linha, 7);</span>
+				}
+
+			}
+		
+			
+<span class="nc" id="L1453">			String valor3 = (String) table.getValueAt(linha,4);</span>
+<span class="nc" id="L1454">			String valor4 = (String) table.getValueAt(linha,6);</span>
+			
+<span class="nc bnc" id="L1456" title="All 2 branches missed.">			if( valor3.equals(valor4)) {</span>
+<span class="nc" id="L1457">				table.setValueAt(&quot;FALSE&quot;, linha, 8);</span>
+<span class="nc" id="L1458">			} else {</span>
+<span class="nc bnc" id="L1459" title="All 2 branches missed.">				if(valor4.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L1460">					table.setValueAt(&quot;FALSE&quot;, linha, 8);</span>
+<span class="nc" id="L1461">				}else {</span>
+<span class="nc" id="L1462">					table.setValueAt(&quot;TRUE&quot;, linha, 8);</span>
+				}
+
+			}		}
+<span class="nc" id="L1466">	}</span>
+	
+
+	/**
+	 * comparatorsResults() Mecanismo de cálculo e apresentação dos resultados de deteção de defeitos
+	 */
+	public void comparatorsResults() { //contadores para os defeitos 
+<span class="nc" id="L1473">		String [] [] aux1 = data;</span>
+		
+		//CONTADORES PARA O IS_LONG_METHOD
+<span class="nc" id="L1476">		int countDCI=0; //iPlasma</span>
+<span class="nc" id="L1477">		int countDII=0; </span>
+<span class="nc" id="L1478">		int countADII=0;</span>
+<span class="nc" id="L1479">		int countADCI=0;</span>
+		
+<span class="nc" id="L1481">		int countDCI1=0; //PMD</span>
+<span class="nc" id="L1482">		int countDII1=0;</span>
+<span class="nc" id="L1483">		int countADII1=0;</span>
+<span class="nc" id="L1484">		int countADCI1=0;</span>
+		
+<span class="nc" id="L1486">		int countDCI2=0;  //ES_is_long_method</span>
+<span class="nc" id="L1487">		int countDII2=0;</span>
+<span class="nc" id="L1488">		int countADII2=0;</span>
+<span class="nc" id="L1489">		int countADCI2=0;</span>
+		
+		//CONTADORES PARA O IS_FEATURE_ENVY, descomentado/acrescentado após testes
+		
+<span class="nc" id="L1493">		int countDCI3=0; //ES_is_feature_envy com is_feature_envy</span>
+<span class="nc" id="L1494">		int countDII3=0;</span>
+<span class="nc" id="L1495">		int countADII3=0;</span>
+<span class="nc" id="L1496">		int countADCI3=0;</span>
+		
+<span class="nc bnc" id="L1498" title="All 2 branches missed.">		for(int linha=0; linha&lt;aux1.length;linha++) {</span>
+			
+			//is_long_method para comparar com os restantes 4
+<span class="nc" id="L1501">			String valorILM = (String) table.getValueAt(linha, 1); </span>
+			//VALORES PARA PARA COMPARAR COM IS_LONG_METHOD
+<span class="nc" id="L1503">			String valoriPlasma = (String) table.getValueAt(linha, 2); //iPlasma</span>
+<span class="nc" id="L1504">			String valorPMD = (String) table.getValueAt(linha, 3); //PMD</span>
+<span class="nc" id="L1505">			String valorESILM = (String) table.getValueAt(linha, 5); //ES_is_longMethod</span>
+			
+<span class="nc" id="L1507">			String valorESIFE = (String) table.getValueAt(linha, 6); //ES_is_feature_envy</span>
+<span class="nc" id="L1508">			String valorIFE=(String) table.getValueAt(linha, 4);  //is_feature_envy</span>
+					
+<span class="nc bnc" id="L1510" title="All 2 branches missed.">			if(valorILM.equals(&quot;TRUE&quot;)) {							</span>
+<span class="nc bnc" id="L1511" title="All 2 branches missed.">				if(valoriPlasma.equals(&quot;TRUE&quot;)) { //Def.corretos	//iPlasma</span>
+<span class="nc" id="L1512">					countDCI++;</span>
+//					System.out.println(&quot;DCIplasma&quot; + &quot;\n&quot; + countDCI + &quot;\n&quot; + &quot;estamos na linha&quot; + &quot;\n&quot; + linha);	
+					//tt.setValueAt(countDCI,2,1);
+<span class="nc" id="L1515">				}else {</span>
+<span class="nc" id="L1516">					countADII++; //ausencias de def.corretos</span>
+<span class="nc" id="L1517">					System.out.println(&quot;ADIIplasma&quot; + &quot;\n&quot; + countADII);</span>
+				}
+				
+<span class="nc bnc" id="L1520" title="All 2 branches missed.">				if(valorPMD.equals(&quot;TRUE&quot;)) { //Def.corretos 		//PMD</span>
+<span class="nc" id="L1521">					countDCI1++;</span>
+<span class="nc" id="L1522">					System.out.println(&quot;DCI1PMD&quot; + &quot;\n&quot; + countDCI1 + &quot;estamos na linha&quot; + &quot;\n&quot; + linha);</span>
+					
+<span class="nc" id="L1524">				}else {</span>
+<span class="nc" id="L1525">					countADII1++; //ausencias de def.corretos</span>
+<span class="nc" id="L1526">					System.out.println(&quot;ADII1PMD&quot; + &quot;\n&quot; + countADII1);</span>
+				}
+<span class="nc bnc" id="L1528" title="All 2 branches missed.">				if(valorESILM.equals(&quot;TRUE&quot;)) { //Def.corretos 		//ES_is_long_method</span>
+<span class="nc" id="L1529">					countDCI2++;</span>
+<span class="nc" id="L1530">					System.out.println(&quot;ADCI12ESILM&quot; + &quot;\n&quot; +countDCI2);</span>
+<span class="nc" id="L1531">				}else {</span>
+<span class="nc bnc" id="L1532" title="All 2 branches missed.">					if(valorESILM.equals(&quot;&quot;)==false) {</span>
+<span class="nc" id="L1533">						countADII2++; //ausencias de def.corretos</span>
+<span class="nc" id="L1534">						System.out.println(&quot;ADII2ESILM&quot; + &quot;\n&quot; +countADII2);</span>
+					}
+				}
+			}
+
+<span class="nc bnc" id="L1539" title="All 2 branches missed.">			if(valorIFE.equals(&quot;TRUE&quot;))	{					//is_feature_envy com ES_is_feature_envy</span>
+//				if(!valorESIFE.equals(&quot; &quot;)) {
+<span class="nc bnc" id="L1541" title="All 2 branches missed.">				if(valorESIFE.equals(&quot;TRUE&quot;)) {</span>
+<span class="nc" id="L1542">					countDCI3++;</span>
+<span class="nc" id="L1543">				}else {</span>
+<span class="nc bnc" id="L1544" title="All 2 branches missed.">					if(valorESIFE.equals(&quot;&quot;)==false) {</span>
+<span class="nc" id="L1545">						countADII3++;</span>
+					}
+				}
+				
+			}
+			
+			
+<span class="nc bnc" id="L1552" title="All 2 branches missed.">			if(valorILM.equals(&quot;FALSE&quot;)) { </span>
+<span class="nc bnc" id="L1553" title="All 2 branches missed.">				if(valoriPlasma.equals(&quot;TRUE&quot;)){ 				//iPlasma</span>
+<span class="nc" id="L1554">					countDII++; //defeitos incorretos</span>
+<span class="nc" id="L1555">					System.out.println(&quot;DIIILM&quot; + &quot;\n&quot; +countDII);</span>
+<span class="nc" id="L1556">				}else {</span>
+<span class="nc" id="L1557">					countADCI++; //aus.def.incorr</span>
+<span class="nc" id="L1558">					System.out.println(&quot;ADCIILM&quot; + &quot;\n&quot; +countADCI);</span>
+				}
+				
+<span class="nc bnc" id="L1561" title="All 2 branches missed.">				if(valorPMD.equals(&quot;TRUE&quot;)){ 						//PMD</span>
+<span class="nc" id="L1562">					countDII1++; //defeitos incorretos</span>
+<span class="nc" id="L1563">					System.out.println(&quot;DII1PMD&quot; + &quot;\n&quot; +countDII1);</span>
+<span class="nc" id="L1564">				}else {</span>
+<span class="nc" id="L1565">					countADCI1++; //aus.def.incorr</span>
+<span class="nc" id="L1566">					System.out.println(&quot;ADCI1PMD&quot; + &quot;\n&quot; +countADCI1 + &quot;estamos na linha&quot; + linha);</span>
+				}
+				
+<span class="nc bnc" id="L1569" title="All 2 branches missed.">				if(valorESILM.equals(&quot;TRUE&quot;)){ 						//ES_is_long_method</span>
+<span class="nc" id="L1570">					countDII2++; //defeitos incorretos</span>
+<span class="nc" id="L1571">					System.out.println(&quot;DII2ILM&quot; + &quot;\n&quot; +countDII2);</span>
+<span class="nc" id="L1572">				}else {</span>
+<span class="nc bnc" id="L1573" title="All 2 branches missed.">					if(valorESILM.equals(&quot;&quot;)==false) {</span>
+<span class="nc" id="L1574">						countADCI2++; //aus.def.incorr</span>
+<span class="nc" id="L1575">						System.out.println(&quot;ADCI2ILM&quot; + &quot;\n&quot; +countADCI2);</span>
+					}
+				}
+			
+			}
+			
+				
+<span class="nc bnc" id="L1582" title="All 2 branches missed.">		if(valorIFE.equals(&quot;FALSE&quot;))	{ 						//is_feature_envy com ES_is_feature_envy</span>
+<span class="nc bnc" id="L1583" title="All 2 branches missed.">			if(valorESIFE.equals(&quot;TRUE&quot;)) {</span>
+<span class="nc" id="L1584">				countDII3++;</span>
+<span class="nc" id="L1585">				System.out.println(&quot;DII3IFE&quot; + &quot;\n&quot; +countDII3);</span>
+<span class="nc" id="L1586">			}else {</span>
+<span class="nc bnc" id="L1587" title="All 2 branches missed.">				if(valorESIFE.equals(&quot;&quot;)==false) {</span>
+<span class="nc" id="L1588">					countADCI3++;</span>
+//					System.out.println(&quot;ADCI3IFE&quot; + &quot;\n&quot; +countADCI3);
+				}
+			}
+		
+			
+		}
+			
+		//ORGANIZAR MELHOR	
+
+<span class="nc" id="L1598">			tt.setValueAt(countDCI,2,1);</span>
+<span class="nc" id="L1599">			tt.setValueAt(countDII,2,2);</span>
+<span class="nc" id="L1600">			tt.setValueAt(countADCI,2,3);</span>
+<span class="nc" id="L1601">			tt.setValueAt(countADII,2,4);</span>
+			
+<span class="nc" id="L1603">			tt.setValueAt(countDCI1,1,1);</span>
+<span class="nc" id="L1604">			tt.setValueAt(countDII1,1,2);</span>
+<span class="nc" id="L1605">			tt.setValueAt(countADII1,1,4);</span>
+<span class="nc" id="L1606">			tt.setValueAt(countADCI1,1,3);</span>
+			
+<span class="nc" id="L1608">			tt.setValueAt(countDCI2,3,1);</span>
+<span class="nc" id="L1609">			tt.setValueAt(countDII2, 3, 2);</span>
+<span class="nc" id="L1610">			tt.setValueAt(countADII2, 3, 4);</span>
+<span class="nc" id="L1611">			tt.setValueAt(countADCI2,3,3);</span>
+			
+<span class="nc" id="L1613">			tt.setValueAt(countDCI3,4,1);</span>
+<span class="nc" id="L1614">			tt.setValueAt(countDII3,4,2);</span>
+<span class="nc" id="L1615">			tt.setValueAt(countADCI3,4,3);</span>
+<span class="nc" id="L1616">			tt.setValueAt(countADII3,4,4);</span>
+		}
+<span class="nc" id="L1618">	}</span>
+	
+
+	/**
+	 * getValue() Devolve valor na entrada da tabela na linha de indice 0 e coluna de indice 5
+	 */
+	public String getValue() {
+<span class="fc" id="L1625">		return (String) table.getValueAt(0, 5);</span>
+	}
+	
+
+	/**
+	 * inic() Inicialização de atributos para a realização de testes unitários
+	 * @param string nome ficheiro
+	 * @param regras regras definidas
+	 * @param records registos do ficheiro Excel
+	 * @param selectedValue caminho do ficheiro 
+	 * @throws IOException 
+	 */
+	public void inic(String string, ArrayList&lt;Regra&gt; regras, ArrayList&lt;Record&gt; records,String selectedValue) throws IOException {
+<span class="fc" id="L1638">		regras2.clear();</span>
+<span class="fc" id="L1639">		f = new JFrame(&quot;frame&quot;); </span>
+<span class="fc" id="L1640">        JPanel p =new JPanel(new BorderLayout()); </span>
+<span class="fc" id="L1641">        JLabel l= new JLabel(&quot;Select rule&quot;); </span>
+<span class="fc" id="L1642">        String week[]=new String [regras.size()];</span>
+<span class="fc bfc" id="L1643" title="All 2 branches covered.">        for(int o = 0; o!=regras.size();o++){</span>
+<span class="fc" id="L1644">        	String iff=regras.get(o).getMetricas();</span>
+<span class="fc" id="L1645">        	String then=regras.get(o).getEntao();</span>
+<span class="fc" id="L1646">        	String elsee=regras.get(o).getSenao(); </span>
+<span class="fc" id="L1647">        	week[o] = &quot;IF( &quot; + iff + &quot; ) THEN ( &quot; + then + &quot; ) ELSE ( &quot; + elsee + &quot; )&quot;;</span>
+        }
+<span class="fc" id="L1649">        JList b= new JList(week); </span>
+<span class="fc" id="L1650">        p.add(b, BorderLayout.NORTH); </span>
+<span class="fc" id="L1651">        JButton bt = new JButton(&quot;Avançar&quot;);</span>
+<span class="fc" id="L1652">        p.add(bt, BorderLayout.CENTER);</span>
+<span class="fc" id="L1653">        f.add(p); </span>
+<span class="fc" id="L1654">        f.setSize(600,200);  </span>
+<span class="fc" id="L1655">        f.setVisible(true);</span>
+<span class="fc" id="L1656">        this.string=string;</span>
+<span class="fc" id="L1657">		this.regras=regras;</span>
+<span class="fc" id="L1658">		this.records=records;</span>
+<span class="fc" id="L1659">		button=bt;</span>
+		
+<span class="fc" id="L1661">		String s = selectedValue;</span>
+<span class="fc" id="L1662">		System.out.println(s);</span>
+<span class="fc" id="L1663">		setTitles();</span>
+<span class="fc" id="L1664">		setData1(string);</span>
+<span class="fc" id="L1665">		addFrameContent();</span>
+<span class="fc" id="L1666">		setFrameVisible2();		</span>
+<span class="fc bfc" id="L1667" title="All 2 branches covered.">		for(int i=5;i!=9;i++) {</span>
+<span class="fc bfc" id="L1668" title="All 2 branches covered.">			for(int j=0;j!=records.size();j++) {</span>
+<span class="fc bfc" id="L1669" title="All 2 branches covered.">				if(i==5) {</span>
+<span class="fc" id="L1670">					table.setValueAt(&quot;&quot;, j, i);</span>
+				}
+<span class="fc bfc" id="L1672" title="All 2 branches covered.">				if(i==6) {</span>
+<span class="fc" id="L1673">					table.setValueAt(&quot;&quot;, j, i);</span>
+				}
+			}	
+		}
+<span class="fc bfc" id="L1677" title="All 2 branches covered.">		for(int b1=0;b1!=regras.size();b1++) {</span>
+<span class="fc" id="L1678">			String aux = &quot;IF( &quot; + regras.get(b1).getMetricas() + &quot; ) THEN ( &quot; + regras.get(b1).getEntao() + &quot; ) ELSE ( &quot; + regras.get(b1).getSenao() + &quot; )&quot;;</span>
+<span class="fc bfc" id="L1679" title="All 2 branches covered.">			if(aux.equals(s)){</span>
+<span class="fc" id="L1680">				regras2.add(regras.get(b1));</span>
+<span class="fc" id="L1681">				System.out.println(regras.get(b1).getMetricas() + &quot; &quot; + regras.get(b1).getEntao() + &quot; &quot; + regras.get(b1).getSenao());</span>
+			}
+		}
+
+<span class="fc" id="L1685">		f.dispose();</span>
+<span class="fc" id="L1686">		analizarMetricas();</span>
+<span class="fc" id="L1687">	}</span>
+
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>AllTests (10/dez/2019 18:48:54)</div></body></html>
